@@ -80,40 +80,21 @@ def create_network_from_topology(topology, max_subnets=10):
     # Mappa IP -> host Mininet
     host_map = {}
     
-    # Mappa subnet -> switch
-    switch_map = {}
-    
-    # Switch centrale per interconnessione (simula il gateway router)
-    # Usa s0 come nome canonico per il gateway
+    # Switch unico centrale per tutti gli host (architettura semplificata)
+    # Tutti gli host connessi direttamente a s0 per permettere port mirroring completo
     central_switch = net.addSwitch('s0')
     info("*** Switch centrale (gateway) creato: s0\n")
     
     # Limita il numero di sottoreti per evitare topologie troppo complesse
     subnets_to_create = topology['subnets'][:max_subnets]
     info(f"*** Creazione di {len(subnets_to_create)} sottoreti (su {len(topology['subnets'])} totali)\n")
+    info("*** NOTA: tutti gli host connessi direttamente a s0 per cattura completa\n")
     
-    # Crea uno switch per ogni subnet (partendo da s1)
-    info("*** Creazione switch per sottoreti\n")
-    for idx, subnet_info in enumerate(subnets_to_create):
-        subnet = subnet_info['network']
-        switch_name = f"s{idx+1}"
-        switch = net.addSwitch(switch_name)
-        switch_map[subnet] = switch
-        
-        # Connetti ogni switch al gateway centrale
-        net.addLink(switch, central_switch)
-        
-        info(f"  - Switch {switch_name} per {subnet} (connesso a s0)\n")
-    
-    # Crea gli host
-    info("*** Creazione host\n")
+    # Crea gli host e connettili TUTTI direttamente a s0
+    info("*** Creazione host (tutti connessi a s0)\n")
     host_counter = 1
     for subnet_info in subnets_to_create:
         subnet = subnet_info['network']
-        switch = switch_map.get(subnet)
-        
-        if not switch:
-            continue
         
         for ip in subnet_info['hosts']:
             host_name = f"h{host_counter}"
@@ -121,10 +102,10 @@ def create_network_from_topology(topology, max_subnets=10):
             host = net.addHost(host_name, ip=f"{ip}/24")
             host_map[ip] = host
             
-            # Connetti host allo switch della sua subnet
-            net.addLink(host, switch)
+            # Connetti host direttamente al gateway centrale
+            net.addLink(host, central_switch)
             
-            info(f"  - Host {host_name}: {ip}\n")
+            info(f"  - Host {host_name}: {ip} (connesso a s0)\n")
             host_counter += 1
     
     # Crea il nodo probe se presente nella topologia
@@ -142,7 +123,49 @@ def create_network_from_topology(topology, max_subnets=10):
         
         info(f"  - Probe {probe_name}: {probe_ip} (connesso a s0)\n")
     
-    return net, host_map, probe
+    # Ritorna il numero di host invece di subnet (per calcolo porta probe)
+    num_hosts = len(host_map)
+    return net, host_map, probe, num_hosts
+
+
+def disable_ipv6(net, host_map, probe=None):
+    """Disabilita IPv6 su tutti gli host per forzare l'uso di IPv4"""
+    info("*** Disabilitazione IPv6 su tutti gli host\n")
+    
+    # Disabilita IPv6 su tutti gli host
+    for ip, host in host_map.items():
+        # Disabilita IPv6 globalmente
+        host.cmd('sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null 2>&1')
+        host.cmd('sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null 2>&1')
+        host.cmd('sysctl -w net.ipv6.conf.lo.disable_ipv6=1 > /dev/null 2>&1')
+        
+        # Disabilita IPv6 su tutte le interfacce dell'host
+        for intf in host.intfList():
+            if intf.name != 'lo':
+                host.cmd(f'sysctl -w net.ipv6.conf.{intf.name}.disable_ipv6=1 > /dev/null 2>&1')
+    
+    # Disabilita IPv6 anche sul probe
+    if probe:
+        probe.cmd('sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null 2>&1')
+        probe.cmd('sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null 2>&1')
+        probe.cmd('sysctl -w net.ipv6.conf.lo.disable_ipv6=1 > /dev/null 2>&1')
+        
+        # Disabilita IPv6 su tutte le interfacce del probe
+        for intf in probe.intfList():
+            if intf.name != 'lo':
+                probe.cmd(f'sysctl -w net.ipv6.conf.{intf.name}.disable_ipv6=1 > /dev/null 2>&1')
+        
+        info("  - IPv6 disabilitato anche sul probe\n")
+    
+    # Disabilita IPv6 sugli switch
+    for switch in net.switches:
+        switch.cmd('sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null 2>&1')
+        switch.cmd('sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null 2>&1')
+    
+    info("  - IPv6 disabilitato su tutti i nodi\n")
+    
+    # Attendi che le modifiche abbiano effetto
+    time.sleep(1)
 
 
 def start_servers(net, host_map):
@@ -150,14 +173,17 @@ def start_servers(net, host_map):
     info("*** Avvio server su tutti gli host\n")
     
     for ip, host in host_map.items():
-        # Avvia server in background
-        cmd = "python3 /app/server_adv.py > /tmp/server_{}.log 2>&1 &".format(
+        # Avvia server TCP semplice invece di scapy (più affidabile)
+        # server_tcp_simple.py gestisce handshake correttamente
+        cmd = "python3 /app/server_tcp_simple.py > /tmp/server_{}.log 2>&1 &".format(
             ip.replace('.', '_')
         )
         host.cmd(cmd)
         info(f"  - Server avviato su {ip}\n")
     
     # Attendi che i server si avviino
+    time.sleep(2)
+    info("  - Server pronti\n")
     time.sleep(2)
 
 
@@ -220,18 +246,50 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
          f"{stats.get('total_flows', 0)} flussi\n")
     
     # Crea rete
-    net, host_map, probe = create_network_from_topology(topology, max_subnets)
+    net, host_map, probe, num_hosts = create_network_from_topology(topology, max_subnets)
     
     # Avvia rete
     info("*** Avvio rete\n")
     net.start()
+    
+    # Disabilita IPv6 per forzare IPv4
+    disable_ipv6(net, host_map, probe)
+    
+    # Attendi che IPv6 sia completamente disabilitato
+    info("*** Attesa disabilitazione completa IPv6...\n")
+    time.sleep(2)
     
     # Configura switch in modalità standalone (learning switch)
     info("*** Configurazione switch in modalità standalone\n")
     for switch in net.switches:
         switch.cmd('ovs-ofctl add-flow {} action=normal'.format(switch.name))
     
+    # Configura port mirroring sul gateway centrale per far vedere tutto il traffico al probe
+    if probe:
+        info("*** Configurazione port mirroring per probe\n")
+        # Trova la porta dell'interfaccia del probe connessa al gateway (s0)
+        # Il probe è connesso all'ultimo port del gateway after all subnet switches
+        probe_config = topology.get('probe', {})
+        interface = probe_config.get('interface', 'probe-eth0')
+        
+        # Calcola il numero di porta del probe: num_hosts host + 1
+        # Tutti gli host sono connessi a s0: s0-eth1, s0-eth2, ..., s0-ethN (N=num_hosts)
+        # Il probe è connesso dopo, quindi su s0-eth{N+1}
+        probe_port_num = num_hosts + 1
+        probe_port_name = f"s0-eth{probe_port_num}"
+        
+        # Configura mirror per copiare tutto il traffico verso il probe
+        # select-all=true copia tutti i pacchetti in entrata e uscita
+        central_switch = net.switches[0]  # s0 è sempre il primo switch (gateway)
+        central_switch.cmd(
+            f'ovs-vsctl -- set Bridge s0 mirrors=@m '
+            f'-- --id=@probeport get Port {probe_port_name} '
+            f'-- --id=@m create Mirror name=probe_mirror select-all=true output-port=@probeport'
+        )
+        info(f"  - Port mirroring configurato: s0:{probe_port_name} -> {interface}\n")
+    
     # Avvia packet capture sul probe
+    tcpdump_proc = None  # Dichiarato qui per poterlo usare alla fine
     if probe:
         probe_config = topology.get('probe', {})
         capture_file = probe_config.get('capture_file', '/pcap/capture.pcap')
@@ -241,16 +299,22 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         info(f"*** Avvio packet capture sul probe\n")
         info(f"  - File: {capture_file}\n")
         info(f"  - Interface: {interface}\n")
+        info(f"  - Filtro: Solo IPv4 ('ip')\n")
         
-        # Costruisci comando tcpdump
-        tcpdump_cmd = f"tcpdump -i {interface} -w {capture_file}"
+        # Costruisci comando tcpdump con filtro BPF per catturare solo IPv4
+        # Il filtro 'ip' esclude IPv6, ARP e altri protocolli
+        # Usa popen con lista di argomenti invece di cmd con & (KeyError: 'SHELL')
+        tcpdump_args = ["tcpdump", "-i", interface, "-w", capture_file]
+        
+        # Se c'è un filtro custom, combinalo con il filtro IPv4
         if capture_filter:
-            tcpdump_cmd += f" '{capture_filter}'"
-        tcpdump_cmd += " &"
+            tcpdump_args.append(f"ip and ({capture_filter})")
+        else:
+            tcpdump_args.append("ip")
         
-        probe.cmd(tcpdump_cmd)
+        tcpdump_proc = probe.popen(tcpdump_args)
         time.sleep(1)  # Attendi che tcpdump si avvii
-        info("  - Packet capture avviata\n")
+        info("  - Packet capture avviata (solo IPv4)\n")
     
     # Avvia server
     start_servers(net, host_map)
@@ -273,10 +337,11 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         CLI(net)
     
     # Ferma packet capture
-    if probe:
+    if tcpdump_proc:
         info("*** Arresto packet capture\n")
-        probe.cmd("pkill tcpdump")
-        time.sleep(1)
+        tcpdump_proc.terminate()
+        tcpdump_proc.wait()
+        time.sleep(0.5)
     
     # Cleanup
     info("*** Arresto rete\n")

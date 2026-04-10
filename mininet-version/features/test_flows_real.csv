@@ -1,0 +1,3 @@
+Source IP,Destination IP,Source Port,Destination Port,Flow Duration,Fwd Packet Length Mean,Fwd Packet Length Std,Flow Packets/s,Idle Mean
+10.0.2.15,10.0.2.2,45678,9000,3000000,512,100,50,100000
+10.0.2.2,10.0.2.15,50000,9000,2000000,256,50,80,50000

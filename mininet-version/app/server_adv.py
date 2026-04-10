@@ -1,7 +1,11 @@
 from scapy.all import *
+import os
 
 SERVER_PORT = 9000
 
+# Disabilita RST automatico del kernel su porta 9000
+# Altrimenti il kernel risponde con RST prima che scapy possa gestire il pacchetto
+os.system(f"iptables -A OUTPUT -p tcp --tcp-flags RST RST --sport {SERVER_PORT} -j DROP 2>/dev/null")
 
 def handle(pkt):
     if pkt.haslayer(TCP):

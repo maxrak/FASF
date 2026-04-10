@@ -9,6 +9,7 @@ services:
       - ./app:/app
       - ./pcap:/pcap
       - ./shared:/shared
+      - ./features:/features
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     tcpdump \
     iproute2 \
+    iputils-ping \
+    netcat-openbsd \
     openjdk-11-jre
 
 RUN pip install scapy pandas numpy
