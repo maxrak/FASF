@@ -1,0 +1,42 @@
+from scapy.all import *
+from threading import Thread
+
+SERVER_IP = "0.0.0.0"
+SERVER_PORT = 9000
+
+
+def handle_packet(pkt):
+    if pkt.haslayer(TCP) and pkt.haslayer(IP):
+        ip = pkt[IP]
+        tcp = pkt[TCP]
+
+        # SYN → SYN-ACK
+        if tcp.flags == "S":
+            synack = IP(dst=ip.src, src=ip.dst) / TCP(
+                sport=tcp.dport,
+                dport=tcp.sport,
+                flags="SA",
+                seq=1000,
+                ack=tcp.seq + 1
+            )
+            send(synack, verbose=0)
+
+        # ACK/data → risposta ACK
+        elif "A" in tcp.flags:
+            ack = IP(dst=ip.src, src=ip.dst) / TCP(
+                sport=tcp.dport,
+                dport=tcp.sport,
+                flags="A",
+                seq=tcp.ack,
+                ack=tcp.seq + len(tcp.payload)
+            )
+            send(ack, verbose=0)
+
+
+def start_server():
+    print("[+] Scapy server in ascolto...")
+    sniff(filter=f"tcp port {SERVER_PORT}", prn=handle_packet)
+
+
+if __name__ == "__main__":
+    start_server()

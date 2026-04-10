@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+
+  server:
+    build: ./server
+    networks:
+      cic_net:
+        ipv4_address: 172.28.0.2
+    cap_add: [NET_RAW, NET_ADMIN]
+
+  client:
+    build: ./client
+    networks:
+      cic_net:
+        ipv4_address: 172.28.0.3
+    depends_on: [server]
+    cap_add: [NET_RAW, NET_ADMIN]
+
+  probe:
+    build: ./probe
+    networks:
+      cic_net:
+        ipv4_address: 172.28.0.4
+    cap_add: [NET_RAW, NET_ADMIN]
+    volumes:
+      - ./pcap:/pcap
+
+  cicflowmeter:
+    build: ./cicflowmeter
+    volumes:
+      - ./pcap:/pcap
+      - ./features:/features
+
+  evaluator:
+    build: ./evaluator
+    volumes:
+      - ./features:/features
+      - ./results:/results
+
+  optimizer:
+    build: ./optimizer
+    volumes:
+      - ./shared:/shared
+      - ./results:/results
+    depends_on:
+      - evaluator
+
+networks:
+  cic_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

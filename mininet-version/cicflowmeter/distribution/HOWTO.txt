@@ -1,0 +1,18 @@
+Su un qualsiasi linux:
+
+1) installare java se non c'è già:
+ 
+  apt update && apt install default-jdk
+
+2) installare libpcap se non c'è già:
+
+  apt update && apt install libpcap-dev
+
+3) mettersi nella dir distribution:
+
+   cd distribution
+
+4) lanciare una flussificazione di prova:
+
+   java -Djava.library.path=$(pwd)"/jnetpcap-1.4.r1500"   -jar CICFlowMeterV3-0.0.4-SNAPSHOT_cmd.jar smallFlows.pcap pippo
+ 

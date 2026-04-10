@@ -1,0 +1,53 @@
+{
+  "description": "Test topology for probe verification",
+  "architecture": "client_subnets_with_central_router",
+  "subnets": [
+    {
+      "type": "client_subnet",
+      "network": "10.0.0.0/8",
+      "switch_name": "s10_0_0_0",
+      "hosts": ["10.0.2.15"],
+      "num_hosts": 1
+    },
+    {
+      "type": "internet",
+      "network": "0.0.0.0/0",
+      "switch_name": "s_internet",
+      "hosts": ["72.14.213.101"],
+      "num_hosts": 1
+    }
+  ],
+  "routers": [
+    {
+      "id": "gateway_router",
+      "type": "central_gateway",
+      "connects_clients": ["10.0.0.0/8"],
+      "connects_internet": "0.0.0.0/0",
+      "purpose": "Route traffic between client subnets and Internet"
+    }
+  ],
+  "probe": {
+    "name": "probe",
+    "ip": "10.255.255.254/24",
+    "connection": "gateway_router",
+    "interface": "probe-eth0",
+    "capture_file": "/pcap/test_capture.pcap",
+    "capture_filter": "",
+    "purpose": "Packet capture for traffic analysis"
+  },
+  "flows": [
+    {
+      "src_ip": "10.0.2.15",
+      "dst_ip": "72.14.213.101",
+      "src_ports": [12345],
+      "dst_ports": [80],
+      "flow_count": 1
+    }
+  ],
+  "statistics": {
+    "total_ips": 2,
+    "client_subnets": 1,
+    "server_ips": 1,
+    "total_flows": 1
+  }
+}
