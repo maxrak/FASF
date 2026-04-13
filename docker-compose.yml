@@ -1,0 +1,36 @@
+services:
+
+  mininet:
+    build: ./mininet
+    container_name: cic_mininet
+    privileged: true
+    network_mode: host
+    volumes:
+      - ./mininet/app:/app
+      - ./shared/pcap:/app/pcap
+      - ./shared/input_flows:/app/flows
+      - ./shared/topologies:/app/topologies
+      - ./shared/results:/results
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+
+  cicflowmeter:
+    build: ./cicflowmeter
+    volumes:
+      - ./shared/pcap:/pcap
+      - ./shared/output_flows:/flows
+
+  evaluator:
+    build: ./evaluator
+    volumes:
+      - ./evaluator/app:/app
+      - ./shared/input_flows:/app/input_flows
+      - ./shared/output_flows:/app/output_flows
+      - ./shared/topologies:/app/topologies
+      - ./shared/results:/results
+
+  optimizer:
+    build: ./optimizer
+    volumes:
+      - ./shared/results:/results
