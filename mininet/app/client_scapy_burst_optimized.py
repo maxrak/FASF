@@ -158,7 +158,7 @@ def generate_flow(row, ip_client, ip_server, params):
 # ---------------------------
 # MAIN
 # ---------------------------
-def start_client(csv_file, ip_client, ip_server, output="burst_dataset.csv"):
+def start_client(csv_file, ip_client, ip_server, output="/results/burst_dataset.csv"):
 
     df = pd.read_csv(csv_file)
 
@@ -178,7 +178,18 @@ def start_client(csv_file, ip_client, ip_server, output="burst_dataset.csv"):
         ((df[src_col] == ip_server) & (df[dst_col] == ip_client))
     ]
 
+    print(f"[+] CSV: {csv_file}")
+    print(f"[+] Ricerca flussi tra {ip_client} <-> {ip_server}")
+    print(f"[+] Colonne usate: {src_col}, {dst_col}")
+    print(f"[+] Righe totali nel CSV: {len(df)}")
     print(f"[+] Flussi selezionati: {len(flows)}")
+    
+    if len(flows) == 0:
+        print(f"[!] ATTENZIONE: Nessun flusso trovato!")
+        print(f"[!] IP unici nel CSV: {df[src_col].unique().tolist()}")
+        # Crea comunque un file vuoto per evitare errori
+        pd.DataFrame([]).to_csv(output, index=False)
+        return
 
     results = []
 
@@ -194,7 +205,13 @@ def start_client(csv_file, ip_client, ip_server, output="burst_dataset.csv"):
 
     print(f"[+] Dataset salvato in {output}")
 
-
+ip_client = sys.argv[2]
+    ip_server = sys.argv[3]
+    
+    # Nome file univoco per ogni coppia di IP
+    output_file = f"/results/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
+    
+    start_client(sys.argv[1], ip_client, ip_server, output_file
 # ---------------------------
 # ENTRYPOINT
 # ---------------------------

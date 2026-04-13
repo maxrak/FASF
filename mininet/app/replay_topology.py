@@ -291,6 +291,7 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
         
         # Avvia client_scapy_burst_optimized.py in background
         # Parametri: flows.csv IPclient IPserver
+        # Il burst_dataset.csv viene salvato in /results/ (mappato in shared/results/)
         cmd = f"python3 /app/client_scapy_burst_optimized.py {csv_file} {src_ip} {dst_ip} > /tmp/client_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
         src_host.cmd(cmd)
         started += 1
