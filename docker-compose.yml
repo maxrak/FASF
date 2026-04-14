@@ -9,6 +9,7 @@ services:
       - ./mininet/app:/app
       - ./shared/pcap:/app/pcap
       - ./shared/input_flows:/app/flows
+      - ./shared/flows_params:/app/flows_params
       - ./shared/topologies:/app/topologies
       - ./shared/results:/results
     cap_add:
@@ -27,6 +28,7 @@ services:
       - ./evaluator/app:/app
       - ./shared/input_flows:/app/input_flows
       - ./shared/output_flows:/app/output_flows
+      - ./shared/flows_params:/app/flows_params
       - ./shared/topologies:/app/topologies
       - ./shared/results:/results
 

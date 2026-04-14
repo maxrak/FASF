@@ -40,4 +40,5 @@ echo "📂 Analisi del file: input_flows/$CSV_FILE"
 echo "📝 Output: topologies/$CSV_FILE.json"
 echo ""
 
-docker compose run --rm evaluator python analyze_flows.py input_flows/$CSV_FILE topologies/$CSV_FILE.json
+docker compose run --rm evaluator python analyze_flows.py input_flows/$CSV_FILE.csv topologies/$CSV_FILE.json
+docker compose run --rm evaluator python generate_initial_params.py input_flows/$CSV_FILE.csv flows_params/

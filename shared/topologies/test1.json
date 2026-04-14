@@ -39,7 +39,7 @@
     "ip": "10.255.255.254/24",
     "connection": "gateway_router",
     "interface": "probe-eth0",
-    "capture_file": "pcap/test1.pcap",
+    "capture_file": "pcap/capture.pcap",
     "capture_filter": "",
     "purpose": "Packet capture for traffic analysis"
   },

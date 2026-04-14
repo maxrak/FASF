@@ -1,11 +1,86 @@
 from scapy.all import *
 import os
+import sys
+import logging
+import socket
+from datetime import datetime
 
-SERVER_PORT = 9000
+# ---------------------------
+# LOGGER SETUP
+# ---------------------------
+def setup_logger(debug_enabled=True):
+    """Configura il logger per il server"""
+    if not debug_enabled:
+        return None
+    
+    # Ottieni l'IP del server (hostname o IP locale)
+    try:
+        hostname = socket.gethostname()
+        server_ip = socket.gethostbyname(hostname)
+        ip_safe = server_ip.replace('.', '_').replace(':', '_')
+    except:
+        ip_safe = "unknown"
+    
+    # Nome file log: server_{ip}.log
+    log_file = f"/results/server_{ip_safe}.log"
+    
+    # Configura logger
+    logger = logging.getLogger(f'server_{ip_safe}')
+    logger.setLevel(logging.DEBUG)
+    
+    # File handler
+    fh = logging.FileHandler(log_file, mode='w')
+    fh.setLevel(logging.DEBUG)
+    
+    # Console handler (solo INFO e superiori)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    
+    # Formatter
+    formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    
+    logger.info("="*60)
+    logger.info(f"SERVER DEBUG LOG")
+    logger.info(f"Server IP: {server_ip} ({hostname})")
+    logger.info(f"Timestamp: {datetime.now()}")
+    logger.info("="*60)
+    
+    print(f"[+] Log server salvato in: {log_file}")
+    
+    return logger
 
-# Disabilita RST automatico del kernel su porta 9000
+
+# Parse parametri
+debug = True
+iface = None  # Interfaccia di rete (None = tutte)
+
+for arg in sys.argv[1:]:
+    if arg == "--no-debug":
+        debug = False
+    elif arg.startswith("--iface="):
+        iface = arg.split("=")[1]
+    elif not arg.startswith("--"):
+        iface = arg  # Backward compatibility: primo argomento è l'interfaccia
+
+logger = setup_logger(debug)
+
+if logger:
+    logger.info("Avvio server scapy su tutte le porte TCP...")
+
+# Disabilita RST automatico del kernel su TUTTE le porte TCP
 # Altrimenti il kernel risponde con RST prima che scapy possa gestire il pacchetto
-os.system(f"iptables -A OUTPUT -p tcp --tcp-flags RST RST --sport {SERVER_PORT} -j DROP 2>/dev/null")
+os.system("iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP 2>/dev/null")
+
+if logger:
+    logger.info("Regola iptables configurata: DROP RST automatici del kernel")
 
 def handle(pkt):
     if pkt.haslayer(TCP):
@@ -13,18 +88,66 @@ def handle(pkt):
         tcp = pkt[TCP]
 
         if tcp.flags == "S":
-            send(IP(dst=ip.src, src=ip.dst) /
-                 TCP(sport=tcp.dport, dport=tcp.sport,
-                     flags="SA", seq=1000, ack=tcp.seq + 1),
-                 verbose=0)
+            if logger:
+                logger.info(f"[SYN] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq})")
+            
+            response = IP(dst=ip.src, src=ip.dst) / TCP(
+                sport=tcp.dport, 
+                dport=tcp.sport,
+                flags="SA", 
+                seq=1000, 
+                ack=tcp.seq + 1
+            )
+            
+            if logger:
+                logger.info(f"[SYN-ACK] Invio a {ip.src}:{tcp.sport} <- {ip.dst}:{tcp.dport} (seq=1000, ack={tcp.seq + 1})")
+            
+            send(response, verbose=0)
 
         elif "P" in tcp.flags:
-            send(IP(dst=ip.src, src=ip.dst) /
-                 TCP(sport=tcp.dport, dport=tcp.sport,
-                     flags="A",
-                     seq=tcp.ack,
-                     ack=tcp.seq + len(tcp.payload)),
-                 verbose=0)
+            payload_len = len(tcp.payload) if tcp.payload else 0
+            
+            if logger:
+                logger.debug(f"[PSH-ACK] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq}, ack={tcp.ack}, payload={payload_len}B)")
+            
+            response = IP(dst=ip.src, src=ip.dst) / TCP(
+                sport=tcp.dport, 
+                dport=tcp.sport,
+                flags="A",
+                seq=tcp.ack,
+                ack=tcp.seq + payload_len
+            )
+            
+            if logger:
+                logger.debug(f"[ACK] Invio a {ip.src}:{tcp.sport} <- {ip.dst}:{tcp.dport} (seq={tcp.ack}, ack={tcp.seq + payload_len})")
+            
+            send(response, verbose=0)
+        
+        elif tcp.flags == "A":
+            # ACK puro (handshake completion)
+            if logger:
+                logger.debug(f"[ACK] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq}, ack={tcp.ack})")
+        
+        elif "F" in tcp.flags:
+            # FIN: chiusura connessione
+            if logger:
+                logger.info(f"[FIN] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq})")
 
 
-sniff(filter=f"tcp port {SERVER_PORT}", prn=handle)
+if logger:
+    if iface:
+        logger.info(f"Server in ascolto su interfaccia {iface}, tutte le porte TCP...")
+    else:
+        logger.info("Server in ascolto su tutte le interfacce, tutte le porte TCP...")
+    logger.info("Pronto a ricevere connessioni.")
+
+# Ascolta su tutte le porte TCP invece che solo una specifica
+# Se specificata un'interfaccia, usa quella, altrimenti sniffa su tutte
+if iface:
+    if logger:
+        logger.info(f"Sniffing su interfaccia: {iface}")
+    sniff(iface=iface, filter="tcp", prn=handle)
+else:
+    if logger:
+        logger.info("Sniffing su tutte le interfacce")
+    sniff(filter="tcp", prn=handle)

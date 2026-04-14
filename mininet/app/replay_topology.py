@@ -5,6 +5,7 @@ Replay network topology from JSON and simulate traffic flows
 
 import json
 import sys
+import os
 import time
 import pandas as pd
 from mininet.net import Mininet
@@ -175,18 +176,20 @@ def start_servers(net, host_map):
     info("*** Avvio server su tutti gli host\n")
     
     for ip, host in host_map.items():
-        # Avvia server TCP semplice invece di scapy (più affidabile)
-        # server_tcp_simple.py gestisce handshake correttamente
-        cmd = "python3 /app/server_tcp_simple.py > /tmp/server_{}.log 2>&1 &".format(
+        # Avvia server_adv.py con scapy (gestisce handshake TCP con iptables)
+        # Disabilita RST automatico del kernel prima di avviare server scapy
+        # Specifica l'interfaccia eth0 dell'host per Mininet
+        iface = f"{host.name}-eth0"
+        cmd = "python3 /app/server_adv.py --iface={} > /tmp/server_{}.log 2>&1 &".format(
+            iface,
             ip.replace('.', '_')
         )
         host.cmd(cmd)
-        info(f"  - Server avviato su {ip}\n")
+        info(f"  - Server scapy avviato su {ip} (interfaccia {iface})\n")
     
     # Attendi che i server si avviino
-    time.sleep(2)
+    time.sleep(3)  # Tempo extra per permettere a scapy di inizializzare
     info("  - Server pronti\n")
-    time.sleep(2)
 
 
 def generate_flows_from_csv(csv_file, host_map, topology):
@@ -222,7 +225,6 @@ def generate_flows_from_csv(csv_file, host_map, topology):
                 ip_to_subnet[ip] = subnet_network
         
         # Trova tutti i flussi che hanno ENTRAMBI gli IP nella topologia creata
-        # e sono nella STESSA subnet
         valid_flows = []
         seen_pairs = set()  # Evita duplicati
         
@@ -236,7 +238,7 @@ def generate_flows_from_csv(csv_file, host_map, topology):
                 src_subnet = ip_to_subnet.get(src_ip)
                 dst_subnet = ip_to_subnet.get(dst_ip)
                 
-                if not src_subnet or not dst_subnet or src_subnet != dst_subnet:
+                if not src_subnet or not dst_subnet:
                     continue  # Salta flussi cross-subnet o IP senza subnet mappata
                 
                 # Salta broadcast addresses (.255)
@@ -260,7 +262,7 @@ def generate_flows_from_csv(csv_file, host_map, topology):
         return []
 
 
-def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', duration=30):
+def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', duration=30, config_dir='/app/flows_params', base_name=None):
     """
     Avvia i client per generare traffico tra gli host
     
@@ -270,8 +272,17 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
         flows: lista dei flussi da generare
         csv_file: path al CSV con i dati dei flussi originali
         duration: durata del traffico in secondi (non usato con client_scapy_burst_optimized)
+        config_dir: directory dove si trovano i file di configurazione per IP
+        base_name: nome base per i file di configurazione (se None, estratto da csv_file)
     """
     info("*** Avvio generazione traffico\n")
+    
+    # Estrae il nome base dal CSV (senza path e senza estensione)
+    import os
+    if base_name is None:
+        base_name = os.path.splitext(os.path.basename(csv_file))[0]
+    info(f"  - Nome base flusso: {base_name}\n")
+    info(f"  - Directory config: {config_dir}\n")
     
     # Conta quanti flussi effettivi vengono avviati
     started = 0
@@ -287,12 +298,18 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
             info(f"  ! Host non trovato per flusso {src_ip} -> {dst_ip}\n")
             continue
         
+        # Costruisce il path del file di configurazione per questo IP sorgente
+        # Formato: {base_name}_{src_ip}.config
+        src_ip_safe = src_ip.replace('.', '_').replace(':', '_')
+        config_file = f"{config_dir}/{base_name}_{src_ip_safe}.config"
+        
         info(f"  - Traffico da {src_ip} a {dst_ip}\n")
+        info(f"    Config: {config_file}\n")
         
         # Avvia client_scapy_burst_optimized.py in background
-        # Parametri: flows.csv IPclient IPserver
+        # Parametri: flows.csv IPclient IPserver [config_file]
         # Il burst_dataset.csv viene salvato in /results/ (mappato in shared/results/)
-        cmd = f"python3 /app/client_scapy_burst_optimized.py {csv_file} {src_ip} {dst_ip} > /tmp/client_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
+        cmd = f"python3 /app/client_scapy_burst_optimized.py {csv_file} {src_ip} {dst_ip} {config_file} > /tmp/client_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
         src_host.cmd(cmd)
         started += 1
     
@@ -309,9 +326,17 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         duration: durata in secondi (0 per modalità interattiva)
         max_subnets: numero massimo di sottoreti da creare
     """
+    # Estrae il nome base dal CSV per generare file PCAP con nome dinamico
+    flow_name = os.path.splitext(os.path.basename(csv_file))[0]
+    
     # Carica topologia
     info("*** Caricamento topologia da {}\n".format(json_file))
     topology = load_topology(json_file)
+    
+    # Sovrascrivi il nome del file PCAP con il nome del flusso
+    if 'probe' in topology:
+        topology['probe']['capture_file'] = f'pcap/capture_{flow_name}.pcap'
+        info(f"*** File PCAP: capture_{flow_name}.pcap\n")
     
     # Adatta le statistiche per la nuova architettura
     stats = topology['statistics']
@@ -412,6 +437,10 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
             hosts_list[i].cmd(f'ping -c 1 -W 1 {hosts_list[i+1].IP()} > /dev/null 2>&1')
         time.sleep(2)
     
+    # Estrae il nome base dal CSV originale prima di adattarlo
+    # (serve per trovare i file di configurazione)
+    # Nota: flow_name già estratto all'inizio della funzione
+    
     # Adatta il CSV per compatibilità con client_scapy_burst_optimized.py
     adapted_csv = adapt_csv_columns(csv_file)
     
@@ -420,9 +449,9 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     info("*** Generazione flows da CSV e host creati\n")
     flows = generate_flows_from_csv(adapted_csv, host_map, topology)
     
-    # Avvia traffico
+    # Avvia traffico (passa flow_name dal CSV originale)
     if flows:
-        start_traffic_flows(net, host_map, flows, adapted_csv, duration)
+        start_traffic_flows(net, host_map, flows, adapted_csv, duration, base_name=flow_name)
     else:
         info("*** ATTENZIONE: Nessun flusso valido trovato!\n")
         info("    Verifica che il CSV contenga IP presenti nella topologia\n")

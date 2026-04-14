@@ -22,7 +22,7 @@ def run():
     net.start()
 
     print("[+] Avvio server")
-    h2.cmd("python3 /app/server_scapy.py &")
+    h2.cmd("python3 /app/server_tcp_simple.py &")
 
     print("[+] Avvio probe")
     h3.cmd("tcpdump -i h3-eth0 -w /pcap/capture.pcap &")
