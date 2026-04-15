@@ -1,31 +1,176 @@
-2026-04-14 17:37:39 - INFO - ============================================================
-2026-04-14 17:37:39 - INFO - CLIENT DEBUG LOG - flows_adapted
-2026-04-14 17:37:39 - INFO - IP Client: 10.0.2.15
-2026-04-14 17:37:39 - INFO - Timestamp: 2026-04-14 17:37:39.761891
-2026-04-14 17:37:39 - INFO - ============================================================
-2026-04-14 17:37:39 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=10.0.2.15, Server=10.0.2.2
-2026-04-14 17:37:39 - INFO - Output: /results/burst_dataset_10_0_2_15_10_0_2_2.csv, Config: /app/flows_params/test1_10_0_2_15.config
-2026-04-14 17:37:39 - INFO - Parametri caricati: None
-2026-04-14 17:37:39 - INFO - CSV: /tmp/flows_adapted.csv
-2026-04-14 17:37:39 - INFO - Ricerca flussi: 10.0.2.15 <-> 10.0.2.2
-2026-04-14 17:37:39 - INFO - Colonne: Source IP, Destination IP
-2026-04-14 17:37:39 - INFO - Righe totali: 2, Flussi selezionati: 2
-2026-04-14 17:37:39 - INFO - ============================================================
-2026-04-14 17:37:39 - INFO - ELABORAZIONE FLUSSO 1/2
-2026-04-14 17:37:39 - INFO - ============================================================
-2026-04-14 17:37:39 - INFO - [FLOW] Avvio flusso 10.0.2.15:45678 -> 10.0.2.2:9000
-2026-04-14 17:37:39 - INFO - [HANDSHAKE] Invio SYN: 10.0.2.15:45678 -> 10.0.2.2:9000 (seq=55642)
-2026-04-14 17:37:40 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 10.0.2.2:9000
-2026-04-14 17:37:40 - ERROR - [FLOW] Handshake fallito per 10.0.2.15:45678 -> 10.0.2.2:9000
-2026-04-14 17:37:40 - INFO - ============================================================
-2026-04-14 17:37:40 - INFO - ELABORAZIONE FLUSSO 2/2
-2026-04-14 17:37:40 - INFO - ============================================================
-2026-04-14 17:37:40 - INFO - [FLOW] Avvio flusso 10.0.2.15:50000 -> 10.0.2.2:9000
-2026-04-14 17:37:40 - INFO - [HANDSHAKE] Invio SYN: 10.0.2.15:50000 -> 10.0.2.2:9000 (seq=83871)
-2026-04-14 17:37:41 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 10.0.2.2:9000
-2026-04-14 17:37:41 - ERROR - [FLOW] Handshake fallito per 10.0.2.15:50000 -> 10.0.2.2:9000
-2026-04-14 17:37:41 - INFO - Dataset salvato in /results/burst_dataset_10_0_2_15_10_0_2_2.csv
-2026-04-14 17:37:41 - INFO - Totale flussi processati: 0/2
-2026-04-14 17:37:41 - INFO - ============================================================
-2026-04-14 17:37:41 - INFO - ESECUZIONE COMPLETATA
-2026-04-14 17:37:41 - INFO - ============================================================
+2026-04-15 08:57:45 - INFO - ============================================================
+2026-04-15 08:57:45 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-04-15 08:57:45 - INFO - IP Client: 10.0.2.15
+2026-04-15 08:57:45 - INFO - Timestamp: 2026-04-15 08:57:45.811479
+2026-04-15 08:57:45 - INFO - ============================================================
+2026-04-15 08:57:45 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=10.0.2.15, Server=10.0.2.2
+2026-04-15 08:57:45 - INFO - Output: /results/burst_dataset_10_0_2_15_10_0_2_2.csv, Config: /app/flows_params/test1_10_0_2_15.config
+2026-04-15 08:57:45 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 0.7, 'burst_size_p': 0.35, 'idle_scale': 0.05, 'iat_rate': 100.0}
+2026-04-15 08:57:45 - INFO - CSV: /tmp/flows_adapted.csv
+2026-04-15 08:57:45 - INFO - Ricerca flussi: 10.0.2.15 <-> 10.0.2.2
+2026-04-15 08:57:45 - INFO - Colonne: Source IP, Destination IP
+2026-04-15 08:57:45 - INFO - Righe totali: 2, Flussi selezionati: 2
+2026-04-15 08:57:45 - INFO - ============================================================
+2026-04-15 08:57:45 - INFO - ELABORAZIONE FLUSSO 1/2
+2026-04-15 08:57:45 - INFO - ============================================================
+2026-04-15 08:57:45 - INFO - [FLOW] Avvio flusso 10.0.2.15:45678 -> 10.0.2.2:9000
+2026-04-15 08:57:45 - INFO - [HANDSHAKE] Invio SYN: 10.0.2.15:45678 -> 10.0.2.2:9000 (seq=88721)
+2026-04-15 08:57:45 - INFO - [HANDSHAKE] Ricevuto SYN-ACK: 10.0.2.2:9000 -> 10.0.2.15:45678 (seq=0, ack=88722)
+2026-04-15 08:57:45 - INFO - [HANDSHAKE] Invio ACK: 10.0.2.15:45678 -> 10.0.2.2:9000 (seq=88722, ack=1)
+2026-04-15 08:57:45 - INFO - [FLOW] Durata prevista: 3.00s, Idle mean: 0.100000s
+2026-04-15 08:57:45 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-04-15 08:57:45 - DEBUG - [DATA] Invio pacchetto 1/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=493B, seq=88722, ack=1)
+2026-04-15 08:57:45 - DEBUG - [DATA] Invio pacchetto 2/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=382B, seq=89215, ack=1)
+2026-04-15 08:57:45 - DEBUG - [DATA] Invio pacchetto 3/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=549B, seq=89597, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 4/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=560B, seq=90146, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 1 completato: 4 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.051434s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=542B, seq=90706, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 2 completato: 1 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.053530s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=564B, seq=91248, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 2/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=505B, seq=91812, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 3 completato: 2 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.051372s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=441B, seq=92317, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 2/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=524B, seq=92758, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 3/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=440B, seq=93282, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 4/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=528B, seq=93722, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 4 completato: 4 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.089688s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=513B, seq=94250, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 5 completato: 1 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.057077s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=507B, seq=94763, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 2/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=452B, seq=95270, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 6 completato: 2 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.158453s
+2026-04-15 08:57:46 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 1/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=560B, seq=95722, ack=1)
+2026-04-15 08:57:46 - DEBUG - [DATA] Invio pacchetto 2/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=398B, seq=96282, ack=1)
+2026-04-15 08:57:46 - DEBUG - [FLOW] Burst 7 completato: 2 pacchetti inviati
+2026-04-15 08:57:46 - DEBUG - [FLOW] Idle time: 0.125067s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=479B, seq=96680, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 2/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=715B, seq=97159, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 3/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=544B, seq=97874, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 4/4: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=572B, seq=98418, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 8 completato: 4 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.056707s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=536B, seq=98990, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 9 completato: 1 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.109863s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=375B, seq=99526, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 10 completato: 1 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.084438s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=514B, seq=99901, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 2/2: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=565B, seq=100415, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 11 completato: 2 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.097376s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=731B, seq=100980, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=417B, seq=101711, ack=1)
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=543B, seq=102128, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 12 completato: 3 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.068046s
+2026-04-15 08:57:47 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:47 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=481B, seq=102671, ack=1)
+2026-04-15 08:57:47 - DEBUG - [FLOW] Burst 13 completato: 1 pacchetti inviati
+2026-04-15 08:57:47 - DEBUG - [FLOW] Idle time: 0.088941s
+2026-04-15 08:57:48 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=458B, seq=103152, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=483B, seq=103610, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=421B, seq=104093, ack=1)
+2026-04-15 08:57:48 - DEBUG - [FLOW] Burst 14 completato: 3 pacchetti inviati
+2026-04-15 08:57:48 - DEBUG - [FLOW] Idle time: 0.058110s
+2026-04-15 08:57:48 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=482B, seq=104514, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=555B, seq=104996, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=483B, seq=105551, ack=1)
+2026-04-15 08:57:48 - DEBUG - [FLOW] Burst 15 completato: 3 pacchetti inviati
+2026-04-15 08:57:48 - DEBUG - [FLOW] Idle time: 0.137951s
+2026-04-15 08:57:48 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=416B, seq=106034, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=578B, seq=106450, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=551B, seq=107028, ack=1)
+2026-04-15 08:57:48 - DEBUG - [FLOW] Burst 16 completato: 3 pacchetti inviati
+2026-04-15 08:57:48 - DEBUG - [FLOW] Idle time: 0.084024s
+2026-04-15 08:57:48 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=467B, seq=107579, ack=1)
+2026-04-15 08:57:48 - DEBUG - [FLOW] Burst 17 completato: 1 pacchetti inviati
+2026-04-15 08:57:48 - DEBUG - [FLOW] Idle time: 0.052305s
+2026-04-15 08:57:48 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 1/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=393B, seq=108046, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 2/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=571B, seq=108439, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 3/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=464B, seq=109010, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 4/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=471B, seq=109474, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 5/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=548B, seq=109945, ack=1)
+2026-04-15 08:57:48 - DEBUG - [DATA] Invio pacchetto 6/6: 10.0.2.15:45678 -> 10.0.2.2:9000 (size=472B, seq=110493, ack=1)
+2026-04-15 08:57:49 - DEBUG - [FLOW] Burst 18 completato: 6 pacchetti inviati
+2026-04-15 08:57:49 - DEBUG - [FLOW] Idle time: 0.110784s
+2026-04-15 08:57:49 - INFO - [FLOW] Flusso completato in 3.20s: 44 pacchetti, 18 burst
+2026-04-15 08:57:49 - INFO - Risultato flusso 0: {'duration': 3.200531005859375, 'packets': 44, 'bursts': 18, 'avg_burst_size': 2.4444444444444446}
+2026-04-15 08:57:49 - INFO - ============================================================
+2026-04-15 08:57:49 - INFO - ELABORAZIONE FLUSSO 2/2
+2026-04-15 08:57:49 - INFO - ============================================================
+2026-04-15 08:57:49 - INFO - [FLOW] Avvio flusso 10.0.2.15:50000 -> 10.0.2.2:9000
+2026-04-15 08:57:49 - INFO - [HANDSHAKE] Invio SYN: 10.0.2.15:50000 -> 10.0.2.2:9000 (seq=59464)
+2026-04-15 08:57:49 - INFO - [HANDSHAKE] Ricevuto SYN-ACK: 10.0.2.2:9000 -> 10.0.2.15:50000 (seq=0, ack=59465)
+2026-04-15 08:57:49 - INFO - [HANDSHAKE] Invio ACK: 10.0.2.15:50000 -> 10.0.2.2:9000 (seq=59465, ack=1)
+2026-04-15 08:57:49 - INFO - [FLOW] Durata prevista: 2.00s, Idle mean: 0.050000s
+2026-04-15 08:57:49 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=229B, seq=59465, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=241B, seq=59694, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=215B, seq=59935, ack=1)
+2026-04-15 08:57:49 - DEBUG - [FLOW] Burst 1 completato: 3 pacchetti inviati
+2026-04-15 08:57:49 - DEBUG - [FLOW] Idle time: 0.120175s
+2026-04-15 08:57:49 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=310B, seq=60150, ack=1)
+2026-04-15 08:57:49 - DEBUG - [FLOW] Burst 2 completato: 1 pacchetti inviati
+2026-04-15 08:57:49 - DEBUG - [FLOW] Idle time: 0.282248s
+2026-04-15 08:57:49 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 1/5: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=304B, seq=60460, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 2/5: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=234B, seq=60764, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 3/5: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=240B, seq=60998, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 4/5: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=204B, seq=61238, ack=1)
+2026-04-15 08:57:49 - DEBUG - [DATA] Invio pacchetto 5/5: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=318B, seq=61442, ack=1)
+2026-04-15 08:57:50 - DEBUG - [FLOW] Burst 3 completato: 5 pacchetti inviati
+2026-04-15 08:57:50 - DEBUG - [FLOW] Idle time: 0.062323s
+2026-04-15 08:57:50 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-04-15 08:57:50 - DEBUG - [DATA] Invio pacchetto 1/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=277B, seq=61760, ack=1)
+2026-04-15 08:57:50 - DEBUG - [DATA] Invio pacchetto 2/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=248B, seq=62037, ack=1)
+2026-04-15 08:57:50 - DEBUG - [DATA] Invio pacchetto 3/3: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=254B, seq=62285, ack=1)
+2026-04-15 08:57:50 - DEBUG - [FLOW] Burst 4 completato: 3 pacchetti inviati
+2026-04-15 08:57:50 - DEBUG - [FLOW] Idle time: 0.080618s
+2026-04-15 08:57:50 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:50 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=279B, seq=62539, ack=1)
+2026-04-15 08:57:50 - DEBUG - [FLOW] Burst 5 completato: 1 pacchetti inviati
+2026-04-15 08:57:50 - DEBUG - [FLOW] Idle time: 0.102757s
+2026-04-15 08:57:50 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-04-15 08:57:50 - DEBUG - [DATA] Invio pacchetto 1/1: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=289B, seq=62818, ack=1)
+2026-04-15 08:57:50 - DEBUG - [FLOW] Burst 6 completato: 1 pacchetti inviati
+2026-04-15 08:57:50 - DEBUG - [FLOW] Idle time: 0.586816s
+2026-04-15 08:57:51 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 1/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=227B, seq=63107, ack=1)
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 2/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=227B, seq=63334, ack=1)
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 3/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=302B, seq=63561, ack=1)
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 4/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=204B, seq=63863, ack=1)
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 5/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=233B, seq=64067, ack=1)
+2026-04-15 08:57:51 - DEBUG - [DATA] Invio pacchetto 6/6: 10.0.2.15:50000 -> 10.0.2.2:9000 (size=269B, seq=64300, ack=1)
+2026-04-15 08:57:51 - DEBUG - [FLOW] Burst 7 completato: 6 pacchetti inviati
+2026-04-15 08:57:51 - DEBUG - [FLOW] Idle time: 0.129068s
+2026-04-15 08:57:51 - INFO - [FLOW] Flusso completato in 2.22s: 20 pacchetti, 7 burst
+2026-04-15 08:57:51 - INFO - Risultato flusso 1: {'duration': 2.2195773124694824, 'packets': 20, 'bursts': 7, 'avg_burst_size': 2.857142857142857}
+2026-04-15 08:57:51 - INFO - Dataset salvato in /results/burst_dataset_10_0_2_15_10_0_2_2.csv
+2026-04-15 08:57:51 - INFO - Totale flussi processati: 2/2
+2026-04-15 08:57:51 - INFO - ============================================================
+2026-04-15 08:57:51 - INFO - ESECUZIONE COMPLETATA
+2026-04-15 08:57:51 - INFO - ============================================================

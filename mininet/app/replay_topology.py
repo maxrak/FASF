@@ -177,11 +177,11 @@ def start_servers(net, host_map):
     
     for ip, host in host_map.items():
         # Avvia server_adv.py con scapy (gestisce handshake TCP con iptables)
-        # Disabilita RST automatico del kernel prima di avviare server scapy
-        # Specifica l'interfaccia eth0 dell'host per Mininet
+        # Passa IP e interfaccia per logging e sniffing corretto
         iface = f"{host.name}-eth0"
-        cmd = "python3 /app/server_adv.py --iface={} > /tmp/server_{}.log 2>&1 &".format(
+        cmd = "python3 /app/server_adv.py --iface={} --ip={} > /tmp/server_{}.log 2>&1 &".format(
             iface,
+            ip,
             ip.replace('.', '_')
         )
         host.cmd(cmd)

@@ -8,18 +8,20 @@ from datetime import datetime
 # ---------------------------
 # LOGGER SETUP
 # ---------------------------
-def setup_logger(debug_enabled=True):
+def setup_logger(server_ip=None, debug_enabled=True):
     """Configura il logger per il server"""
     if not debug_enabled:
         return None
     
-    # Ottieni l'IP del server (hostname o IP locale)
-    try:
-        hostname = socket.gethostname()
-        server_ip = socket.gethostbyname(hostname)
-        ip_safe = server_ip.replace('.', '_').replace(':', '_')
-    except:
-        ip_safe = "unknown"
+    # Se IP non fornito, prova a rilevarlo
+    if not server_ip:
+        try:
+            hostname = socket.gethostname()
+            server_ip = socket.gethostbyname(hostname)
+        except:
+            server_ip = "unknown"
+    
+    ip_safe = server_ip.replace('.', '_').replace(':', '_')
     
     # Nome file log: server_{ip}.log
     log_file = f"/results/server_{ip_safe}.log"
@@ -49,7 +51,7 @@ def setup_logger(debug_enabled=True):
     
     logger.info("="*60)
     logger.info(f"SERVER DEBUG LOG")
-    logger.info(f"Server IP: {server_ip} ({hostname})")
+    logger.info(f"Server IP: {server_ip}")
     logger.info(f"Timestamp: {datetime.now()}")
     logger.info("="*60)
     
@@ -61,16 +63,21 @@ def setup_logger(debug_enabled=True):
 # Parse parametri
 debug = True
 iface = None  # Interfaccia di rete (None = tutte)
+server_ip = None  # IP del server per logging
 
 for arg in sys.argv[1:]:
     if arg == "--no-debug":
         debug = False
     elif arg.startswith("--iface="):
         iface = arg.split("=")[1]
+    elif arg.startswith("--ip="):
+        server_ip = arg.split("=")[1]
     elif not arg.startswith("--"):
-        iface = arg  # Backward compatibility: primo argomento è l'interfaccia
+        # Backward compatibility: primo argomento è l'interfaccia
+        if not iface:
+            iface = arg
 
-logger = setup_logger(debug)
+logger = setup_logger(server_ip, debug)
 
 if logger:
     logger.info("Avvio server scapy su tutte le porte TCP...")
@@ -86,6 +93,10 @@ def handle(pkt):
     if pkt.haslayer(TCP):
         ip = pkt[IP]
         tcp = pkt[TCP]
+        
+        # Log ogni pacchetto TCP ricevuto (anche se non gestito)
+        if logger:
+            logger.debug(f"[PKT] Ricevuto: {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} flags={tcp.flags}")
 
         if tcp.flags == "S":
             if logger:
@@ -132,6 +143,10 @@ def handle(pkt):
             # FIN: chiusura connessione
             if logger:
                 logger.info(f"[FIN] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq})")
+    else:
+        # Pacchetto non TCP ricevuto (non dovrebbe succedere con filtro BPF)
+        if logger:
+            logger.debug(f"[PKT] Pacchetto non-TCP ricevuto (tipo={pkt.summary()})")
 
 
 if logger:
@@ -146,8 +161,11 @@ if logger:
 if iface:
     if logger:
         logger.info(f"Sniffing su interfaccia: {iface}")
-    sniff(iface=iface, filter="tcp", prn=handle)
+        logger.info("Modalità: promiscua, filtro BPF: tcp")
+    # promisc=True per catturare tutti i pacchetti sull'interfaccia
+    # store=False per non memorizzare pacchetti (risparmio memoria)
+    sniff(iface=iface, filter="tcp", prn=handle, store=False, promisc=True)
 else:
     if logger:
         logger.info("Sniffing su tutte le interfacce")
-    sniff(filter="tcp", prn=handle)
+    sniff(filter="tcp", prn=handle, store=False, promisc=True)

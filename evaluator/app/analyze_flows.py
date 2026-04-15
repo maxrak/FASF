@@ -287,6 +287,11 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
         }
     }
     
+    # Sammple tutti gli IP già aggiunti nelle subnet client
+    client_ips_set = set()
+    for ips in client_subnets.values():
+        client_ips_set.update(ips)
+    
     # Aggiungi subnet client
     for subnet_addr, ips in sorted(client_subnets.items()):
         topology["subnets"].append({
@@ -297,14 +302,19 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
             "num_hosts": len(ips)
         })
     
-    # Aggiungi subnet Internet (tutti gli IP destinazione)
-    topology["subnets"].append({
-        "type": "internet",
-        "network": "0.0.0.0/0",
-        "switch_name": "s_internet",
-        "hosts": sorted(dst_ips),
-        "num_hosts": len(dst_ips)
-    })
+    # Aggiungi subnet Internet SOLO con IP di destinazione che NON sono già nelle subnet client
+    # Questo evita duplicati per gli IP che sono sia client che server
+    internet_only_ips = dst_ips - client_ips_set
+    
+    # Se ci sono IP solo destinazione, crea la subnet Internet
+    if internet_only_ips:
+        topology["subnets"].append({
+            "type": "internet",
+            "network": "0.0.0.0/0",
+            "switch_name": "s_internet",
+            "hosts": sorted(internet_only_ips),
+            "num_hosts": len(internet_only_ips)
+        })
     
     # Aggiungi router centrale
     client_networks = [s["network"] for s in topology["subnets"] if s["type"] == "client_subnet"]
@@ -324,9 +334,12 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
         
         # Stampa sommario
         print(f"\n🌐 CONFIGURAZIONE DI RETE GENERATA:")
-        print(f"   └─ Architettura: Client Subnets + Central Router + Internet")
+        print(f"   └─ Architettura: Client Subnets + Central Router" + (" + Internet" if internet_only_ips else ""))
         print(f"   └─ {len(client_subnets)} subnet client")
-        print(f"   └─ 1 subnet Internet (con {len(dst_ips)} server)")
+        if internet_only_ips:
+            print(f"   └─ 1 subnet Internet (con {len(internet_only_ips)} server)")
+        else:
+            print(f"   └─ Nessuna subnet Internet (tutti gli IP sono sia client che server)")
         print(f"   └─ {len(all_ips)} host totali")
         print(f"   └─ {len(flows)} flussi di traffico")
         print(f"   └─ {len(topology['routers'])} router (gateway centrale)")

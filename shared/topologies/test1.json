@@ -11,16 +11,6 @@
         "10.0.2.2"
       ],
       "num_hosts": 2
-    },
-    {
-      "type": "internet",
-      "network": "0.0.0.0/0",
-      "switch_name": "s_internet",
-      "hosts": [
-        "10.0.2.15",
-        "10.0.2.2"
-      ],
-      "num_hosts": 2
     }
   ],
   "routers": [
