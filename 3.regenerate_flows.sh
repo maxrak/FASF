@@ -33,8 +33,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 fi
 
 TEST_NAME="$1"
-PCAP_FILE="pcap/${TEST_NAME}.pcap"
-OUTPUT_FILE="flows/regenerated_${TEST_NAME}.csv"
+PCAP_FILE="pcap/capture_${TEST_NAME}.pcap"
+OUTPUT_FILE="/flows/regenerated_${TEST_NAME}.csv"
 
 # Verifica che il file pcap esista
 if [ ! -f "shared/${PCAP_FILE}" ]; then
