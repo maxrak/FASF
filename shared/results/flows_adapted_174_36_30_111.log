@@ -1,0 +1,31 @@
+2026-04-15 12:07:57 - INFO - ============================================================
+2026-04-15 12:07:59 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-04-15 12:07:59 - INFO - IP Client: 174.36.30.111
+2026-04-15 12:07:59 - INFO - Timestamp: 2026-04-15 12:07:59.886105
+2026-04-15 12:07:59 - INFO - ============================================================
+2026-04-15 12:07:59 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=174.36.30.111, Server=192.168.3.131
+2026-04-15 12:07:59 - INFO - Output: /results/burst_dataset_174_36_30_111_192_168_3_131.csv, Config: /app/flows_params/smallFlows_174_36_30_111.config
+2026-04-15 12:08:00 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 27.5183}
+2026-04-15 12:08:00 - INFO - CSV: /tmp/flows_adapted.csv
+2026-04-15 12:08:00 - INFO - Ricerca flussi: 174.36.30.111 <-> 192.168.3.131
+2026-04-15 12:08:00 - INFO - Colonne: Source IP, Destination IP
+2026-04-15 12:08:00 - INFO - Righe totali: 658, Flussi selezionati: 2
+2026-04-15 12:08:01 - INFO - ============================================================
+2026-04-15 12:08:01 - INFO - ELABORAZIONE FLUSSO 1/2
+2026-04-15 12:08:01 - INFO - ============================================================
+2026-04-15 12:08:01 - INFO - [FLOW] Avvio flusso 174.36.30.111:5480 -> 192.168.3.131:49206
+2026-04-15 12:08:01 - INFO - [HANDSHAKE] Invio SYN: 174.36.30.111:5480 -> 192.168.3.131:49206 (seq=22344)
+2026-04-15 12:08:02 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 192.168.3.131:49206
+2026-04-15 12:08:02 - ERROR - [FLOW] Handshake fallito per 174.36.30.111:5480 -> 192.168.3.131:49206
+2026-04-15 12:08:06 - INFO - ============================================================
+2026-04-15 12:08:07 - INFO - ELABORAZIONE FLUSSO 2/2
+2026-04-15 12:08:07 - INFO - ============================================================
+2026-04-15 12:08:07 - INFO - [FLOW] Avvio flusso 174.36.30.111:80 -> 192.168.3.131:49206
+2026-04-15 12:08:07 - INFO - [HANDSHAKE] Invio SYN: 174.36.30.111:80 -> 192.168.3.131:49206 (seq=42693)
+2026-04-15 12:08:08 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 192.168.3.131:49206
+2026-04-15 12:08:08 - ERROR - [FLOW] Handshake fallito per 174.36.30.111:80 -> 192.168.3.131:49206
+2026-04-15 12:08:08 - INFO - Dataset salvato in /results/burst_dataset_174_36_30_111_192_168_3_131.csv
+2026-04-15 12:08:08 - INFO - Totale flussi processati: 0/2
+2026-04-15 12:08:08 - INFO - ============================================================
+2026-04-15 12:08:08 - INFO - ESECUZIONE COMPLETATA
+2026-04-15 12:08:08 - INFO - ============================================================

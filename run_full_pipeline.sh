@@ -1,5 +1,21 @@
 #!/bin/bash
 # Pipeline completa: Analisi → Topologia → Replay → Capture
+#
+# Uso:
+#   ./run_full_pipeline.sh [csv_file] [duration] [max_subnets] [implementation]
+#
+# Parametri (tutti opzionali):
+#   csv_file       : file CSV con i flussi (default: features/target.csv)
+#   duration       : durata replay in secondi (default: 60)
+#   max_subnets    : numero massimo di subnet (default: 10)
+#   implementation : tipo client/server (default: scapy_burst)
+#                    Valori: scapy_burst, tcp_simple, flow_emulator
+#
+# Esempi:
+#   ./run_full_pipeline.sh                                    # Tutti i default
+#   ./run_full_pipeline.sh myflows.csv                        # Custom CSV
+#   ./run_full_pipeline.sh myflows.csv 120                    # CSV + duration
+#   ./run_full_pipeline.sh myflows.csv 120 20 tcp_simple      # Tutti i parametri
 
 set -e  # Exit on error
 
@@ -11,11 +27,13 @@ echo ""
 CSV_FILE="${1:-features/target.csv}"
 DURATION="${2:-60}"
 MAX_SUBNETS="${3:-10}"
+IMPLEMENTATION="${4:-scapy_burst}"  # Default: scapy_burst
 
 echo "📋 Configurazione:"
 echo "  - File CSV: $CSV_FILE"
 echo "  - Durata replay: $DURATION secondi"
 echo "  - Max subnet: $MAX_SUBNETS"
+echo "  - Implementazione: $IMPLEMENTATION"
 echo ""
 
 # Step 1: Genera topologia dal CSV
@@ -36,12 +54,13 @@ echo ""
 
 # Step 4: Esegui replay con probe
 echo "4️⃣  Esegui replay in Mininet con probe..."
-echo "    (Durata: $DURATION secondi, Max subnet: $MAX_SUBNETS)"
+echo "    (Durata: $DURATION secondi, Max subnet: $MAX_SUBNETS, Implementazione: $IMPLEMENTATION)"
 docker compose run --rm mininet python3 /app/replay_topology.py \
     /shared/network_topology.json \
     "$DURATION" \
     /features/target.csv \
-    "$MAX_SUBNETS"
+    "$MAX_SUBNETS" \
+    "$IMPLEMENTATION"
 echo ""
 
 # Step 5: Verifica pcap generato

@@ -1,0 +1,7 @@
+2026-04-15 12:08:07 - INFO - ============================================================
+2026-04-15 12:08:07 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-04-15 12:08:07 - INFO - IP Client: 66.209.190.254
+2026-04-15 12:08:07 - INFO - Timestamp: 2026-04-15 12:08:07.245605
+2026-04-15 12:08:07 - INFO - ============================================================
+2026-04-15 12:08:07 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=66.209.190.254, Server=172.16.255.1
+2026-04-15 12:08:07 - INFO - Output: /results/burst_dataset_66_209_190_254_172_16_255_1.csv, Config: /app/flows_params/smallFlows_66_209_190_254.config

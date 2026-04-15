@@ -1,0 +1,24 @@
+2026-04-15 13:36:49 - INFO - ============================================================
+2026-04-15 13:36:49 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-04-15 13:36:49 - INFO - IP Client: 192.168.1.20
+2026-04-15 13:36:49 - INFO - Timestamp: 2026-04-15 13:36:49.423430
+2026-04-15 13:36:49 - INFO - ============================================================
+2026-04-15 13:36:49 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=192.168.1.20, Server=1.1.1.1
+2026-04-15 13:36:49 - INFO - Output: /results/burst_dataset_192_168_1_20_1_1_1_1.csv, Config: /app/flows_params/test2_192_168_1_20.config
+2026-04-15 13:36:49 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 0.7, 'burst_size_p': 0.22, 'idle_scale': 0.02, 'iat_rate': 100.0}
+2026-04-15 13:36:49 - INFO - CSV: /tmp/flows_adapted.csv
+2026-04-15 13:36:49 - INFO - Ricerca flussi: 192.168.1.20 <-> 1.1.1.1
+2026-04-15 13:36:49 - INFO - Colonne: Source IP, Destination IP
+2026-04-15 13:36:49 - INFO - Righe totali: 6, Flussi selezionati: 1
+2026-04-15 13:36:49 - INFO - ============================================================
+2026-04-15 13:36:49 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-04-15 13:36:49 - INFO - ============================================================
+2026-04-15 13:36:49 - INFO - [FLOW] Avvio flusso 192.168.1.20:56000 -> 1.1.1.1:443
+2026-04-15 13:36:49 - INFO - [HANDSHAKE] Invio SYN: 192.168.1.20:56000 -> 1.1.1.1:443 (seq=967222026-04-15 13:36:50 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 8.8.8.8:53
+2026-04-15 13:36:50 - ERROR - [FLOW] Handshake fallito per 192.168.1.20:58000 -> 8.8.8.8:53
+2026-04-15 13:36:50 - INFO - Dataset salvato in /results/burst_dataset_192_168_1_20_8_8_8_8.csv
+2026-04-15 13:36:50 - INFO - Totale flussi processati: 0/1
+2026-04-15 13:36:50 - INFO - ============================================================
+2026-04-15 13:36:50 - INFO - ESECUZIONE COMPLETATA
+2026-04-15 13:36:50 - INFO - ============================================================
+===

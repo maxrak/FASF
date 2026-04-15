@@ -1,0 +1,23 @@
+2026-04-15 12:08:17 - INFO - ============================================================
+2026-04-15 12:08:17 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-04-15 12:08:17 - INFO - IP Client: 172.16.255.1
+2026-04-15 12:08:17 - INFO - Timestamp: 2026-04-15 12:08:17.220214
+2026-04-15 12:08:17 - INFO - ============================================================
+2026-04-15 12:08:17 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=172.16.255.1, Server=218.173.246.133
+2026-04-15 12:08:17 - INFO - Output: /results/burst_dataset_172_16_255_1_218_173_246_133.csv, Config: /app/flows_params/smallFlows_172_16_255_1.config
+2026-04-15 12:08:17 - INFO - Parametri caricati: {'pkt_size_scale': 0.9, 'pkt_size_sigma': 0.55, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 7.1593}
+2026-04-15 12:08:17 - INFO - CSV: /tmp/flows_adapted.csv
+2026-04-15 12:08:17 - INFO - Ricerca flussi: 172.16.255.1 <-> 218.173.246.133
+2026-04-15 12:08:17 - INFO - Colonne: Source IP, Destination IP
+2026-04-15 12:08:17 - INFO - Righe totali: 658, Flussi selezionati: 1
+2026-04-15 12:08:17 - INFO - ============================================================
+2026-04-15 12:08:17 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-04-15 12:08:17 - INFO - ============================================================
+2026-04-15 12:08:17 - INFO - [FLOW] Avvio flusso 172.16.255.1:50983 -> 218.173.246.133:21363
+2026-04-15 12:08:17 - INFO - [HANDSHAKE] Invio SYN: 172.16.255.1:50983 -> 218.173.246.133:2132022026-042026-2026-04-15 12:08:18 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 218.173.246.133:21363
+2026-04-15 12:08:18 - ERROR - [FLOW] Handshake fallito per 172.16.255.1:50983 -> 218.173.246.133:21363
+2026-04-15 12:08:18 - INFO - Dataset salvato in /results/burst_dataset_172_16_255_1_218_173_246_133.csv
+2026-04-15 12:08:18 - INFO - Totale flussi processati: 0/1
+2026-04-15 12:08:18 - INFO - ============================================================
+2026-04-15 12:08:18 - INFO - ESECUZIONE COMPLETATA
+2026-04-15 12:08:18 - INFO - ============================================================

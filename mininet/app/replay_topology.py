@@ -171,21 +171,33 @@ def disable_ipv6(net, host_map, probe=None):
     time.sleep(1)
 
 
-def start_servers(net, host_map):
-    """Avvia il server su tutti gli host"""
-    info("*** Avvio server su tutti gli host\n")
+def start_servers(net, host_map, implementation='scapy_burst'):
+    """
+    Avvia il server su tutti gli host
+    
+    Args:
+        net: rete Mininet
+        host_map: mappa IP -> host
+        implementation: tipo di implementazione da usare (scapy_burst, tcp_simple, flow_emulator)
+    """
+    info(f"*** Avvio server su tutti gli host (implementation: {implementation})\n")
+    
+    # Path al server in base all'implementazione scelta
+    server_script = f"/app/implementations/{implementation}/server.py"
     
     for ip, host in host_map.items():
-        # Avvia server_adv.py con scapy (gestisce handshake TCP con iptables)
+        # Avvia il server corretto in base all'implementazione
         # Passa IP e interfaccia per logging e sniffing corretto
         iface = f"{host.name}-eth0"
-        cmd = "python3 /app/server_adv.py --iface={} --ip={} > /tmp/server_{}.log 2>&1 &".format(
+        cmd = "python3 {} --iface={} --ip={} > /tmp/server_{}_{}.log 2>&1 &".format(
+            server_script,
             iface,
             ip,
+            implementation,
             ip.replace('.', '_')
         )
         host.cmd(cmd)
-        info(f"  - Server scapy avviato su {ip} (interfaccia {iface})\n")
+        info(f"  - Server {implementation} avviato su {ip} (interfaccia {iface})\n")
     
     # Attendi che i server si avviino
     time.sleep(3)  # Tempo extra per permettere a scapy di inizializzare
@@ -262,7 +274,7 @@ def generate_flows_from_csv(csv_file, host_map, topology):
         return []
 
 
-def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', duration=30, config_dir='/app/flows_params', base_name=None):
+def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', duration=30, config_dir='/app/flows_params', base_name=None, implementation='scapy_burst'):
     """
     Avvia i client per generare traffico tra gli host
     
@@ -274,8 +286,9 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
         duration: durata del traffico in secondi (non usato con client_scapy_burst_optimized)
         config_dir: directory dove si trovano i file di configurazione per IP
         base_name: nome base per i file di configurazione (se None, estratto da csv_file)
+        implementation: tipo di implementazione da usare (scapy_burst, tcp_simple, flow_emulator)
     """
-    info("*** Avvio generazione traffico\n")
+    info(f"*** Avvio generazione traffico (implementation: {implementation})\n")
     
     # Estrae il nome base dal CSV (senza path e senza estensione)
     import os
@@ -283,6 +296,9 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
         base_name = os.path.splitext(os.path.basename(csv_file))[0]
     info(f"  - Nome base flusso: {base_name}\n")
     info(f"  - Directory config: {config_dir}\n")
+    
+    # Path al client in base all'implementazione scelta
+    client_script = f"/app/implementations/{implementation}/client.py"
     
     # Conta quanti flussi effettivi vengono avviati
     started = 0
@@ -306,17 +322,17 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
         info(f"  - Traffico da {src_ip} a {dst_ip}\n")
         info(f"    Config: {config_file}\n")
         
-        # Avvia client_scapy_burst_optimized.py in background
+        # Avvia il client corretto in base all'implementazione
         # Parametri: flows.csv IPclient IPserver [config_file]
         # Il burst_dataset.csv viene salvato in /results/ (mappato in shared/results/)
-        cmd = f"python3 /app/client_scapy_burst_optimized.py {csv_file} {src_ip} {dst_ip} {config_file} > /tmp/client_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
+        cmd = f"python3 {client_script} {csv_file} {src_ip} {dst_ip} {config_file} > /tmp/client_{implementation}_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
         src_host.cmd(cmd)
         started += 1
     
     info(f"*** {started} flussi di traffico avviati\n")
 
 
-def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60, max_subnets=10):
+def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60, max_subnets=10, implementation='scapy_burst'):
     """
     Esegue il replay della topologia
     
@@ -325,6 +341,7 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         csv_file: path al CSV con i dati dei flussi originali
         duration: durata in secondi (0 per modalità interattiva)
         max_subnets: numero massimo di sottoreti da creare
+        implementation: tipo di implementazione client/server da usare (scapy_burst, tcp_simple, flow_emulator)
     """
     # Estrae il nome base dal CSV per generare file PCAP con nome dinamico
     flow_name = os.path.splitext(os.path.basename(csv_file))[0]
@@ -416,7 +433,7 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         info("  - Packet capture avviata (solo IPv4)\n")
     
     # Avvia server
-    start_servers(net, host_map)
+    start_servers(net, host_map, implementation)
     
     # Con molti host, serve più tempo perché server + switch siano pronti
     info("*** Attesa inizializzazione server e popolamento MAC table...\n")
@@ -451,7 +468,7 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     
     # Avvia traffico (passa flow_name dal CSV originale)
     if flows:
-        start_traffic_flows(net, host_map, flows, adapted_csv, duration, base_name=flow_name)
+        start_traffic_flows(net, host_map, flows, adapted_csv, duration, base_name=flow_name, implementation=implementation)
     else:
         info("*** ATTENZIONE: Nessun flusso valido trovato!\n")
         info("    Verifica che il CSV contenga IP presenti nella topologia\n")
@@ -481,22 +498,29 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        print("Usage: python replay_topology.py <topology.json> [duration] [flows_csv] [max_subnets]")
+        print("Usage: python replay_topology.py <topology.json> [duration] [flows_csv] [max_subnets] [implementation]")
         print("\nEsempi:")
         print("  python replay_topology.py network_topology.json")
         print("  python replay_topology.py network_topology.json 60")
         print("  python replay_topology.py network_topology.json 60 /features/target.csv")
         print("  python replay_topology.py network_topology.json 60 /features/target.csv 20")
+        print("  python replay_topology.py network_topology.json 60 /features/target.csv 20 scapy_burst")
+        print("  python replay_topology.py network_topology.json 60 /features/target.csv 20 tcp_simple")
         print("  python replay_topology.py network_topology.json 0  # modalità interattiva")
+        print("\nImplementazioni disponibili:")
+        print("  - scapy_burst (default): client_scapy_burst_optimized.py + server_adv.py")
+        print("  - tcp_simple: client_replay.py + server_tcp_simple.py")
+        print("  - flow_emulator: flow_emulator.py + server_adv.py")
         sys.exit(1)
     
     json_file = sys.argv[1]
     duration = int(sys.argv[2]) if len(sys.argv) > 2 else 60
     csv_file = sys.argv[3] if len(sys.argv) > 3 else '/features/target.csv'
     max_subnets = int(sys.argv[4]) if len(sys.argv) > 4 else 10
+    implementation = sys.argv[5] if len(sys.argv) > 5 else 'scapy_burst'
     
     setLogLevel('info')
-    run_topology_replay(json_file, csv_file, duration, max_subnets)
+    run_topology_replay(json_file, csv_file, duration, max_subnets, implementation)
 
 
 if __name__ == '__main__':
