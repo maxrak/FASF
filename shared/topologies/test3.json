@@ -1,0 +1,567 @@
+{
+  "description": "Network topology for Mininet - Client subnets + Internet",
+  "architecture": "client_subnets_with_central_router",
+  "subnets": [
+    {
+      "type": "client_subnet",
+      "network": "10.0.0.0/8",
+      "switch_name": "s10_0_0_0",
+      "hosts": [
+        "10.0.2.15"
+      ],
+      "num_hosts": 1
+    },
+    {
+      "type": "client_subnet",
+      "network": "172.16.0.0/16",
+      "switch_name": "s172_16_0_0",
+      "hosts": [
+        "172.16.255.1"
+      ],
+      "num_hosts": 1
+    },
+    {
+      "type": "client_subnet",
+      "network": "192.168.0.0/16",
+      "switch_name": "s192_168_0_0",
+      "hosts": [
+        "192.168.3.131"
+      ],
+      "num_hosts": 1
+    },
+    {
+      "type": "client_subnet",
+      "network": "72.14.0.0/16",
+      "switch_name": "s72_14_0_0",
+      "hosts": [
+        "72.14.213.103",
+        "72.14.213.18"
+      ],
+      "num_hosts": 2
+    },
+    {
+      "type": "internet",
+      "network": "0.0.0.0/0",
+      "switch_name": "s_internet",
+      "hosts": [
+        "118.6.206.252",
+        "125.232.97.116",
+        "134.2.48.153",
+        "147.31.122.1",
+        "172.16.255.255",
+        "188.163.1.229",
+        "189.126.44.128",
+        "192.168.3.90",
+        "192.168.3.99",
+        "195.27.155.11",
+        "204.9.163.166",
+        "206.108.207.138",
+        "206.108.207.139",
+        "207.46.148.38",
+        "208.50.77.134",
+        "208.82.238.129",
+        "208.88.186.244",
+        "212.8.163.80",
+        "213.146.189.205",
+        "63.215.202.48",
+        "63.215.202.49",
+        "64.4.9.254",
+        "65.54.95.140",
+        "65.54.95.39",
+        "65.54.95.68",
+        "65.55.118.107",
+        "65.55.239.163",
+        "65.55.5.231",
+        "65.55.5.232",
+        "66.220.149.32",
+        "69.126.180.28",
+        "69.63.181.15",
+        "72.14.213.101",
+        "72.14.213.102",
+        "72.14.213.138",
+        "72.14.213.147",
+        "74.75.251.207",
+        "89.34.75.134"
+      ],
+      "num_hosts": 38
+    }
+  ],
+  "routers": [
+    {
+      "id": "gateway_router",
+      "type": "central_gateway",
+      "connects_clients": [
+        "10.0.0.0/8",
+        "172.16.0.0/16",
+        "192.168.0.0/16",
+        "72.14.0.0/16"
+      ],
+      "connects_internet": "0.0.0.0/0",
+      "purpose": "Route traffic between client subnets and Internet"
+    }
+  ],
+  "probe": {
+    "name": "probe",
+    "ip": "10.255.255.254/24",
+    "connection": "gateway_router",
+    "interface": "probe-eth0",
+    "capture_file": "pcap/capture.pcap",
+    "capture_filter": "",
+    "purpose": "Packet capture for traffic analysis"
+  },
+  "flows": [
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "63.215.202.48",
+      "src_ports": [
+        "55966"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "63.215.202.49",
+      "src_ports": [
+        "55967"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 2
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.239.163",
+      "src_ports": [
+        "55958"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.5.232",
+      "src_ports": [
+        "55957",
+        "55962"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 3
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.5.231",
+      "src_ports": [
+        "55959"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "206.108.207.139",
+      "src_ports": [
+        "55960"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "72.14.213.147",
+      "src_ports": [
+        "52152",
+        "57839"
+      ],
+      "dst_ports": [
+        "80",
+        "443"
+      ],
+      "flow_count": 2
+    },
+    {
+      "src_ip": "72.14.213.18",
+      "dst_ip": "192.168.3.131",
+      "src_ports": [
+        "443"
+      ],
+      "dst_ports": [
+        "49673"
+      ],
+      "flow_count": 2
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "72.14.213.101",
+      "src_ports": [
+        "55968"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "66.220.149.32",
+      "src_ports": [
+        "56048"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "206.108.207.138",
+      "src_ports": [
+        "56058"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "195.27.155.11",
+      "src_ports": [
+        "56061"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "147.31.122.1",
+      "src_ports": [
+        "10622"
+      ],
+      "dst_ports": [
+        "443"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "172.16.255.255",
+      "src_ports": [
+        "137"
+      ],
+      "dst_ports": [
+        "137"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "72.14.213.138",
+      "src_ports": [
+        "57011"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "10.0.2.15",
+      "dst_ip": "192.168.3.90",
+      "src_ports": [
+        "1095"
+      ],
+      "dst_ports": [
+        "139"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "204.9.163.166",
+      "src_ports": [
+        "58547"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "72.14.213.102",
+      "src_ports": [
+        "52202",
+        "52205"
+      ],
+      "dst_ports": [
+        "443"
+      ],
+      "flow_count": 2
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "208.88.186.244",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "13392"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "213.146.189.205",
+      "src_ports": [
+        "10688"
+      ],
+      "dst_ports": [
+        "443"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "125.232.97.116",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "60875"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.54.95.140",
+      "src_ports": [
+        "55963",
+        "56027",
+        "56359"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 3
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "69.126.180.28",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "443"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.54.95.39",
+      "src_ports": [
+        "52257"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "207.46.148.38",
+      "src_ports": [
+        "56042"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.54.95.68",
+      "src_ports": [
+        "56292",
+        "56331"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 2
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "212.8.163.80",
+      "src_ports": [
+        "10678"
+      ],
+      "dst_ports": [
+        "54900"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "72.14.213.103",
+      "dst_ip": "192.168.3.131",
+      "src_ports": [
+        "80"
+      ],
+      "dst_ports": [
+        "57890"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "134.2.48.153",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "8984"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "69.63.181.15",
+      "src_ports": [
+        "57198"
+      ],
+      "dst_ports": [
+        "5480"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.118.107",
+      "src_ports": [
+        "56035"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "188.163.1.229",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "50709"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "208.82.238.129",
+      "src_ports": [
+        "58362"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "89.34.75.134",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "23924"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "74.75.251.207",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "39109"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "189.126.44.128",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "3192"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "172.16.255.1",
+      "dst_ip": "118.6.206.252",
+      "src_ports": [
+        "50983"
+      ],
+      "dst_ports": [
+        "48570"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "192.168.3.99",
+      "src_ports": [
+        "52400"
+      ],
+      "dst_ports": [
+        "161"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "208.50.77.134",
+      "src_ports": [
+        "57201"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "10.0.2.15",
+      "dst_ip": "64.4.9.254",
+      "src_ports": [
+        "2527"
+      ],
+      "dst_ports": [
+        "61863"
+      ],
+      "flow_count": 1
+    }
+  ],
+  "statistics": {
+    "total_ips": 43,
+    "client_subnets": 4,
+    "server_ips": 39,
+    "total_flows": 40
+  }
+}

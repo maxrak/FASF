@@ -1,0 +1,3 @@
+2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    You select: distribution/smallFlows.pcap
+2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    Out folder: flows.csv
+2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    CICFlowMeter received 1 pcap file

@@ -1,11 +1,11 @@
-2026-04-15 12:03:50 - INFO - ============================================================
-2026-04-15 12:03:50 - INFO - SERVER DEBUG LOG
-2026-04-15 12:03:50 - INFO - Server IP: 66.209.190.254
-2026-04-15 12:03:50 - INFO - Timestamp: 2026-04-15 12:03:50.169417
-2026-04-15 12:03:50 - INFO - ============================================================
-2026-04-15 12:03:50 - INFO - Avvio server scapy su tutte le porte TCP...
-2026-04-15 12:03:51 - INFO - Regola iptables configurata: DROP RST automatici del kernel
-2026-04-15 12:03:51 - INFO - Server in ascolto su interfaccia h9-eth0, tutte le porte TCP...
-2026-04-15 12:03:51 - INFO - Pronto a ricevere connessioni.
-2026-04-15 12:03:51 - INFO - Sniffing su interfaccia: h9-eth0
-2026-04-15 12:03:51 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-07-05 17:51:06 - INFO - ============================================================
+2026-07-05 17:51:06 - INFO - SERVER DEBUG LOG
+2026-07-05 17:51:06 - INFO - Server IP: 66.209.190.254
+2026-07-05 17:51:07 - INFO - Timestamp: 2026-07-05 17:51:06.996923
+2026-07-05 17:51:07 - INFO - ============================================================
+2026-07-05 17:51:07 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-07-05 17:51:07 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-07-05 17:51:07 - INFO - Server in ascolto su interfaccia h9-eth0, tutte le porte TCP...
+2026-07-05 17:51:07 - INFO - Pronto a ricevere connessioni.
+2026-07-05 17:51:07 - INFO - Sniffing su interfaccia: h9-eth0
+2026-07-05 17:51:07 - INFO - Modalità: promiscua, filtro BPF: tcp

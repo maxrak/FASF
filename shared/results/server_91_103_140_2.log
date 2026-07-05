@@ -1,1 +1,11 @@
-2026-04-15 12:03:44 - INFO - ============================================================
+2026-07-05 17:51:22 - INFO - ============================================================
+2026-07-05 17:51:22 - INFO - SERVER DEBUG LOG
+2026-07-05 17:51:22 - INFO - Server IP: 91.103.140.2
+2026-07-05 17:51:22 - INFO - Timestamp: 2026-07-05 17:51:22.797316
+2026-07-05 17:51:22 - INFO - ============================================================
+2026-07-05 17:51:22 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-07-05 17:51:23 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-07-05 17:51:23 - INFO - Server in ascolto su interfaccia h208-eth0, tutte le porte TCP...
+2026-07-05 17:51:24 - INFO - Pronto a ricevere connessioni.
+2026-07-05 17:51:24 - INFO - Sniffing su interfaccia: h208-eth0
+2026-07-05 17:51:24 - INFO - Modalità: promiscua, filtro BPF: tcp

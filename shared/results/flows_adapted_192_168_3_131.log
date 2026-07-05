@@ -1,31 +1,489 @@
-2026-04-15 12:08:16 - INFO - ============================================================
-2026-04-15 12:08:16 - INFO - CLIENT DEBUG LOG - flows_adapted
-2026-04-15 12:08:16 - INFO - IP Client: 192.168.3.131
-2026-04-15 12:08:16 - INFO - Timestamp: 2026-04-15 12:08:16.010582
-2026-04-15 12:08:16 - INFO - ============================================================
-2026-04-15 12:08:16 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=192.168.3.131, Server=65.55.15.244
-2026-04-15 12:08:16 - INFO - Output: /results/burst_dataset_192_168_3_131_65_55_15_244.csv, Config: /app/flows_params/smallFlows_192_168_3_131.config
-2026-04-15 12:08:16 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.5, 'idle_scale': 2.0, 'iat_rate': 1.0}
-2026-04-15 12:08:16 - INFO - CSV: /tmp/flows_adapted.csv
-2026-04-15 12:08:16 - INFO - Ricerca flussi: 192.168.3.131 <-> 65.55.15.244
-2026-04-15 12:08:16 - INFO - Colonne: Source IP, Destination IP
-2026-04-15 12:08:16 - INFO - Righe totali: 658, Flussi selezionati: 2
-2026-04-15 12:08:16 - INFO - ============================================================
-2026-04-15 12:08:16 - INFO - ELABORAZIONE FLUSSO 1/2
-2026-04-15 12:08:16 - INFO - ============================================================
-2026-04-15 12:08:16 - INFO - [FLOW] Avvio flusso 192.168.3.131:57180 -> 65.55.15.244:5480
-2026-04-15 12:08:16 - INFO - [HANDSHAKE] Invio SYN: 192.168.3.131:57180 -> 65.55.15.244:5480 (seq=8440)
-2026-04-15 12:08:17 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 65.55.15.244:5480
-2026-04-15 12:08:17 - ERROR - [FLOW] Handshake fallito per 192.168.3.131:57180 -> 65.55.15.244:5480
-2026-04-15 12:08:17 - INFO - ============================================================
-2026-04-15 12:08:17 - INFO - ELABORAZIONE FLUSSO 2/2
-2026-04-15 12:08:17 - INFO - ============================================================
-2026-04-15 12:08:17 - INFO - [FLOW] Avvio flusso 192.168.3.131:57180 -> 65.55.15.244:80
-2026-04-15 12:08:17 - INFO - [HANDSHAKE] Invio SYN: 192.168.3.131:57180 -> 65.55.15.244:80 (seq=43486)
-2026-04-15 12:08:18 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 65.55.15.244:80
-2026-04-15 12:08:18 - ERROR - [FLOW] Handshake fallito per 192.168.3.131:57180 -> 65.55.15.244:80
-2026-04-15 12:08:18 - INFO - Dataset salvato in /results/burst_dataset_192_168_3_131_65_55_15_244.csv
-2026-04-15 12:08:18 - INFO - Totale flussi processati: 0/2
-2026-04-15 12:08:18 - INFO - ============================================================
-2026-04-15 12:08:18 - INFO - ESECUZIONE COMPLETATA
-2026-04-15 12:08:18 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-07-05 20:05:16 - INFO - IP Client: 192.168.3.131
+2026-07-05 20:05:16 - INFO - Timestamp: 2026-07-05 20:05:16.559877
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=192.168.3.131, Server=195.27.155.11
+2026-07-05 20:05:16 - INFO - Output: /results/burst_dataset_192_168_3_131_195_27_155_11.csv, Config: /app/flows_params/test3_192_168_3_131.config
+2026-07-05 20:05:16 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 0.8, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 1.0}
+2026-07-05 20:05:16 - INFO - CSV: /tmp/flows_adapted.csv
+2026-07-05 20:05:16 - INFO - Ricerca flussi diretti: 192.168.3.131 -> 195.27.155.11
+2026-07-05 20:05:16 - INFO - Colonne: Source IP, Destination IP
+2026-07-05 20:05:16 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - [FLOW] Avvio flusso 192.168.3.131:56061 -> 195.27.155.11:80
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio SYN: 192.168.3.131:56061 -> 195.27.155.11:80 (seq=25536)
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Ricevuto SYN-ACK: 72.14.213.138:80 -> 192.168.3.131:57011 (seq=0, ack=23945)
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio ACK: 192.168.3.131:57011 -> 72.14.213.138:80 (seq=23945, ack=1)
+2026-07-05 20:05:16 - INFO - [FLOW] Durata prevista: 1.95s, Idle mean: 0.000000s
+2026-07-05 20:05:16 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:57011 -> 72.14.213.138:80 (size=621B, seq=23945, ack=1)
+2022026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 2/9: 192.168.3.131:56061 -> 195.27.155.11:80 (size=154B, seq=25689, ack=1)
+20222026-07-05 20:05:16 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 1/12026-07-05 20:05:16 - INFO - [FLOW] Flusso completato in 0.53s: 2 pacche2026-07-05 20:05:16 - DEBUG - [FLOW] Burst 2 completato: 1 pacchetti inviati
+2026-07-05 20:05:16 - DEBUG - [2026-07-05 20:05:17 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:17 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56331 -> 65.54.95.68:80 (size=6B, seq=8840, ack=1)
+2026-07-05 20:05:17 - DEBUG - [FLOW] Burst 3 completato: 1 pacchetti inviati
+2026-07-05 20:05:17 - DEBUG - [FLOW] Idle time: 0.126672s
+2026-07-05 20:05:18 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56331 -> 65.54.95.68:80 (size=1B, seq=8846, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56331 -> 65.54.95.68:80 (size=1B, seq=8847, ack=1)
+2026-07-05 20:05:18 - DEBUG - [FLOW] Burst 4 completato: 2 pacchetti inviati
+2026-07-05 20:05:18 - DEBUG - [FLOW] Idle time: 0.120006s
+2026-07-05 20:05:18 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56331 -> 65.54.95.68:80 (size=102B, seq=8848, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56331 -> 65.54.95.68:80 (size=1B, seq=8950, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56331 -> 65.54.95.68:80 (size=4B, seq=8951, ack=1)
+2026-07-05 20:05:18 - DEBUG - [FLOW] Burst 5 completato: 3 pacchetti inviati
+2026-07-05 20:05:18 - DEBUG - [FLOW] Idle time: 0.111687s
+2026-07-05 20:05:18 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 1/4: 192.168.3.131:56331 -> 65.54.95.68:80 (size=43B, seq=8955, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 2/4: 192.168.3.131:56331 -> 65.54.95.68:80 (size=1B, seq=8998, ack=1)
+20262026-07-05 20:05:19 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:55967 -> 63.215.202.49:80 (size=1B, seq=1949, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:55967 -> 63.215.202.49:80 (size=1B, seq2026-07-05 20:05:19 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:55958 2026-07-05 20:05:19 - DEBUG - [BURST] Generazione burst di 8 pacchetti
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 1/8: 192.168.3.131:55967 -> 63.215.202.49:80 (size=3B, seq=1951, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 2/8: 192.168.3.131:55967 -> 63.215.202.49:80 (size=3B, seq=1954, a2026-07-05 20:05:19 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:55958 -> 65.55.239.163:80 (size=99B, seq=103953, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 2/5: 192.168.3.131:55958 -> 65.55.239.163:80 (size=167B, seq=104052, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 3/5: 192.168.3.131:55958 -> 65.55.239.163:80 (size=141B, seq=104219, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 4/5: 192.168.3.131:55958 -> 65.55.239.163:80 (size=211B, seq=104360, ack=1)
+2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 5/5: 192.168.3.131:55958 -> 65.55.239.163:80 (size=120B, seq=104571, ack=1)
+2026-07-05 20:05:20 - DEBUG - [FLOW] Burst 6 completato: 5 pacchetti inviati
+2026-07-05 20:05:20 - DE2026-07-05 20:05:20 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:20 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=34B, seq=74370, ack=1)
+2026-07-05 20:05:21 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=7B, seq=74404, ack=1)
+2026-07-05 20:05:21 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=3B, seq=74411, ack=1)
+2026-07-05 20:05:21 - DEBUG - [FLOW] Burst 8 completato: 3 pacchetti inviati
+2026-07-05 20:05:21 - DEBUG - [FLOW] Idle time: 0.142674s
+2026-07-05 20:05:21 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:21 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=9B, seq=74414, ack=1)
+2026-07-05 20:05:21 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=47B, seq=74423, ack=1)
+2026-07-05 20:05:21 - DEBUG - [FLOW] Burst 9 completato: 2 pacchetti inviati
+2026-07-05 20:05:21 - DEBUG - [FLOW] Idle time: 1.010284s
+2026-07-05 20:05:22 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:22 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=31B, seq=74470, ack=1)
+2026-07-05 20:05:22 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=2B, seq=74501, ack=1)
+2026-07-05 20:05:22 - DEBUG - [FLOW] Burst 10 completato: 2 pacchetti inviati
+2026-07-05 20:05:222026-07-05 20:05:24 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:24 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=218B, seq=46465, ack=1)
+2026-07-05 20:05:24 - DEBUG - [FLOW] Burst 11 completato: 1 pacchetti inviati
+2026-07-05 20:05:24 - DEBUG - [FLOW] Idle time: 0.149981s
+2026-07-05 20:05:24 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:24 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=286B, seq=46683, ack=1)
+2026-07-05 20:05:24 - DEBUG - [FLOW] Burst 12 completato: 1 pacchetti inviati
+2026-07-05 20:05:24 - DEBUG - [FLOW] Idle time: 0.525516s
+2026-07-05 20:05:25 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=81B, seq=46969, ack=1)
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=916B, seq=47050, ack=1)
+2026-07-05 20:05:25 - DEBUG - [FLOW] Burst 13 completato: 2 pacchetti inviati
+2026-07-05 20:05:25 - DEBUG - [FLOW] Idle time: 0.303353s
+2026-07-05 20:05:25 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=220B, seq=47966, ack=1)
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=239B, seq=48186, ack=1)
+2026-07-05 20:05:25 - DEBUG - [FLOW] Burst 14 completato: 2 pacchetti inviati
+2026-07-05 20:05:25 - DEBUG - [FLOW] Idle time: 0.114085s
+2026-07-05 20:05:25 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=171B, seq=48425, ack=1)
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=309B, seq=48596, ack=1)
+2026-07-05 20:05:25 - DEBUG - [FLOW] Burst 15 completato: 2 pacchetti inviati
+2026-07-05 20:05:25 - DEBUG - [FLOW] Idle time: 0.389688s
+2026-07-05 20:05:26 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=685B, seq=48905, ack=1)
+2026-07-05 20:05:26 - DEBUG - [FLOW] Burst 16 completato: 1 pacchetti inviati
+2026-07-05 20:05:26 - DEBUG - [FLOW] Idle time: 0.163374s
+2026-07-05 20:05:26 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=164B, seq=49590, ack=1)
+2026-07-05 20:05:26 - DEBUG - [FLOW] Burst 17 completato: 1 pacchetti inviati
+2026-07-05 20:05:26 - DEBUG - [FLOW] Idle time: 0.143286s
+2026-07-05 20:05:26 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=187B, seq=49754, ack=1)
+2026-07-05 20:05:26 - DEBUG - [FLOW] Burst 18 completato: 1 pacchetti inviati
+2026-07-05 20:05:26 - DEBUG - [FLOW] Idle time: 0.173502s
+2026-07-05 20:05:26 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=469B, seq=49941, ack=1)
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=74B, seq=50410, ack=1)
+2026-07-05 20:05:26 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=55B, seq=50484, ack=1)
+2026-07-05 20:05:26 - DEBUG - [FLOW] Burst 19 completato: 3 pacchetti inviati
+2026-07-05 20:05:26 - DEBUG - [FLOW] Idle time: 0.431488s
+2026-07-05 20:05:27 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 1/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=302B, seq=50539, ack=1)
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 2/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=140B, seq=50841, ack=1)
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 3/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=195B, seq=50981, ack=1)
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 4/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=226B, seq=51176, ack=1)
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 5/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=263B, seq=51402, ack=1)
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 6/6: 192.168.3.131:56035 -> 65.55.118.107:80 (size=586B, seq=51665, ack=1)
+2026-07-05 20:05:27 - DEBUG - [FLOW] Burst 20 completato: 6 pacchetti inviati
+2026-07-05 20:05:27 - DEBUG - [FLOW] Idle time: 0.110742s
+2026-07-05 20:05:27 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:27 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=207B, seq=52251, ack=1)
+2026-07-05 20:05:27 - DEBUG - [FLOW] Burst 21 completato: 1 pacchetti inviati
+2026-07-05 20:05:27 - DEBUG - [FLOW] Idle time: 0.207771s
+2026-07-05 20:05:28 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:28 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=205B, seq=52458, ack=1)
+2026-07-05 20:05:28 - DEBUG - [FLOW] Burst 22 completato: 1 pacchetti inviati
+2026-07-05 20:05:28 - DEBUG - [FLOW] Idle time: 1.371650s
+2026-07-05 20:05:29 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:29 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=66B, seq=52663, ack=1)
+2026-07-05 20:05:29 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=160B, seq=52729, ack=1)
+2026-07-05 20:05:29 - DEBUG - [FLOW] Burst 23 completato: 2 pacchetti inviati
+2026-07-05 20:05:29 - DEBUG - [FLOW] Idle time: 0.150944s
+2026-07-05 20:05:29 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:29 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=696B, seq=52889, ack=1)
+2026-07-05 20:05:29 - DEBUG - [FLOW] Burst 24 completato: 1 pacchetti inviati
+2026-07-05 20:05:29 - DEBUG - [FLOW] Idle time: 0.656177s
+2026-07-05 20:05:30 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:30 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=37B, seq=53585, ack=1)
+2026-07-05 20:05:30 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=65B, seq=53622, ack=1)
+2026-07-05 20:05:30 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=511B, seq=53687, ack=1)
+2026-07-05 20:05:30 - DEBUG - [FLOW] Burst 25 completato: 3 pacchetti inviati
+2026-07-05 20:05:30 - DEBUG - [FLOW] Idle time: 0.291086s
+2026-07-05 20:05:30 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:30 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=94B, seq=54198, ack=1)
+2026-07-05 20:05:30 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=134B, seq=54292, ack=1)
+2026-07-05 20:05:30 - DEBUG - [FLOW] Burst 26 completato: 2 pacchetti inviati
+2026-07-05 20:05:30 - DEBUG - [FLOW] Idle time: 0.611217s
+2026-07-05 20:05:31 - DEBUG - [BURST] Generazione burst di 8 pacchetti
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 1/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=391B, seq=54426, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 2/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=622B, seq=54817, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 3/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=57B, seq=55439, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 4/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=106B, seq=55496, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 5/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=557B, seq=55602, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 6/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=518B, seq=56159, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 7/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=34B, seq=56677, ack=1)
+2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 8/8: 192.168.3.131:56035 -> 65.55.118.107:80 (size=78B, seq=56711, ack=1)
+2026-07-05 20:05:31 - DEBUG - [FLOW] Burst 27 completato: 8 pacchetti inviati
+2026-07-05 20:05:31 - DEBUG - [FLOW] Idle time: 0.100109s
+2026-07-05 20:05:32 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=166B, seq=56789, ack=1)
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=245B, seq=56955, ack=1)
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=277B, seq=57200, ack=1)
+2026-07-05 20:05:32 - DEBUG - [FLOW] Burst 28 completato: 3 pacchetti inviati
+2026-07-05 20:05:32 - DEBUG - [FLOW] Idle time: 0.136009s
+2026-07-05 20:05:32 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=251B, seq=57477, ack=1)
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=85B, seq=57728, ack=1)
+2026-07-05 20:05:32 - DEBUG - [FLOW] Burst 29 completato: 2 pacchetti inviati
+2026-07-05 20:05:32 - DEBUG - [FLOW] Idle time: 0.183287s
+2026-07-05 20:05:32 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=140B, seq=57813, ack=1)
+2026-07-05 20:05:32 - DEBUG - [FLOW] Burst 30 completato: 1 pacchetti inviati
+2026-07-05 20:05:32 - DEBUG - [FLOW] Idle time: 0.145057s
+2026-07-05 20:05:32 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:56035 -> 65.55.118.107:80 (size=739B, seq=57953, ack=1)
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 2/5: 192.168.3.131:56035 -> 65.55.118.107:80 (size=111B, seq=58692, ack=1)
+2026-07-05 20:05:32 - DEBUG - [DATA] Invio pacchetto 3/5: 192.168.3.131:56035 -> 65.55.118.107:80 (size=272B, seq=58803, ack=1)
+2026-07-05 20:05:33 - DEBUG - [DATA] Invio pacchetto 4/5: 192.168.3.131:56035 -> 65.55.118.107:80 (size=265B, seq=59075, ack=1)
+2026-07-05 20:05:33 - DEBUG - [DATA] Invio pacchetto 5/5: 192.168.3.131:56035 -> 65.55.118.107:80 (size=120B, seq=59340, ack=1)
+2026-07-05 20:05:33 - DEBUG - [FLOW] Burst 31 completato: 5 pacchetti inviati
+2026-07-05 20:05:33 - DEBUG - [FLOW] Idle time: 0.609035s
+2026-07-05 20:05:33 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:33 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=168B, seq=59460, ack=1)
+2026-07-05 20:05:33 - DEBUG - [FLOW] Burst 32 completato: 1 pacchetti inviati
+2026-07-05 20:05:33 - DEBUG - [FLOW] Idle time: 0.172105s
+2026-07-05 20:05:33 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:33 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=80B, seq=59628, ack=1)
+2026-07-05 20:05:34 - DEBUG - [FLOW] Burst 33 completato: 1 pacchetti inviati
+2026-07-05 20:05:34 - DEBUG - [FLOW] Idle time: 0.110458s
+2026-07-05 20:05:34 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=79B, seq=59708, ack=1)
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=238B, seq=59787, ack=1)
+2026-07-05 20:05:34 - DEBUG - [FLOW] Burst 34 completato: 2 pacchetti inviati
+2026-07-05 20:05:34 - DEBUG - [FLOW] Idle time: 0.147291s
+2026-07-05 20:05:34 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=257B, seq=60025, ack=1)
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=326B, seq=60282, ack=1)
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=108B, seq=60608, ack=1)
+2026-07-05 20:05:34 - DEBUG - [FLOW] Burst 35 completato: 3 pacchetti inviati
+2026-07-05 20:05:34 - DEBUG - [FLOW] Idle time: 0.149963s
+2026-07-05 20:05:34 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=130B, seq=60716, ack=1)
+2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=25B, seq=60846, ack=1)
+2026-07-05 20:05:34 - DEBUG - [FLOW] Burst 36 completato: 2 pacchetti inviati
+2026-07-05 20:05:34 - DEBUG - [FLOW] Idle time: 1.361462s
+2026-07-05 20:05:36 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 1/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=67B, seq=60871, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 2/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=97B, seq=60938, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 3/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=1822B, seq=61035, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 4/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=123B, seq=62857, ack=1)
+2026-07-05 20:05:36 - DEBUG - [FLOW] Burst 37 completato: 4 pacchetti inviati
+2026-07-05 20:05:36 - DEBUG - [FLOW] Idle time: 0.139435s
+2026-07-05 20:05:36 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=899B, seq=62980, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=422B, seq=63879, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56035 -> 65.55.118.107:80 (size=151B, seq=64301, ack=1)
+2026-07-05 20:05:36 - DEBUG - [FLOW] Burst 38 completato: 3 pacchetti inviati
+2026-07-05 20:05:36 - DEBUG - [FLOW] Idle time: 0.117941s
+2026-07-05 20:05:36 - DEBUG - [BURST] Generazione burst di 7 pacchetti
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 1/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=872B, seq=64452, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 2/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=412B, seq=65324, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 3/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=89B, seq=65736, ack=1)
+2026-07-05 20:05:36 - DEBUG - [DATA] Invio pacchetto 4/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=1441B, seq=65825, ack=1)
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 5/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=120B, seq=67266, ack=1)
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 6/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=546B, seq=67386, ack=1)
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 7/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=113B, seq=67932, ack=1)
+2026-07-05 20:05:37 - DEBUG - [FLOW] Burst 39 completato: 7 pacchetti inviati
+2026-07-05 20:05:37 - DEBUG - [FLOW] Idle time: 0.109091s
+2026-07-05 20:05:37 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56035 -> 65.55.118.107:80 (size=27B, seq=68045, ack=1)
+2026-07-05 20:05:37 - DEBUG - [FLOW] Burst 40 completato: 1 pacchetti inviati
+2026-07-05 20:05:37 - DEBUG - [FLOW] Idle time: 0.115801s
+2026-07-05 20:05:37 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=87B, seq=68072, ack=1)
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=59B, seq=68159, ack=1)
+2026-07-05 20:05:37 - DEBUG - [FLOW] Burst 41 completato: 2 pacchetti inviati
+2026-07-05 20:05:37 - DEBUG - [FLOW] Idle time: 0.238769s
+2026-07-05 20:05:37 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=765B, seq=68218, ack=1)
+2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=249B, seq=68983, ack=1)
+2026-07-05 20:05:37 - DEBUG - [FLOW] Burst 42 completato: 2 pacchetti inviati
+2026-07-05 20:05:37 - DEBUG - [FLOW] Idle time: 0.673323s
+2026-07-05 20:05:38 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:38 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=222B, seq=69232, ack=1)
+2026-07-05 20:05:38 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=300B, seq=69454, ack=1)
+2026-07-05 20:05:38 - DEBUG - [FLOW] Burst 43 completato: 2 pacchetti inviati
+2026-07-05 20:05:38 - DEBUG - [FLOW] Idle time: 0.125683s
+2026-07-05 20:05:38 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:38 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=172B, seq=69754, ack=1)
+2026-07-05 20:05:38 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56035 -> 65.55.118.107:80 (size=432B, seq=69926, ack=1)
+2026-07-05 20:05:38 - DEBUG - [FLOW] Burst 44 completato: 2 pacchetti inviati
+2026-07-05 20:05:38 - DEBUG - [FLOW] Idle time: 0.193690s
+2026-07-05 20:05:39 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-07-05 20:05:39 - DEBUG - [DATA] Invio pacchetto 1/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=63B, seq=70358, ack=1)
+2026-07-05 20:05:39 - DEBUG - [DATA] Invio pacchetto 2/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=95B, seq=70421, ack=1)
+2026-07-05 20:05:39 - DEBUG - [DATA] Invio pacchetto 3/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=290B, seq=70516, ack=1)
+2026-07-05 20:05:39 - DEBUG - [DATA] Invio pacchetto 4/4: 192.168.3.131:56035 -> 65.55.118.107:80 (size=65B, seq=70806, ack=1)
+2026-07-05 20:05:39 - DEBUG - [FLOW] Burst 45 completato: 4 pacchetti inviati
+2026-07-05 20:05:39 - DEBUG - [FLOW] Idle time: 7.767276s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 7 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=39B, seq=70871, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=815B, seq=70910, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=62B, seq=71725, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 4/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=232B, seq=71787, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 5/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=383B, seq=72019, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 6/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=333B, seq=72402, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 7/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=162B, seq=72735, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 46 completato: 7 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.113152s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 7 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=143B, seq=72897, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=101B, seq=73040, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 3/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=1468B, seq=73141, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 4/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=295B, seq=74609, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 5/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=183B, seq=74904, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 6/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=304B, seq=75087, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 7/7: 192.168.3.131:56035 -> 65.55.118.107:80 (size=58B, seq=75391, ack=1)
+DATA] Invio pacchetto 1/1: 192.168.3.131:56058 -> 206.108.207.138:80 (size=2B, seq=78583, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 48 completato: 1 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.181389s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=32B, seq=78585, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=16B, seq=78617, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 49 completato: 2 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.118106s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=45B, seq=78633, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=203B, seq=78678, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=9B, seq=78881, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 50 completato: 3 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.135818s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=10B, seq=78890, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=6B, seq=78900, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=145B, seq=78906, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 51 completato: 3 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.167412s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=67B, seq=79051, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=20B, seq=79118, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 52 completato: 2 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.104609s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56058 -> 206.108.207.138:80 (size=6B, seq=79138, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 53 completato: 1 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.195187s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=22B, seq=79144, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=1481B, seq=79166, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=7B, seq=80647, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 54 completato: 3 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.161141s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56058 -> 206.108.207.138:80 (size=35B, seq=80654, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 55 completato: 1 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.160192s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:56058 -> 206.108.207.138:80 (size=5B, seq=80689, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/5: 192.168.3.131:56058 -> 206.108.207.138:80 (size=21B, seq=80694, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/5: 192.168.3.131:56058 -> 206.108.207.138:80 (size=8B, seq=80715, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 4/5: 192.168.3.131:56058 -> 206.108.207.138:80 (size=1B, seq=80723, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 5/5: 192.168.3.131:56058 -> 206.108.207.138:80 (size=2B, seq=80724, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 56 completato: 5 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.243837s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=6B, seq=80726, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=10B, seq=80732, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:56058 -> 206.108.207.138:80 (size=14B, seq=80742, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 57 completato: 3 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.151908s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=8B, seq=80756, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=125B, seq=80764, ack=1)
+2026-07-05 20:05:43 - DEBUG - [FLOW] Burst 58 completato: 2 pacchetti inviati
+2026-07-05 20:05:43 - DEBUG - [FLOW] Idle time: 0.144997s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56058 -> 206.108.207.138:80 (size=6B, seq=80889, ack=1)
+, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 56 completato: 3 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.109066s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 (size=24B, seq=17126, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 57 completato: 1 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.156993s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 (size=14B, seq=17150, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 58 completato: 1 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.162230s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:52152 -> 72.14.213.147:443 (size=41B, seq=17164, ack=1)
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 2/5: 192.168.3.131:52152 -> 72.14.213.147:443 (size=2B, seq=17205, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 3/5: 192.168.3.131:52152 -> 72.14.213.147:443 (size=59B, seq=17207, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 4/5: 192.168.3.131:52152 202026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56061 -> 195.27.155.11:80 (size=1407B, seq=85827, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 54 completato: 1 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.220076s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56061 -> 195.27.155.11:80 (size=330B, seq=87234, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56061 -> 195.27.155.11:80 (size=144B, seq=87564, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 55 completato: 2 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.283423s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56061 -> 195.27.155.11:80 (size=490B, seq=87708, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56061 -> 195.27.155.11:80 (size=535B, seq=88198, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 56 completato: 2 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.240559s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:56061 -> 195.27.155.11:80 (size=434B, seq=88733, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.101925s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:56048 -> 66.220.149.32:80 (size=52B, seq=111909, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:56048 -> 66.220.149.32:80 (size=177B, seq=111961, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 56 completato: 2 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.616404s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:42 - DEBUG - [D2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 9 pacchetti
+2026-07-05 20:05:43 - DEBU2026-07-05 20:05:43 - DEBUG - [FLOW] Burst 57 completato: 1 pacchetti inviati
+2026-07-05 20:05:43 - DEB2026-07-05 20:05:43 - DEBUG - [DA2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:56048 -> 66.220.149.32:80 (size=18B, seq=112353, ack=1)
+=148B, seq=18261, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 4/9: 192.168.3.131:52152 -> 72.14.213.147:443 (size=7B, seq=18409, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 5/9: 192.168.3.131:52152 -> 72.14.213.147:443 (size=67B, seq=18416, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 6/9: 192.168.3.131:52152 -> 72.14.213.147:443 (size=2B, seq=18483, ack=1)
+o 2/2: 192.168.3.131:58547 -> 204.9.163.166:80 (size=51B, seq=15066, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 59 completato: 2 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.274240s
+2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:58547 -> 204.9.163.166:80 (size=91B, seq=15117, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 60 completato: 1 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.114559s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 8 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=8B, seq=15208, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=1B, seq=15216, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 3/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=36B, seq=15217, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 4/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=11B, seq=15253, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 5/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=36B, seq=15264, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 6/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=2B, seq=15300, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 7/8: 192.168.3.131:58547 -> 204.9.163.166:82026-07-05 20:05:41 - DEBUG - 2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 8/8: 192.168.3.131:58547 -> 204.9.163.166:80 (size=8B, seq=15309, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 61 completato: 8 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.128436s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:58547 -> 204.9.163.166:80 (size=57B, seq=15317, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:58547 -> 204.9.163.166:80 (size=14B, seq=15374, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 62 completat2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-052026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:58547 -> 204.9.163.166:80 (size=2B, seq=15388, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/3:2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 2 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/2: 192.168.3.131:55958 -> 65.55.239.163:80 (size=532B, seq=153762, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 2/2: 192.168.3.131:55958 -> 65.55.239.163:80 (size=609B, seq=154294, ack=1)
+2026-07-05 20:05:43 - DEBUG - [FLOW] Burst 69 completato: 2 pacchetti inviati
+2026-07-05 20:05:43 - DEBUG - [FLOW] Idle time: 0.157035s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 (size=90B, seq=154903, ack=1)
+-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:58547 -> 204.9.163.166:80 (size=1B, seq=15454, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 64 completato: 3 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.122409s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:58547 -> 204.9.163.166:80 (size=13B, seq=15455, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 65 completato: 1 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.121280s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=1B, seq=15468, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=83B, seq=15469, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=6B, seq=15552, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 4/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=79B, seq=15558, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 5/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=30B, seq=15637, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 6/6: 192.168.3.131:58547 -> 204.9.163.166:80 (size=75B, seq=15667, ack=1)
+2026-07-05 20:05:43 - DEBUG - [FLOW] Burst 66 completato: 6 pacchetti inviati
+2026-07-05 20:05:43 - DEBUG - [FLOW] Idle time: 0.115951s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:58547 -> 204.9.163.166:80 (size=16B, seq=15742, ack=1)
+05 20:05:43 - DEBUG - [DATA] In2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/4: 192.168.3.131:55960 -> 206.108.207.139:80 (size=768B, seq=116888, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 2/4: 192.168.3.131:55960 -> 206.108.207.139:80 (size=1608B, seq=117656, ack=1)
+ time: 0.165829s
+2026-07-05 20:05:43 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:52400 -> 192.168.3.99:161 (size=78B, seq=40292, ack=1)
+ 71 completato: 1 pacchetti inviati
+2026-07-05 20:05:43 - DEBUG - [FLOW] Idle time: 0.128839s
+2026-07-05 20:05:43 - DEBU2026-07-05 20:05:44 - INFO - [FLOW] Flusso completato in 9.62s: 69 pacchetti, 20 burst
+2026-07-05 20:05:44 - INFO - Risultato flusso 2: {'duration': 9.62041974067688, 'packets': 69, 'bursts': 20, 'avg_burst_size': 3.45}
+2026-07-05 20:05:44 - INFO - Dataset salvato in /results/burst_dataset_192_168_3_131_65_54_95_140.csv
+2026-07-05 20:05:44 - INFO - Totale flussi processati: 3/3
+2026-07-05 20:05:44 - INFO - ============================================================
+2026-07-05 20:05:44 - INFO - ESECUZIONE COMPLETATA
+2026-07-05 20:05:44 - INFO - ============================================================
+e burst di 1 pacchetti
+2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/1: 192.168.3.131:55957 -> 65.55.5.232:80 (size=229B, seq=166374, ack=1)
+2026-07-05 20:05:40 - DEBUG - [FLOW] Burst 72 completato: 1 pacchetti inviati
+2026-07-05 20:05:40 - DEBUG - [FLOW] Idle time: 0.134618s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 5 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/5: 192.168.3.131:55957 -> 65.55.5.232:80 (size=829B, seq=166603, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/5: 192.168.3.131:55957 -> 65.55.5.232:80 (size=970B, seq=167432, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 3/5: 192.168.3.131:55957 -> 65.55.5.232:80 (size=138B, seq=168402, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 4/5: 192.168.3.131:55957 -> 65.55.5.232:80 (size=71B, seq=168540, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 5/5: 192.168.3.131:55957 -> 65.55.5.232:80 (size=292B, seq=168611, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 73 completato: 5 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.199878s
+2026-07-05 20:05:41 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 1/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=330B, seq=168903, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=286B, seq=169233, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 3/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=234B, seq=169519, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 4/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=611B, seq=169753, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 5/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=64B, seq=170364, ack=1)
+2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 6/6: 192.168.3.131:55957 -> 65.55.5.232:80 (size=219B, seq=170428, ack=1)
+2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 74 completato: 6 pacchetti inviati
+2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 0.191349s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 3 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/3: 192.168.3.131:55957 -> 65.55.5.232:80 (size=545B, seq=170647, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/3: 192.168.3.131:55957 -> 65.55.5.232:80 (size=131B, seq=171192, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/3: 192.168.3.131:55957 -> 65.55.5.232:80 (size=823B, seq=171323, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 75 completato: 3 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.133037s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 4 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/4: 192.168.3.131:55957 -> 65.55.5.232:80 (size=428B, seq=172146, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/4: 192.168.3.131:55957 -> 65.55.5.232:80 (size=520B, seq=172574, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 3/4: 192.168.3.131:55957 -> 65.55.5.232:80 (size=313B, seq=173094, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 4/4: 192.168.3.131:55957 -> 65.55.5.232:80 (size=138B, seq=173407, ack=1)
+2026-07-05 20:05:42 - DEBUG - [FLOW] Burst 76 completato: 4 pacchetti inviati
+2026-07-05 20:05:42 - DEBUG - [FLOW] Idle time: 0.127787s
+2026-07-05 20:05:42 - DEBUG - [BURST] Generazione burst di 8 pacchetti
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 1/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=159B, seq=173545, ack=1)
+2026-07-05 20:05:42 - DEBUG - [DATA] Invio pacchetto 2/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=394B, seq=173704, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 3/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=852B, seq=174098, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 4/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=1202B, seq=174950, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 5/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=119B, seq=176152, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 6/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=86B, seq=176271, ack=1)
+2026-07-05 20:05:43 - DEBUG - [DATA] Invio pacchetto 7/8: 192.168.3.131:55957 -> 65.55.5.232:80 (size=305B, seq=176357, ack=1)

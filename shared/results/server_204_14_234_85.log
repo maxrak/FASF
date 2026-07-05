@@ -1,0 +1,11 @@
+2026-07-05 17:51:19 - INFO - ============================================================
+2026-07-05 17:51:19 - INFO - SERVER DEBUG LOG
+2026-07-05 17:51:19 - INFO - Server IP: 204.14.234.85
+2026-07-05 17:51:19 - INFO - Timestamp: 2026-07-05 17:51:19.045259
+2026-07-05 17:51:19 - INFO - ============================================================
+2026-07-05 17:51:20 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-07-05 17:51:21 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-07-05 17:51:21 - INFO - Server in ascolto su interfaccia h82-eth0, tutte le porte TCP...
+2026-07-05 17:51:21 - INFO - Pronto a ricevere connessioni.
+2026-07-05 17:51:21 - INFO - Sniffing su interfaccia: h82-eth0
+2026-07-05 17:51:21 - INFO - Modalità: promiscua, filtro BPF: tcp

@@ -1,0 +1,468 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{listings}
+
+\title{Network Traffic Replication Framework:\\A CICFlowMeter-Based Approach}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+
+We present a novel framework for replicating network traffic datasets using exclusively the statistical output from CICFlowMeter as input. The framework leverages network simulation to reconstruct a plausible network topology from the IP addresses of involved systems, enabling accurate traffic reproduction without requiring access to raw packet captures. This approach addresses a critical challenge in cybersecurity research: the ability to reproduce and validate network traffic datasets while preserving privacy and reducing data storage requirements.
+
+\section{Core Components}
+
+The framework is composed of four main components that work in a coordinated pipeline:
+
+\subsection{Evaluator Module}
+
+A Python-based analysis engine responsible for extracting network topology information from CICFlowMeter CSV output. It performs IP address analysis, subnet detection, and generates structured network topology representations in JSON format. Additionally, it calculates initial flow parameters for each host and evaluates the similarity between original and regenerated traffic using custom loss functions.
+
+\subsection{Mininet Simulator}
+
+A software-defined network emulator that creates virtual network topologies with hosts, switches, and routing infrastructure. The simulator implements the topology derived from the Evaluator module and executes traffic generation scripts on virtual hosts. It supports multiple traffic generation implementations (Scapy-based burst generation, TCP simple replay, and flow emulation) to accommodate different traffic patterns.
+
+\subsection{CICFlowMeter Analyzer}
+
+A network traffic analysis tool that processes packet captures (PCAP files) and extracts statistical flow features. These features include packet counts, byte counts, flow duration, inter-arrival times, flag distributions, and protocol-specific metrics. The tool outputs CSV files compatible with machine learning intrusion detection systems.
+
+\subsection{Optimizer Module (Optional)}
+
+An adaptive parameter optimization component that iteratively refines traffic generation parameters to minimize the statistical distance between original and replicated traffic. It implements random search and gradient-free optimization strategies to converge toward accurate traffic replication.
+
+\section{Operational Workflow}
+
+The framework operates through three sequential stages, each managed by a dedicated script:
+
+\subsection{Stage 1: Topology Generation}
+
+\textbf{Script:} \texttt{1.generate\_topology.sh}
+
+This stage analyzes the input CICFlowMeter CSV file to extract network structure information.
+
+\subsubsection{Input}
+CICFlowMeter CSV file containing flow statistics (source/destination IP addresses, ports, protocols, timing information).
+
+\subsubsection{Process}
+\begin{itemize}
+    \item The \texttt{analyze\_flows.py} script identifies unique IP addresses and classifies them as source or destination hosts
+    \item Network subnets are automatically detected based on IP address patterns
+    \item A hierarchical network topology is constructed with a central gateway switch connecting multiple subnet switches
+    \item Host-to-IP mappings are established for the simulation environment
+\end{itemize}
+
+\subsubsection{Output}
+\begin{itemize}
+    \item JSON topology file describing the network structure (switches, hosts, links, IP assignments)
+    \item Initial flow parameter files for each source IP address, containing traffic generation settings
+\end{itemize}
+
+\subsection{Stage 2: Traffic Replication}
+
+\textbf{Script:} \texttt{2.replicate\_flow.sh}
+
+This stage executes the network simulation to generate synthetic traffic based on the extracted topology and flow parameters.
+
+\subsubsection{Input}
+\begin{itemize}
+    \item Network topology JSON file from Stage 1
+    \item Original CICFlowMeter CSV file for reference
+    \item Traffic generation implementation selection (default: \texttt{scapy\_burst})
+\end{itemize}
+
+\subsubsection{Process}
+\begin{itemize}
+    \item Mininet instantiates the virtual network topology with all switches and hosts
+    \item Client and server processes are launched on appropriate virtual hosts
+    \item Traffic generation follows the temporal and statistical patterns defined in flow parameters
+    \item A dedicated probe node captures all network traffic through port mirroring on the central switch
+    \item Simulation runs for a configurable duration (default: 30 seconds)
+\end{itemize}
+
+\subsubsection{Output}
+PCAP file (\texttt{capture\_<flowname>.pcap}) containing all generated network traffic.
+
+\subsubsection{Available Traffic Generation Implementations}
+\begin{itemize}
+    \item \texttt{scapy\_burst}: Optimized burst-based traffic generation using Scapy, suitable for complex multi-flow scenarios
+    \item \texttt{tcp\_simple}: Basic TCP connection replay for simple client-server interactions
+    \item \texttt{flow\_emulator}: High-fidelity flow emulation preserving packet timing and sizes
+\end{itemize}
+
+\subsection{Stage 3: Flow Regeneration}
+
+\textbf{Script:} \texttt{3.regenerate\_flows.sh}
+
+This stage validates the replication accuracy by reanalyzing the generated traffic using the same tool that analyzed the original dataset.
+
+\subsubsection{Input}
+PCAP file from Stage 2.
+
+\subsubsection{Process}
+\begin{itemize}
+    \item CICFlowMeter processes the captured PCAP file
+    \item Identical flow features are extracted using the same algorithms applied to the original dataset
+    \item Feature vectors are computed for each detected flow
+\end{itemize}
+
+\subsubsection{Output}
+Regenerated CSV file (\texttt{regenerated\_<flowname>.csv}) with CICFlowMeter flow statistics. This file can be directly compared with the original input to quantify replication accuracy.
+
+\section{Network Architecture}
+
+The simulated network implements a star topology with centralized traffic monitoring:
+
+\begin{verbatim}
+            Central Gateway Switch (s0)
+                    | [Probe Node]
+           +--------+--------+--------+
+       Subnet    Subnet    Subnet    ...
+       Switch    Switch    Switch
+       (s1)      (s2)      (s3)
+         |         |         |
+      Hosts     Hosts     Hosts
+\end{verbatim}
+
+The probe node connects directly to the central switch with port mirroring enabled, ensuring complete traffic visibility regardless of the number of subnets or hosts. This architecture facilitates accurate PCAP capture while maintaining network isolation between different subnets.
+
+\section{Topology Generation Algorithm}
+
+The topology generation algorithm operates in five sequential phases:
+
+\subsection{Phase 1: IP Parsing and Classification}
+
+The algorithm reads the CICFlowMeter CSV file and extracts source-destination IP pairs. Each IP address is classified into three categories:
+\begin{itemize}
+    \item \textbf{Source-only} (pure clients)
+    \item \textbf{Destination-only} (pure servers)
+    \item \textbf{Bidirectional} (both client and server)
+\end{itemize}
+
+\subsection{Phase 2: Adaptive Subnet Grouping}
+
+IP addresses are grouped into subnets using adaptive network masks based on address class:
+
+\begin{itemize}
+    \item \textbf{10.x.x.x} $\rightarrow$ /8 (Class A private)
+    \item \textbf{172.16-31.x.x} $\rightarrow$ /16 (Class B private)
+    \item \textbf{192.168.x.x} $\rightarrow$ /16 (Class C private, extended grouping)
+    \item \textbf{Public IPs} $\rightarrow$ /16 (prefix-based grouping)
+\end{itemize}
+
+\subsection{Phase 3: Star Topology Construction}
+
+A centralized architecture is constructed:
+\begin{itemize}
+    \item Gateway Router (s0) serves as central hub
+    \item Probe node connects to gateway for traffic capture
+    \item Subnet switches connect client subnets
+    \item Internet subnet contains server-only hosts
+\end{itemize}
+
+\subsection{Phase 4: IP Deduplication}
+
+To prevent duplicate host creation:
+\begin{itemize}
+    \item Bidirectional IPs are assigned \textbf{only} to client subnets
+    \item The ``Internet'' subnet contains \textbf{exclusively} server-only hosts
+\end{itemize}
+
+\subsection{Phase 5: JSON Generation}
+
+The algorithm produces a structured JSON file containing:
+\begin{itemize}
+    \item List of subnets with assigned IP addresses
+    \item Central router configuration
+    \item Traffic flow definitions (source$\rightarrow$destination, ports, counters)
+    \item Probe node configuration for packet capture
+    \item Statistical metadata
+\end{itemize}
+
+\textbf{Complexity:} $O(n)$ where $n$ = number of flows in the CSV file.
+
+\section{Traffic Generation Algorithm}
+
+\subsection{Architecture Overview}
+
+The framework employs a \textbf{statistical parametric burst-based model} that replicates network traffic through a five-phase pipeline.
+
+\subsection{Phase 1: Initial Parameter Extraction}
+
+From CICFlowMeter flow features, five control parameters are derived:
+
+\subsubsection{Packet Size Scale ($\alpha_{size}$)}
+
+\textbf{Range:} [0.5, 2.0]
+
+\textbf{Formula:}
+\begin{equation}
+\alpha_{size} = \begin{cases}
+0.9 & \text{if } \mu_{pkt} < 80 \text{ bytes} \\
+1.1 & \text{if } \mu_{pkt} > 800 \text{ bytes} \\
+1.0 & \text{otherwise}
+\end{cases}
+\end{equation}
+where $\mu_{pkt}$ is the forward packet length mean.
+
+\subsubsection{Packet Size Sigma ($\sigma_{size}$)}
+
+\textbf{Range:} [0.5, 2.0]
+
+\textbf{Formula:} Based on coefficient of variation $CV = \sigma_{pkt}/\mu_{pkt}$:
+\begin{equation}
+\sigma_{size} = \begin{cases}
+0.55 & \text{if } CV < 0.10 \\
+0.70 & \text{if } 0.10 \leq CV < 0.25 \\
+0.85 & \text{if } 0.25 \leq CV < 0.50 \\
+1.00 & \text{if } 0.50 \leq CV < 0.80 \\
+1.20 & \text{if } CV \geq 0.80
+\end{cases}
+\end{equation}
+
+\subsubsection{Burst Size Parameter ($p_{burst}$)}
+
+\textbf{Range:} [0.1, 0.9]
+
+\textbf{Formula:} Based on active/idle ratio and packet count:
+\begin{equation}
+p_{burst} = \text{clamp}\left(f\left(\frac{t_{active}}{t_{idle}}, N_{fwd}\right), 0.1, 0.9\right)
+\end{equation}
+where higher $p$ yields smaller bursts and lower $p$ yields larger bursts.
+
+\subsubsection{Idle Scale ($\tau_{idle}$)}
+
+\textbf{Range:} [0.01, 1.0] seconds
+
+\textbf{Formula:}
+\begin{equation}
+\tau_{idle} = 0.5 \times \frac{\mu_{idle}}{10^6}
+\end{equation}
+where $\mu_{idle}$ is the idle mean in microseconds.
+
+\subsubsection{Inter-Arrival Time Rate ($\lambda_{IAT}$)}
+
+\textbf{Range:} [1, 10000] packets/second
+
+\textbf{Formula:}
+\begin{equation}
+\lambda_{IAT} = \frac{10^6}{\mu_{IAT}}
+\end{equation}
+where $\mu_{IAT}$ is the flow IAT mean in microseconds.
+
+\subsection{Phase 2: TCP Handshake}
+
+A standard three-way TCP handshake is performed:
+\begin{align}
+\text{Client} &\rightarrow \text{Server}: \text{SYN}(\text{seq}=X) \\
+\text{Server} &\rightarrow \text{Client}: \text{SYN-ACK}(\text{seq}=Y, \text{ack}=X+1) \\
+\text{Client} &\rightarrow \text{Server}: \text{ACK}(\text{seq}=X+1, \text{ack}=Y+1)
+\end{align}
+
+This establishes a valid TCP connection with random sequence numbers, ensuring CICFlowMeter correctly detects TCP flags.
+
+\subsection{Phase 3: Burst Generation}
+
+For each burst, $N \sim \text{Geometric}(p_{burst})$ packets are generated:
+
+\begin{algorithm}[H]
+\caption{Burst Generation}
+\begin{algorithmic}
+\FOR{$i = 1$ to $N$}
+    \STATE $\mu \leftarrow \log(\mu_{pkt} \cdot \alpha_{size}) - \sigma^2/2$
+    \STATE $\sigma \leftarrow \sqrt{\log(1 + (\sigma_{pkt} \cdot \sigma_{size} / \mu_{pkt})^2)}$
+    \STATE $size \sim \text{LogNormal}(\mu, \sigma^2)$
+    \STATE Send TCP PSH-ACK packet with $size$ bytes payload
+    \STATE $seq \leftarrow seq + size$
+    \STATE $\Delta t \sim \text{Exponential}(\lambda_{IAT} \times 5)$
+    \STATE Sleep($\min(\Delta t, 0.01)$)
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Phase 4: Flow Loop}
+
+The main flow generation loop ensures flow duration is respected:
+
+\begin{algorithm}[H]
+\caption{Flow Generation}
+\begin{algorithmic}
+\STATE $t_{start} \leftarrow \text{current\_time}()$
+\WHILE{$\text{current\_time}() - t_{start} < T_{duration}$}
+    \STATE Generate\_Burst()
+    \STATE $t_{idle} \sim (\text{Pareto}(\alpha=1.5) + 1) \times \tau_{idle}$
+    \STATE Sleep($\min(t_{idle}, 3)$)
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+The flow duration $T_{duration}$ is \textbf{guaranteed} by the while loop condition.
+
+\subsection{Reproducible Features}
+
+\subsubsection{Features with Strong Guarantees}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Feature} & \textbf{Guarantee} & \textbf{Mechanism} \\
+\midrule
+Flow Duration & $\approx 100\%$ & Time-controlled while loop \\
+Source IP / Dest IP & $100\%$ & Assigned by Mininet topology \\
+Source Port / Dest Port & $100\%$ & Read from CSV or random \\
+Protocol & $100\%$ & Always TCP (PSH-ACK flags) \\
+\bottomrule
+\end{tabular}
+\caption{Features with deterministic guarantees}
+\end{table}
+
+\subsubsection{Features with Statistical Guarantees}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Feature} & \textbf{Accuracy} & \textbf{Distribution} \\
+\midrule
+Fwd Packet Length Mean/Std & 85-95\% & LogNormal($\mu$, $\sigma^2$) \\
+Total Fwd Packets & 70-90\% & Burst count $\times$ burst size \\
+Flow IAT Mean/Std & 60-80\% & Exponential + Pareto \\
+Idle Mean & 75-85\% & Pareto(1.5) $\times$ $\tau_{idle}$ \\
+Active Mean & 65-80\% & Implicit from burst duration \\
+Flow Packets/s & 70-85\% & Resultant from IAT and idle \\
+\bottomrule
+\end{tabular}
+\caption{Features with statistical guarantees}
+\end{table}
+
+\subsubsection{Uncontrolled Features}
+
+The following features depend on server behavior:
+\begin{itemize}
+    \item Total Backward Packets (TCP ACK responses)
+    \item Backward Packet Length (server-controlled)
+    \item TCP Flags Distribution (beyond SYN/PSH-ACK/FIN)
+    \item Flow Bytes/s (derived from sizes and timing)
+\end{itemize}
+
+\section{Optimizer: Iterative Parameter Tuning}
+
+The optimizer implements a \textbf{gradient-free random search} with loss-based feedback.
+
+\subsection{Optimization Loop}
+
+\begin{algorithm}[H]
+\caption{Parameter Optimization}
+\begin{algorithmic}
+\STATE $L_{best} \leftarrow \infty$
+\STATE $\theta_{best} \leftarrow \emptyset$
+\FOR{$iter = 1$ to $N_{iterations}$}
+    \STATE $\theta \sim \mathcal{U}(\text{bounds})$ \COMMENT{Sample random parameters}
+    \STATE Save($\theta$, ``params\_tmp.json'')
+    \STATE Execute pipeline (Mininet $\rightarrow$ PCAP $\rightarrow$ CICFlowMeter)
+    \STATE Wait(30 seconds)
+    \STATE $L \leftarrow$ Compute\_Loss(target\_features, generated\_features)
+    \IF{$L < L_{best}$}
+        \STATE $L_{best} \leftarrow L$
+        \STATE $\theta_{best} \leftarrow \theta$
+    \ENDIF
+\ENDFOR
+\RETURN $\theta_{best}$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Loss Function}
+
+The loss function is a weighted sum of normalized errors:
+
+\begin{equation}
+\mathcal{L}(\mathbf{f}_{target}, \mathbf{f}_{gen}) = \sum_{i=1}^{9} w_i \cdot \frac{|f_{target}^i - f_{gen}^i|}{|f_{target}^i| + \epsilon}
+\end{equation}
+
+where $\epsilon = 10^{-6}$ prevents division by zero.
+
+\subsubsection{Feature Weights}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Feature} & \textbf{Weight} \\
+\midrule
+Flow Duration & 1.0 \\
+Total Fwd Packets & 1.0 \\
+Total Backward Packets & 1.0 \\
+Fwd Packet Length Mean & 0.5 \\
+Fwd Packet Length Std & 0.5 \\
+Flow IAT Mean & 0.7 \\
+Flow IAT Std & 0.7 \\
+Idle Mean & 0.8 \\
+Active Mean & 0.8 \\
+\bottomrule
+\end{tabular}
+\caption{Loss function feature weights}
+\end{table}
+
+\subsection{Convergence Properties}
+
+The optimizer uses gradient-free search because:
+\begin{enumerate}
+    \item The Mininet$\rightarrow$CICFlowMeter pipeline is non-differentiable
+    \item The parameter-to-feature mapping is stochastic
+    \item Random search effectively explores the 5D parameter space
+\end{enumerate}
+
+After 30 iterations ($\approx$15 minutes):
+\begin{itemize}
+    \item \textbf{Loss reduction:} 40-70\% compared to initial parameters
+    \item \textbf{Feature accuracy:} 80-95\% for weighted features
+\end{itemize}
+
+\subsection{Feedback Mechanism}
+
+The optimization loop creates a closed feedback system:
+
+\begin{equation}
+\theta \rightarrow \text{Traffic} \rightarrow \text{PCAP} \rightarrow \text{Features} \rightarrow \mathcal{L} \rightarrow \theta'
+\end{equation}
+
+The optimizer automatically \textbf{tunes statistical distributions} of the generator to minimize distance between original and replicated traffic, while \textbf{maintaining hard guarantees} (duration, IPs, ports) and \textbf{optimizing statistical properties} (size and timing distributions).
+
+\section{Validation and Iterative Refinement}
+
+The Evaluator module computes a loss function comparing statistical features between original and regenerated traffic. This loss quantifies differences in:
+\begin{itemize}
+    \item Packet and byte counts (forward/backward)
+    \item Flow duration and timing statistics
+    \item Protocol-specific features (TCP flags, header lengths)
+    \item Inter-arrival time distributions
+\end{itemize}
+
+When integrated with the Optimizer module, the framework can iteratively refine traffic generation parameters to minimize this loss, achieving progressively higher replication fidelity.
+
+\section{Application Domains}
+
+This framework enables several critical use cases in network security research:
+\begin{itemize}
+    \item \textbf{Privacy-preserving dataset sharing}: Researchers can share CICFlowMeter statistics instead of raw packet captures
+    \item \textbf{Intrusion detection system testing}: Controlled regeneration of attack traffic for IDS validation
+    \item \textbf{Traffic synthesis for machine learning}: Generation of synthetic training data with known ground truth
+    \item \textbf{Network behavior reproduction}: Replication of specific network conditions for debugging and analysis
+\end{itemize}
+
+\section{Conclusion}
+
+The presented framework combines \textbf{deterministic control} (topology, duration, addresses) with \textbf{stochastic modeling} (packet sizes, intra/inter-burst timing) and \textbf{iterative optimization} (random search guided by loss) to replicate network traffic from CICFlowMeter features alone. This approach achieves high-fidelity traffic reproduction while maintaining privacy and reducing storage requirements compared to raw packet capture distribution.
+
+\end{document}

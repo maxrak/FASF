@@ -1,0 +1,17 @@
+2026-07-05 17:54:54 - INFO - ============================================================
+2026-07-05 17:54:54 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-07-05 17:54:54 - INFO - IP Client: 65.55.57.251
+2026-07-05 17:54:54 - INFO - Timestamp: 2026-07-05 17:54:54.363575
+2026-07-05 17:54:54 - INFO - ============================================================
+2026-07-05 17:54:54 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=65.55.57.251, Server=192.168.3.131
+2026-07-05 17:54:54 - INFO - Output: /results/burst_dataset_65_55_57_251_192_168_3_131.csv, Config: /app/flows_params/smallFlows_65_55_57_251.config
+2026-07-05 17:54:59 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 0.8, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 10000.0}
+2026-07-05 17:55:00 - INFO - CSV: /tmp/flows_adapted.csv
+2026-07-05 17:55:00 - INFO - Ricerca flussi diretti: 65.55.57.251 -> 192.168.3.131
+2026-07-05 17:55:00 - INFO - Colonne: Source IP, Destination IP
+2026-07-05 17:55:00 - INFO - Righe totali: 658, Flussi selezionati: 2
+2026-07-05 17:55:00 - INFO - ============================================================
+2026-07-05 17:55:00 - INFO - ELABORAZIONE FLUSSO 1/2
+2026-07-05 17:55:00 - INFO - ============================================================
+2026-07-05 17:55:00 - INFO - [FLOW] Avvio flusso 65.55.57.251:80 -> 192.168.3.131:57058
+2026-07-05 17:55:00 - INFO - [HANDSHAKE] Invio SYN: 65.55.57.251:80 -> 192.168.3.131:57058 (seq=15338)

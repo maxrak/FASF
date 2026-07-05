@@ -1,0 +1,8 @@
+java -Djava.library.path=$(pwd)"/cfm_distr/jnetpcap-1.4.r1500"   -jar cfm_distr_RT/CICFlowMeterV3-0.0.4-SNAPSHOT_cmd_RT.jar live:eth0 <dir_salvataggio flussi>
+
+Se si vuole vedere il traffico live (sull'interfaccia eth0, per es.). Se si vuole invece la modalità tradizionale (post-mortem) mettere il file .pcap al posto di live:eth0
+
+Per vedere gli update JSON, usare il file tcp-flow-viewer.py, all'interno del quale al posto di "server" bisogna metterci l'indirizzo IP del cicflometer in esecuzione
+
+
+ 

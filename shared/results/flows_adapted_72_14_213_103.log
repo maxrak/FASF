@@ -1,0 +1,48 @@
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-07-05 20:05:16 - INFO - IP Client: 72.14.213.103
+2026-07-05 20:05:16 - INFO - Timestamp: 2026-07-05 20:05:16.560484
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=72.14.213.103, Server=192.168.3.131
+2026-07-05 20:05:16 - INFO - Output: /results/burst_dataset_72_14_213_103_192_168_3_131.csv, Config: /app/flows_params/test3_72_14_213_103.config
+2026-07-05 20:05:16 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 0.8, 'burst_size_p': 0.5, 'idle_scale': 2.0, 'iat_rate': 1.0}
+2026-07-05 20:05:16 - INFO - CSV: /tmp/flows_adapted.csv
+2026-07-05 20:05:16 - INFO - Ricerca flussi diretti: 72.14.213.103 -> 192.168.3.131
+2026-07-05 20:05:16 - INFO - Colonne: Source IP, Destination IP
+2026-07-05 20:05:16 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-07-05 20:05:16 - INFO - ============================================================
+2026-07-05 20:05:16 - INFO - [FLOW] Avvio flusso 72.14.213.103:80 -> 192.168.3.131:57890
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio SYN: 72.14.213.103:80 -> 192.168.3.131:57890 (seq=61959)
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Ricevuto SYN-ACK: 192.168.3.131:57890 -> 72.14.213.103:80 (seq=0, ack=61960)
+2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio ACK: 72.14.213.103:80 -> 192.168.3.131:57890 (seq=61960, ack=1)
+2026-07-05 20:05:16 - INFO - [FLOW] Durata prevista: 9.55s, Idle mean: 9.527052s
+2026-07-05 20:05:16 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.103:80 -> 192.168.3.131:57890 (size=1B, seq=61960, ack=1)
+2026-07-05 20:05:16 - DEBUG - [FLOW] Burst 1 completato: 1 pacchetti inviati
+2026-07-05 20:05:16 - DEBUG - [FLOW] Idle time: 2.006671s
+2026-07-05 20:05:18 - DEBUG - [BURST] Generazione burst di 6 pacchetti
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 1/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=1B, seq=61961, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 2/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=1B, seq=61962, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 3/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=1B, seq=61963, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 4/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=6B, seq=61964, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 5/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=1B, seq=61970, ack=1)
+2026-07-05 20:05:18 - DEBUG - [DATA] Invio pacchetto 6/6: 72.14.213.103:80 -> 192.168.3.131:57890 (size=6B, seq=61971, ack=1)
+2026-07-05 20:05:18 - DEBUG - [FLOW] Burst 2 completato: 6 pacchetti inviati
+2026-07-05 20:05:18 - DEBUG - [FLOW] Idle time: 3.862312s
+2026-07-05 20:05:21 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:21 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.103:80 -> 192.168.3.131:57890 (size=11B, seq=61977, ack=1)
+2026-07-05 20:05:22 - DEBUG - [FLOW] Burst 3 completato: 1 pacchetti inviati
+2026-07-05 20:05:22 - DEBUG - [FLOW] Idle time: 4.329656s
+2026-07-05 20:05:25 - DEBUG - [BURST] Generazione burst di 1 pacchetti
+2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.103:80 -> 192.168.3.131:57890 (size=5B, seq=61988, ack=1)
+2026-07-05 20:05:25 - DEBUG - [FLOW] Burst 4 completato: 1 pacchetti inviati
+2026-07-05 20:05:25 - DEBUG - [FLOW] Idle time: 3.577025s
+2026-07-05 20:05:28 - INFO - [FLOW] Flusso completato in 11.47s: 9 pacchetti, 4 burst
+2026-07-05 20:05:28 - INFO - Risultato flusso 0: {'duration': 11.465737104415894, 'packets': 9, 'bursts': 4, 'avg_burst_size': 2.25}
+2026-07-05 20:05:28 - INFO - Dataset salvato in /results/burst_dataset_72_14_213_103_192_168_3_131.csv
+2026-07-05 20:05:28 - INFO - Totale flussi processati: 1/1
+2026-07-05 20:05:28 - INFO - ============================================================
+2026-07-05 20:05:28 - INFO - ESECUZIONE COMPLETATA
+2026-07-05 20:05:28 - INFO - ============================================================

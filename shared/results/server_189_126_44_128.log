@@ -1,11 +1,34 @@
-2026-04-15 12:03:46 - INFO - ============================================================
-2026-04-15 12:03:46 - INFO - SERVER DEBUG LOG
-2026-04-15 12:03:46 - INFO - Server IP: 189.126.44.128
-2026-04-15 12:03:46 - INFO - Timestamp: 2026-04-15 12:03:46.470613
-2026-04-15 12:03:46 - INFO - ============================================================
-2026-04-15 12:03:46 - INFO - Avvio server scapy su tutte le porte TCP...
-2026-04-15 12:03:46 - INFO - Regola iptables configurata: DROP RST automatici del kernel
-2026-04-15 12:03:46 - INFO - Server in ascolto su interfaccia h64-eth0, tutte le porte TCP...
-2026-04-15 12:03:46 - INFO - Pronto a ricevere connessioni.
-2026-04-15 12:03:46 - INFO - Sniffing su interfaccia: h64-eth0
-2026-04-15 12:03:46 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-07-05 19:48:39 - INFO - ============================================================
+2026-07-05 19:48:39 - INFO - SERVER DEBUG LOG
+2026-07-05 19:48:39 - INFO - Server IP: 189.126.44.128
+2026-07-05 19:48:39 - INFO - Timestamp: 2026-07-05 19:48:39.029996
+2026-07-05 19:48:39 - INFO - ============================================================
+2026-07-05 19:48:39 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-07-05 19:48:39 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-07-05 19:48:39 - INFO - Server in ascolto su interfaccia h12-eth0, tutte le porte TCP...
+2026-07-05 19:48:39 - INFO - Pronto a ricevere connessioni.
+2026-07-05 19:48:39 - INFO - Sniffing su interfaccia: h12-eth0
+2026-07-05 19:48:39 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=S
+2026-07-05 20:05:16 - INFO - [SYN] Ricevuto da 172.16.255.1:50983 -> 189.126.44.128:3192 (seq=26791)
+2026-07-05 20:05:16 - INFO - [SYN-ACK] Invio a 172.16.255.1:50983 <- 189.126.44.128:3192 (seq=1000, ack=26792)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=RA
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=A
+2026-07-05 20:05:16 - DEBUG - [ACK] Ricevuto da 172.16.255.1:50983 -> 189.126.44.128:3192 (seq=26792, ack=1)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=R
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=PA
+2026-07-05 20:05:16 - DEBUG - [PSH-ACK] Ricevuto da 172.16.255.1:50983 -> 189.126.44.128:3192 (seq=26792, ack=1, payload=28B)
+2026-07-05 20:05:16 - DEBUG - [ACK] Invio a 172.16.255.1:50983 <- 189.126.44.128:3192 (seq=1, ack=26820)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=R
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=SA
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=R
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=A
+2026-07-05 20:05:16 - DEBUG - [ACK] Ricevuto da 189.126.44.128:3192 -> 172.16.255.1:50983 (seq=1, ack=26820)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=R
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=PA
+2026-07-05 20:05:16 - DEBUG - [PSH-ACK] Ricevuto da 172.16.255.1:50983 -> 189.126.44.128:3192 (seq=26820, ack=1, payload=28B)
+2026-07-05 20:05:16 - DEBUG - [ACK] Invio a 172.16.255.1:50983 <- 189.126.44.128:3192 (seq=1, ack=26848)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=R
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 189.126.44.128:3192 -> 172.16.255.1:50983 flags=A
+2026-07-05 20:05:16 - DEBUG - [ACK] Ricevuto da 189.126.44.128:3192 -> 172.16.255.1:50983 (seq=1, ack=26848)
+2026-07-05 20:05:16 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 189.126.44.128:3192 flags=R

@@ -6,8 +6,10 @@ WORKDIR /app
 
 COPY distribution/ ./distribution/
 COPY cicflowmeter.sh .
+COPY cicflowmeterlive.sh .
 
 RUN chmod +x cicflowmeter.sh
+RUN chmod +x cicflowmeterlive.sh
 
 CMD ["bash", "-c", "\
 while true; do \

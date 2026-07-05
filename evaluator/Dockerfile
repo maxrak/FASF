@@ -1,6 +1,10 @@
 FROM python:3.10-slim
 
-RUN pip install pandas numpy
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends graphviz \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir pandas numpy pyvis
 
 WORKDIR /app
 

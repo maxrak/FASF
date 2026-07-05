@@ -173,14 +173,13 @@ def start_client(csv_file, ip_client, ip_server, params, output="/results/burst_
     else:
         print(f"[!] ERRORE: Colonne IP non trovate. Colonne disponibili: {df.columns.tolist()}")
         return
-    
+
     flows = df[
-        ((df[src_col] == ip_client) & (df[dst_col] == ip_server)) |
-        ((df[src_col] == ip_server) & (df[dst_col] == ip_client))
+        (df[src_col] == ip_client) & (df[dst_col] == ip_server)
     ]
 
     print(f"[+] CSV: {csv_file}")
-    print(f"[+] Ricerca flussi tra {ip_client} <-> {ip_server}")
+    print(f"[+] Ricerca flussi diretti {ip_client} -> {ip_server}")
     print(f"[+] Colonne usate: {src_col}, {dst_col}")
     print(f"[+] Righe totali nel CSV: {len(df)}")
     print(f"[+] Flussi selezionati: {len(flows)}")
@@ -224,4 +223,3 @@ if __name__ == "__main__":
         exit(1)
 
     start_client(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    

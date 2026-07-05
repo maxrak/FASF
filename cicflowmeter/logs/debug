@@ -1,3 +1,4 @@
-2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    You select: distribution/smallFlows.pcap
-2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    Out folder: flows.csv
-2026-04-10 14:46:55 INFO  cic.cs.unb.ca.ifm.Cmd    CICFlowMeter received 1 pcap file
+2026-04-25 10:57:54 INFO  cic.cs.unb.ca.ifm.Cmd    Please select pcap!
+2026-04-25 10:58:15 INFO  cic.cs.unb.ca.ifm.Cmd    You select: live:eth0
+2026-04-25 10:58:15 INFO  cic.cs.unb.ca.ifm.Cmd    Out folder: local_flows
+2026-04-25 10:58:15 INFO  cic.cs.unb.ca.ifm.Cmd    CICFlowMeter live capture on interface: eth0

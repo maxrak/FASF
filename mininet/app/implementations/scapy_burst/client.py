@@ -294,19 +294,18 @@ def start_client(csv_file, ip_client, ip_server, output="/results/burst_dataset.
         return
     
     flows = df[
-        ((df[src_col] == ip_client) & (df[dst_col] == ip_server)) |
-        ((df[src_col] == ip_server) & (df[dst_col] == ip_client))
+        (df[src_col] == ip_client) & (df[dst_col] == ip_server)
     ]
 
     print(f"[+] CSV: {csv_file}")
-    print(f"[+] Ricerca flussi tra {ip_client} <-> {ip_server}")
+    print(f"[+] Ricerca flussi diretti {ip_client} -> {ip_server}")
     print(f"[+] Colonne usate: {src_col}, {dst_col}")
     print(f"[+] Righe totali nel CSV: {len(df)}")
     print(f"[+] Flussi selezionati: {len(flows)}")
     
     if logger:
         logger.info(f"CSV: {csv_file}")
-        logger.info(f"Ricerca flussi: {ip_client} <-> {ip_server}")
+        logger.info(f"Ricerca flussi diretti: {ip_client} -> {ip_server}")
         logger.info(f"Colonne: {src_col}, {dst_col}")
         logger.info(f"Righe totali: {len(df)}, Flussi selezionati: {len(flows)}")
     
