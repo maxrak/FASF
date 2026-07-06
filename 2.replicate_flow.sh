@@ -11,7 +11,8 @@
 #                     Valori possibili: scapy_burst, tcp_simple, flow_emulator
 #
 # Esempi:
-#   ./2.replicate_flow.sh test2                    # Usa scapy_burst (default)
+#   ./2.replicate_flow.sh test2                    # Usa tcp_burst(default)
+#   ./2.replicate_flow.sh test2 scapy_burst        # Usa scapy_burst
 #   ./2.replicate_flow.sh test2 tcp_simple         # Usa tcp_simple
 #   ./2.replicate_flow.sh smallFlows flow_emulator # Usa flow_emulator
 
@@ -21,14 +22,15 @@ if [ -z "$1" ]; then
     echo "Uso: ./2.replicate_flow.sh <flow_name> [implementation]"
     echo ""
     echo "Implementazioni disponibili:"
-    echo "  - scapy_burst (default): client_scapy_burst_optimized.py + server_adv.py"
+    echo "  - tcp_burst (default): client_tcp_burst.py + server_adv.py"
+    echo "  - scapy_burst: client_scapy_burst_optimized.py + server_adv.py"
     echo "  - tcp_simple: client_replay.py + server_tcp_simple.py"
     echo "  - flow_emulator: flow_emulator.py + server_adv.py"
     exit 1
 fi
 
 FLOW_NAME=$1
-IMPLEMENTATION=${2:-scapy_burst}  # Default: scapy_burst se non specificato
+IMPLEMENTATION=${2:-tcp_burst}  # Default: tcp_burst se non specificato
 
 echo "=== Replica Flusso ==="
 echo "Flusso: $FLOW_NAME"
