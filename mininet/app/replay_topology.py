@@ -930,7 +930,7 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     # Con molti host questo può richiedere tempo, limita il numero
     info("*** Popolamento tabelle ARP/MAC con ping di connettività\n")
     # Pingall completo solo per topologie piccole (<50 host)
-    if len(host_map) < 50:
+    if len(host_map) < 15:
         net.pingAll()
     else:
         # Per topologie grandi, ping solo tra host che devono comunicare

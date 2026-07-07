@@ -52,3 +52,4 @@ echo "📝 Output CSV: shared/output_flows/regenerated_${TEST_NAME}.csv"
 echo ""
 
 docker compose run --rm cicflowmeter bash ./cicflowmeter.sh "${PCAP_FILE}" "${OUTPUT_FILE}" 
+awk -F, '$3 != "0"' shared/output_flows/regenerated_${TEST_NAME}.csv/capture_"${TEST_NAME}".pcap_Flow.csv >shared/output_flows/regenerated_${TEST_NAME}_clean.csv
