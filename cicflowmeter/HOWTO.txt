@@ -1,0 +1,22 @@
+java -Djava.library.path=$(pwd)"/cfm_distr/jnetpcap-1.4.r1500"   -jar cfm_distr_RT/CICFlowMeterV4-RT-1.0.2.jar live:eth0 <dir_salvataggio flussi>
+
+Se si vuole vedere il traffico live (sull'interfaccia eth0, per es.). Se si vuole invece la modalità tradizionale (post-mortem) mettere il file .pcap al posto di live:eth0
+
+Nella dir di CICFlowMeterV4-RT-1.0.2.jar usare una dir config per contenere il file di configurazione
+realtime.properties. In assenza, il programma parte coi valori di default. Istruzioni per la configurazione
+In realtime.properties. La cosa importante è scegliere le features da esaminare in console e via socket.
+
+Per vedere gli update JSON, usare il file tcp-flow-viewer.py, all'interno del quale al posto di "server" bisogna metterci l'indirizzo IP del cicflowmeter in esecuzione
+A mano con nc: nc server 9099
+
+Il container che ospita CICFlowMeter espone solo la porta 9099 all'host (quindi, cambiando il port
+Nel file di configurazione, l'host non avrà più accesso). La porta appare come una porta normale dell'host.
+Quindi se si vuole accedere via socket dall' host: nc localhost 9099
+
+Gli altri programmi Python servono per salvare gli snapshot ricevuti, anche su file in csv.
+
+
+
+
+
+ 

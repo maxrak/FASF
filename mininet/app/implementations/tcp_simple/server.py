@@ -24,6 +24,11 @@ def handle_client(client_socket, client_address):
     except Exception as e:
         pass
     finally:
+        # Chiusura corretta TCP con FIN
+        try:
+            client_socket.shutdown(socket.SHUT_RDWR)
+        except Exception:
+            pass
         try:
             client_socket.close()
         except:

@@ -191,6 +191,7 @@ def normalize_flows(raw_flows):
 def build_model(topology):
     subnets = topology.get("subnets", [])
     routers = topology.get("routers", [])
+    monitoring_switch = topology.get("monitoring_switch")
     probe = topology.get("probe") or {}
     flows = normalize_flows(topology.get("flows", []))
 
@@ -225,6 +226,7 @@ def build_model(topology):
     return {
         "subnets": subnets,
         "routers": routers,
+        "monitoring_switch": monitoring_switch,
         "probe": probe,
         "flows": flows,
         "known_hosts": known_hosts,
@@ -434,6 +436,12 @@ def build_dot(model, graph_name, flow_mode="full"):
 
     central_router_id = str(routers[0].get("id", "gateway_router"))
     declared_hosts = set()
+    
+    # Determina quali switch sono collegati al monitoring switch
+    monitoring_switch_config = model.get("monitoring_switch")
+    private_switch_names = set()
+    if monitoring_switch_config:
+        private_switch_names = set(monitoring_switch_config.get("connects_to", []))
 
     for index, subnet in enumerate(model["subnets"], start=1):
         network = str(subnet.get("network", f"subnet-{index}"))
@@ -501,15 +509,21 @@ def build_dot(model, graph_name, flow_mode="full"):
             )
 
         lines.append("  }")
-        lines.append(
-            "  "
-            + dot_node_id("router", central_router_id)
-            + " -> "
-            + dot_node_id("switch", switch_name)
-            + " ["
-            + dot_attrs(dir="none", color=TOPOLOGY_EDGE_COLOR, penwidth="1.8", tooltip="link router-switch")
-            + "];"
-        )
+        
+        # Se lo switch è privato e c'è monitoring switch, non collegarlo al router
+        # (verrà collegato al monitoring switch dopo)
+        is_private_switch = switch_name in private_switch_names
+        if not is_private_switch:
+            # Switch internet o senza monitoring: collega direttamente al router
+            lines.append(
+                "  "
+                + dot_node_id("router", central_router_id)
+                + " -> "
+                + dot_node_id("switch", switch_name)
+                + " ["
+                + dot_attrs(dir="none", color=TOPOLOGY_EDGE_COLOR, penwidth="1.8", tooltip="link router-switch")
+                + "];"
+            )
         lines.append("")
 
     if model["unknown_hosts"]:
@@ -545,13 +559,68 @@ def build_dot(model, graph_name, flow_mode="full"):
             )
         lines.append("  }")
         lines.append("")
+    
+    # Crea il nodo monitoring switch se presente
+    if monitoring_switch_config:
+        monitoring_switch_name = monitoring_switch_config.get("name", "s_monitoring")
+        monitoring_switch_color = {"fill": "#8b5cf6", "border": "#5b21b6"}  # Viola per distinguerlo
+        
+        lines.append(
+            "  "
+            + dot_node_id("switch", monitoring_switch_name)
+            + " ["
+            + dot_attrs(
+                label=monitoring_switch_name + "\n(monitoring)",
+                shape="box",
+                fillcolor=monitoring_switch_color["fill"],
+                color=monitoring_switch_color["border"],
+                fontcolor="white",
+                penwidth="2.0",
+                tooltip=f"Monitoring Switch: {monitoring_switch_name}\n{monitoring_switch_config.get('purpose', '')}",
+            )
+            + "];"
+        )
+        
+        # Collega monitoring switch al router
+        lines.append(
+            "  "
+            + dot_node_id("router", central_router_id)
+            + " -> "
+            + dot_node_id("switch", monitoring_switch_name)
+            + " ["
+            + dot_attrs(dir="none", color=monitoring_switch_color["border"], penwidth="2.5", tooltip="link router-monitoring")
+            + "];"
+        )
+        
+        # Collega ogni switch privato al monitoring switch
+        for priv_switch_name in private_switch_names:
+            lines.append(
+                "  "
+                + dot_node_id("switch", priv_switch_name)
+                + " -> "
+                + dot_node_id("switch", monitoring_switch_name)
+                + " ["
+                + dot_attrs(dir="none", color=TOPOLOGY_EDGE_COLOR, penwidth="1.8", tooltip="link private-monitoring")
+                + "];"
+            )
+        lines.append("")
 
     probe = model["probe"]
     if probe:
         probe_name = str(probe.get("name", "probe"))
-        probe_connection = str(probe.get("connection", central_router_id))
-        if probe_connection not in router_ids:
-            probe_connection = central_router_id
+        
+        # Determina a cosa collegare il probe: usa mirror_switches se presente, altrimenti connection o router
+        mirror_switches = probe.get("mirror_switches", [])
+        if mirror_switches:
+            # Collega al primo switch in mirror_switches
+            probe_connection = str(mirror_switches[0])
+            probe_connection_type = "switch"
+        else:
+            # Fallback alla vecchia logica
+            probe_connection = str(probe.get("connection", central_router_id))
+            probe_connection_type = "switch" if probe_connection in private_switch_names else "router"
+            if probe_connection_type == "router" and probe_connection not in router_ids:
+                probe_connection = central_router_id
         lines.append(
             "  "
             + dot_node_id("probe", probe_name)
@@ -572,11 +641,12 @@ def build_dot(model, graph_name, flow_mode="full"):
         )
         lines.append(
             "  "
-            + dot_node_id("router", probe_connection)
+            + dot_node_id(probe_connection_type, probe_connection)
             + " -> "
             + dot_node_id("probe", probe_name)
             + " ["
-            + dot_attrs(dir="none", color=PROBE_COLOR["border"], penwidth="1.6", tooltip="link probe")
+            + dot_attrs(dir="none", color=PROBE_COLOR["border"], penwidth="1.6", 
+                       tooltip=f"probe mirror from {probe_connection}")
             + "];"
         )
         lines.append("")
@@ -702,6 +772,12 @@ def write_pyvis_html(model, html_path, graph_name, height):
     routers = model["routers"] or [{"id": "gateway_router", "type": "central_gateway"}]
     central_router_id = str(routers[0].get("id", "gateway_router"))
     router_ids = {str(router.get("id", "gateway_router")) for router in routers}
+    
+    # Determina quali switch sono collegati al monitoring switch
+    monitoring_switch_config = model.get("monitoring_switch")
+    private_switch_names = set()
+    if monitoring_switch_config:
+        private_switch_names = set(monitoring_switch_config.get("connects_to", []))
 
     for router in routers:
         router_id = str(router.get("id", "gateway_router"))
@@ -745,14 +821,20 @@ def write_pyvis_html(model, html_path, graph_name, height):
             switch_color,
             value=max(8, len(subnet.get("hosts", []))),
         )
-        net.add_edge(
-            node_id("router", central_router_id),
-            node_id("switch", switch_name),
-            title=html_title(["Link router-switch", network]),
-            color=TOPOLOGY_EDGE_COLOR,
-            width=2,
-            arrows="",
-        )
+        
+        # Se lo switch è privato e c'è monitoring switch, non collegarlo al router
+        # (verrà collegato al monitoring switch dopo)
+        is_private_switch = switch_name in private_switch_names
+        if not is_private_switch:
+            # Switch internet o senza monitoring: collega direttamente al router
+            net.add_edge(
+                node_id("router", central_router_id),
+                node_id("switch", switch_name),
+                title=html_title(["Link router-switch", network]),
+                color=TOPOLOGY_EDGE_COLOR,
+                width=2,
+                arrows="",
+            )
 
         for host in sorted(str(item) for item in subnet.get("hosts", [])):
             role = host_role(host, model)
@@ -789,13 +871,67 @@ def write_pyvis_html(model, html_path, graph_name, height):
             colors,
             value=max(4, model["outgoing"][host] + model["incoming"][host]),
         )
+    
+    # Crea il nodo monitoring switch se presente
+    if monitoring_switch_config:
+        monitoring_switch_name = monitoring_switch_config.get("name", "s_monitoring")
+        monitoring_switch_color = {"fill": "#8b5cf6", "border": "#5b21b6"}  # Viola per distinguerlo
+        
+        add_pyvis_node(
+            net,
+            node_id("switch", monitoring_switch_name),
+            monitoring_switch_name + " (monitoring)",
+            html_title(
+                [
+                    f"Monitoring Switch: {monitoring_switch_name}",
+                    f"Tipo: {monitoring_switch_config.get('type', 'aggregation')}",
+                    monitoring_switch_config.get('purpose', ''),
+                    f"Collega {len(private_switch_names)} switch privati",
+                ]
+            ),
+            "monitoring_switch",
+            "box",
+            monitoring_switch_color,
+            value=15,
+        )
+        
+        # Collega monitoring switch al router
+        net.add_edge(
+            node_id("router", central_router_id),
+            node_id("switch", monitoring_switch_name),
+            title=html_title(["Link router-monitoring switch"]),
+            color=monitoring_switch_color["border"],
+            width=3,
+            arrows="",
+        )
+        
+        # Collega ogni switch privato al monitoring switch
+        for priv_switch_name in private_switch_names:
+            net.add_edge(
+                node_id("switch", priv_switch_name),
+                node_id("switch", monitoring_switch_name),
+                title=html_title(["Link private-monitoring"]),
+                color=TOPOLOGY_EDGE_COLOR,
+                width=2,
+                arrows="",
+            )
 
     probe = model["probe"]
     if probe:
         probe_name = str(probe.get("name", "probe"))
-        probe_connection = str(probe.get("connection", central_router_id))
-        if probe_connection not in router_ids:
-            probe_connection = central_router_id
+        
+        # Determina a cosa collegare il probe: usa mirror_switches se presente, altrimenti connection o router
+        mirror_switches = probe.get("mirror_switches", [])
+        if mirror_switches:
+            # Collega al primo switch in mirror_switches
+            probe_connection = str(mirror_switches[0])
+            probe_connection_type = "switch"
+        else:
+            # Fallback alla vecchia logica
+            probe_connection = str(probe.get("connection", central_router_id))
+            probe_connection_type = "switch" if probe_connection in private_switch_names else "router"
+            if probe_connection_type == "router" and probe_connection not in router_ids:
+                probe_connection = central_router_id
         add_pyvis_node(
             net,
             node_id("probe", probe_name),
@@ -813,9 +949,9 @@ def write_pyvis_html(model, html_path, graph_name, height):
             value=8,
         )
         net.add_edge(
-            node_id("router", probe_connection),
+            node_id(probe_connection_type, probe_connection),
             node_id("probe", probe_name),
-            title=html_title(["Link probe", probe.get("interface", "")]),
+            title=html_title([f"Probe mirror from {probe_connection}", probe.get("mode", "")]),
             color=PROBE_COLOR["border"],
             width=2,
             arrows="",

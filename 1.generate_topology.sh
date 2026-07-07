@@ -42,4 +42,4 @@ echo ""
 
 docker compose run --rm evaluator python analyze_flows.py input_flows/$CSV_FILE.csv topologies/$CSV_FILE.json
 docker compose run --rm evaluator python generate_initial_params.py input_flows/$CSV_FILE.csv flows_params/
-docker compose run --rm evaluator python topology_viewer.py topologies/test3.json
+docker compose run --rm evaluator python topology_viewer.py topologies/$CSV_FILE.json

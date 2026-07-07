@@ -203,6 +203,22 @@ def generate_flow(row, ip_client, ip_server, params):
             logger.debug(f"[FLOW] Idle time: {idle_time:.6f}s")
         time.sleep(min(idle_time, 3))
     
+    # Chiusura corretta TCP con FIN
+    if logger:
+        logger.info(f"[CLOSE] Invio FIN: {ip_client}:{sport} -> {ip_server}:{dport}")
+    
+    fin = IP(src=ip_client, dst=ip_server) / TCP(
+        sport=sport,
+        dport=dport,
+        flags="FA",  # FIN + ACK
+        seq=seq,
+        ack=ack
+    )
+    send(fin, verbose=0)
+    
+    if logger:
+        logger.info(f"[CLOSE] FIN inviato (seq={seq}, ack={ack})")
+    
     elapsed = time.time() - start
     if logger:
         logger.info(f"[FLOW] Flusso completato in {elapsed:.2f}s: {total_packets} pacchetti, {total_bursts} burst")

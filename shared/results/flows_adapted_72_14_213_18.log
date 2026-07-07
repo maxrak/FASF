@@ -1,66 +1,8 @@
-2026-07-05 20:05:16 - INFO - ============================================================
-2026-07-05 20:05:16 - INFO - CLIENT DEBUG LOG - flows_adapted
-2026-07-05 20:05:16 - INFO - IP Client: 72.14.213.18
-2026-07-05 20:05:16 - INFO - Timestamp: 2026-07-05 20:05:16.545088
-2026-07-05 20:05:16 - INFO - ============================================================
-2026-07-05 20:05:16 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
-2026-07-05 20:05:16 - INFO - Output: /results/burst_dataset_72_14_213_18_192_168_3_131.csv, Config: /app/flows_params/test3_72_14_213_18.config
-2026-07-05 20:05:16 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.5, 'idle_scale': 2.0, 'iat_rate': 1.0}
-2026-07-05 20:05:16 - INFO - CSV: /tmp/flows_adapted.csv
-2026-07-05 20:05:16 - INFO - Ricerca flussi diretti: 72.14.213.18 -> 192.168.3.131
-2026-07-05 20:05:16 - INFO - Colonne: Source IP, Destination IP
-2026-07-05 20:05:16 - INFO - Righe totali: 49, Flussi selezionati: 2
-2026-07-05 20:05:16 - INFO - ============================================================
-2026-07-05 20:05:16 - INFO - ELABORAZIONE FLUSSO 1/2
-2026-07-05 20:05:16 - INFO - ============================================================
-2026-07-05 20:05:16 - INFO - [FLOW] Avvio flusso 72.14.213.18:443 -> 192.168.3.131:49673
-2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio SYN: 72.14.213.18:443 -> 192.168.3.131:49673 (seq=39704)
-2026-07-05 20:05:16 - INFO - [HANDSHAKE] Ricevuto SYN-ACK: 192.168.3.131:49673 -> 72.14.213.18:443 (seq=0, ack=39705)
-2026-07-05 20:05:16 - INFO - [HANDSHAKE] Invio ACK: 72.14.213.18:443 -> 192.168.3.131:49673 (seq=39705, ack=1)
-2026-07-05 20:05:16 - INFO - [FLOW] Durata prevista: 116.99s, Idle mean: 10.902270s
-2026-07-05 20:05:16 - DEBUG - [BURST] Generazione burst di 2 pacchetti
-2026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 1/2: 72.14.213.18:443 -> 192.168.3.131:49673 (size=241B, seq=39705, ack=1)
-2026-07-05 20:05:16 - DEBUG - [DATA] Invio pacchetto 2/2: 72.14.213.18:443 -> 192.168.3.131:49673 (size=133B, seq=39946, ack=1)
-2026-07-05 20:05:16 - DEBUG - [FLOW] Burst 1 completato: 2 pacchetti inviati
-2026-07-05 20:05:16 - DEBUG - [FLOW] Idle time: 3.740664s
-2026-07-05 20:05:19 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:19 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=193B, seq=40079, ack=1)
-2026-07-05 20:05:19 - DEBUG - [FLOW] Burst 2 completato: 1 pacchetti inviati
-2026-07-05 20:05:19 - DEBUG - [FLOW] Idle time: 2.611339s
-2026-07-05 20:05:22 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:22 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=18B, seq=40272, ack=1)
-2026-07-05 20:05:22 - DEBUG - [FLOW] Burst 3 completato: 1 pacchetti inviati
-2026-07-05 20:05:22 - DEBUG - [FLOW] Idle time: 5.379341s
-2026-07-05 20:05:25 - DEBUG - [BURST] Generazione burst di 7 pacchetti
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 1/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=32B, seq=40290, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 2/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=144B, seq=40322, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 3/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=397B, seq=40466, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 4/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=7B, seq=40863, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 5/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=21B, seq=40870, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 6/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=6B, seq=40891, ack=1)
-2026-07-05 20:05:25 - DEBUG - [DATA] Invio pacchetto 7/7: 72.14.213.18:443 -> 192.168.3.131:49673 (size=11B, seq=40897, ack=1)
-2026-07-05 20:05:25 - DEBUG - [FLOW] Burst 4 completato: 7 pacchetti inviati
-2026-07-05 20:05:25 - DEBUG - [FLOW] Idle time: 4.796258s
-2026-07-05 20:05:28 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:28 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=112B, seq=40908, ack=1)
-2026-07-05 20:05:28 - DEBUG - [FLOW] Burst 5 completato: 1 pacchetti inviati
-2026-07-05 20:05:28 - DEBUG - [FLOW] Idle time: 13.642542s
-2026-07-05 20:05:31 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:31 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=7B, seq=41020, ack=1)
-2026-07-05 20:05:31 - DEBUG - [FLOW] Burst 6 completato: 1 pacchetti inviati
-2026-07-05 20:05:31 - DEBUG - [FLOW] Idle time: 3.987661s
-2026-07-05 20:05:34 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:34 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=80B, seq=41027, ack=1)
-2026-07-05 20:05:35 - DEBUG - [FLOW] Burst 7 completato: 1 pacchetti inviati
-2026-07-05 20:05:35 - DEBUG - [FLOW] Idle time: 2.856653s
-2026-07-05 20:05:37 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:37 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=27B, seq=41107, ack=1)
-2026-07-05 20:05:37 - DEBUG - [FLOW] Burst 8 completato: 1 pacchetti inviati
-2026-07-05 20:05:37 - DEBUG - [FLOW] Idle time: 9.058098s
-2026-07-05 20:05:40 - DEBUG - [BURST] Generazione burst di 2 pacchetti
-2026-07-05 20:05:40 - DEBUG - [DATA] Invio pacchetto 1/2: 72.14.213.18:443 -> 192.168.3.131:49673 (size=1B, seq=41134, ack=1)
-2026-07-05 20:05:41 - DEBUG - [DATA] Invio pacchetto 2/2: 72.14.213.18:443 -> 192.168.3.131:49673 (size=7B, seq=41135, ack=1)
-2026-07-05 20:05:41 - DEBUG - [FLOW] Burst 9 completato: 2 pacchetti inviati
-2026-07-05 20:05:41 - DEBUG - [FLOW] Idle time: 8.279087s
-2026-07-05 20:05:44 - DEBUG - [BURST] Generazione burst di 1 pacchetti
-2026-07-05 20:05:44 - DEBUG - [DATA] Invio pacchetto 1/1: 72.14.213.18:443 -> 192.168.3.131:49673 (size=4B, seq=41142, ack=1)
+2026-07-07 09:28:28 - INFO - ============================================================
+2026-07-07 09:28:28 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
+2026-07-07 09:28:28 - INFO - IP Client: 72.14.213.18
+2026-07-07 09:28:28 - INFO - Timestamp: 2026-07-07 09:28:28.594329
+2026-07-07 09:28:28 - INFO - ============================================================
+2026-07-07 09:28:28 - INFO - Avvio client socket: CSV=/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
+2026-07-07 09:28:28 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
+2026-07-07 09:28:28 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use

@@ -1,0 +1,10 @@
+modprobe: FATAL: Module openvswitch not found in directory /lib/modules/6.12.76-linuxkit
+ * Inserting openvswitch module
+ * not removing bridge module because bridges exist (br-5bf1d79ce416 br-60c4b4b6ac21 br-8e197cdeb160 br-a4858c936ab2 br-a69826278ccc docker0)
+ * /etc/openvswitch/conf.db does not exist
+ * Creating empty database /etc/openvswitch/conf.db
+ * Starting ovsdb-server
+ * Configuring Open vSwitch system IDs
+modprobe: FATAL: Module openvswitch not found in directory /lib/modules/6.12.76-linuxkit
+ * Inserting openvswitch module
+ * not removing bridge module because bridges exist (br-5bf1d79ce416 br-60c4b4b6ac21 br-8e197cdeb160 br-a4858c936ab2 br-a69826278ccc docker0)

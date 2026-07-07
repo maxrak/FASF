@@ -150,9 +150,22 @@ def create_network_from_topology(topology, max_subnets=10):
     # Limita il numero di sottoreti per evitare topologie troppo complesse
     subnets_to_create = topology['subnets'][:max_subnets]
     info(f"*** Creazione di {len(subnets_to_create)} sottoreti (su {len(topology['subnets'])} totali)\n")
-    info("*** Architettura: host -> switch subnet -> r0 central_gateway\n")
     
-    # Crea gli switch di subnet, collega il router e poi gli host.
+    # Verifica se esiste monitoring switch nella topologia
+    has_monitoring_switch = 'monitoring_switch' in topology and topology['monitoring_switch'] is not None
+    if has_monitoring_switch:
+        info("*** Architettura: host -> switch subnet -> monitoring_switch -> r0 (per private) | s_internet -> r0 (per pubbliche)\n")
+    else:
+        info("*** Architettura: host -> switch subnet -> r0 central_gateway\n")
+    
+    # Info per creare monitoring switch successivamente
+    monitoring_info = {
+        'private_switches': [],  # Lista di switch privati da collegare al monitoring
+        'internet_switches': [],  # Lista di switch internet da collegare al monitoring
+        'router_intf_index': 0,
+    }
+    
+    # Crea gli switch di subnet, collega il router (solo per subnet internet se c'è monitoring) e poi gli host.
     info("*** Creazione switch, router links e host\n")
     host_counter = 1
     router_intf_index = 0
@@ -180,6 +193,9 @@ def create_network_from_topology(topology, max_subnets=10):
             switch_counter += 1
             switch_name = chunked_switch_name(base_switch_name, chunk_index, len(host_groups))
             switch = net.addSwitch(switch_name, dpid=f"{switch_slot:016x}")
+            
+            # Inizializza router_intf a None (verrà assegnato solo se non c'è monitoring switch)
+            router_intf = None
 
             if is_internet:
                 router_ip = internet_transit_ip(switch_slot)
@@ -190,17 +206,51 @@ def create_network_from_topology(topology, max_subnets=10):
                 router_prefix = int(subnet.split('/')[-1]) if '/' in subnet else 24
                 host_prefix = router_prefix
 
-            router_intf = f"gw-eth{router_intf_index}"
-            router_intf_index += 1
-            switch_router_intf = short_switch_intf(switch_slot, 'gw')
-            net.addLink(
-                router,
-                switch,
-                intfName1=router_intf,
-                intfName2=switch_router_intf,
-                params1={'ip': f'{router_ip}/{router_prefix}'}
-            )
-
+            # Se c'è monitoring switch, TUTTI gli switch passano attraverso di esso
+            # Salva le info per collegarle al monitoring switch dopo
+            if has_monitoring_switch:
+                # NON creare link router->switch, lo faremo tramite monitoring switch
+                # Distingui private da internet per gestione IP successiva
+                switch_info = {
+                    'switch': switch,
+                    'switch_name': switch_name,
+                    'switch_slot': switch_slot,
+                    'router_ip': router_ip,
+                    'router_prefix': router_prefix,
+                    'is_internet': is_internet,
+                }
+                
+                if is_internet:
+                    monitoring_info['internet_switches'].append(switch_info)
+                    info(
+                        f"  - Switch {switch_name}: {subnet} (internet, via monitoring), "
+                        f"router={router_ip}/{router_prefix}, host={len(hosts)}\n"
+                    )
+                else:
+                    monitoring_info['private_switches'].append(switch_info)
+                    info(
+                        f"  - Switch {switch_name}: {subnet} (private, via monitoring), "
+                        f"router={router_ip}/{router_prefix}, host={len(hosts)}\n"
+                    )
+            else:
+                # Senza monitoring: collega direttamente al router (architettura vecchia)
+                router_intf = f"gw-eth{router_intf_index}"
+                router_intf_index += 1
+                switch_router_intf = short_switch_intf(switch_slot, 'gw')
+                net.addLink(
+                    router,
+                    switch,
+                    intfName1=router_intf,
+                    intfName2=switch_router_intf,
+                    params1={'ip': f'{router_ip}/{router_prefix}'}
+                )
+                info(
+                    f"  - Switch {switch_name}: {subnet} ({subnet_type}), "
+                    f"router {router_intf}={router_ip}/{router_prefix}, "
+                    f"host={len(hosts)}\n"
+                )
+            
+            # Crea subnet_state per network_info
             subnet_state = {
                 'type': subnet_type,
                 'network': subnet,
@@ -208,16 +258,10 @@ def create_network_from_topology(topology, max_subnets=10):
                 'switch_name': switch_name,
                 'router_ip': router_ip,
                 'router_prefix': router_prefix,
-                'router_intf': router_intf,
+                'router_intf': router_intf if not has_monitoring_switch else None,  # Se c'è monitoring, tutti gli switch passano attraverso di esso
                 'hosts': hosts,
             }
             network_info['subnets'].append(subnet_state)
-
-            info(
-                f"  - Switch {switch_name}: {subnet} ({subnet_type}), "
-                f"router {router_intf}={router_ip}/{router_prefix}, "
-                f"host={len(hosts)}\n"
-            )
             
             for ip in hosts:
                 host_name = f"h{host_counter}"
@@ -243,19 +287,103 @@ def create_network_from_topology(topology, max_subnets=10):
                 info(f"    - Host {host_name}: {ip}/{host_prefix} gw {router_ip} via {switch_name}\n")
                 host_counter += 1
     
+    # Salva router_intf_index per il monitoring switch
+    monitoring_info['router_intf_index'] = router_intf_index
+    
+    # Crea monitoring switch se presente nella topologia
+    monitoring_switch = None
+    if has_monitoring_switch:
+        info("\n*** Creazione Monitoring Switch\n")
+        monitoring_config = topology['monitoring_switch']
+        monitoring_switch_name = monitoring_config.get('name', 's_monitoring')
+        monitoring_switch = net.addSwitch(monitoring_switch_name, dpid=f"{switch_counter:016x}")
+        switch_counter += 1
+        
+        info(f"  - Monitoring switch: {monitoring_switch_name}\n")
+        
+        # Collega monitoring switch al router
+        monitoring_router_intf = f"gw-eth{monitoring_info['router_intf_index']}"
+        monitoring_info['router_intf_index'] += 1
+        monitoring_router_ip = "10.255.255.1"  # IP dedicato per il link monitoring<->router
+        monitoring_router_prefix = 24
+        
+        net.addLink(
+            router,
+            monitoring_switch,
+            intfName1=monitoring_router_intf,
+            intfName2="mon-gw",
+            params1={'ip': f'{monitoring_router_ip}/{monitoring_router_prefix}'}
+        )
+        info(f"  - Monitoring -> Router: {monitoring_router_intf}={monitoring_router_ip}/{monitoring_router_prefix}\n")
+        
+        # Aggiungi IP secondari sull'interfaccia del router per ogni subnet (privata e internet)
+        # Questo permette al router di essere il gateway per ogni subnet attraverso il monitoring switch
+        all_switches = monitoring_info['private_switches'] + monitoring_info['internet_switches']
+        info(f"  - Configurazione IP secondari sul router per {len(all_switches)} subnet:\n")
+        for sw_info in all_switches:
+            router_ip = sw_info['router_ip']
+            router_prefix = sw_info['router_prefix']
+            # Aggiungi IP secondario
+            router.cmd(f'ip addr add {router_ip}/{router_prefix} dev {monitoring_router_intf}')
+            subnet_label = "internet" if sw_info.get('is_internet') else "private"
+            info(f"      {router_ip}/{router_prefix} ({subnet_label})\n")
+        
+        # Salva l'interfaccia monitoring per reference
+        network_info['monitoring_router_intf'] = monitoring_router_intf
+        
+        # Collega tutti gli switch (privati e internet) al monitoring switch
+        info(f"  - Collegamento {len(all_switches)} switch al monitoring:\n")
+        for idx, sw_info in enumerate(all_switches, start=1):
+            switch = sw_info['switch']
+            switch_name = sw_info['switch_name']
+            switch_slot = sw_info['switch_slot']
+            subnet_label = "internet" if sw_info.get('is_internet') else "private"
+            
+            # Link switch <-> monitoring_switch
+            # Usa switch_slot per garantire nomi unici
+            switch_intf = short_switch_intf(switch_slot, 'mon')
+            mon_intf = short_switch_intf(switch_slot, 'm')
+            
+            net.addLink(
+                switch,
+                monitoring_switch,
+                intfName1=switch_intf,
+                intfName2=mon_intf
+            )
+            info(f"      {switch_name} <-> {monitoring_switch_name} ({subnet_label})\n")
+        
+        # Aggiungi monitoring switch alla switch_map
+        network_info['monitoring_switch'] = monitoring_switch
+        network_info['monitoring_switch_name'] = monitoring_switch_name
+    
+    # Crea mappa switch_name -> switch object per facilitare lookup
+    switch_map = {}
+    for subnet_state in network_info['subnets']:
+        switch_map[subnet_state['switch_name']] = subnet_state['switch']
+    # Aggiungi monitoring switch alla mappa se esiste
+    if monitoring_switch:
+        switch_map[monitoring_switch_name] = monitoring_switch
+    network_info['switch_map'] = switch_map
+    
     # Crea il nodo probe se presente nella topologia
     probe = None
     if 'probe' in topology:
         probe_config = topology['probe']
         probe_name = probe_config.get('name', 'probe')
-        probe_ip = probe_config.get('ip', '10.255.255.254/24')
+        mirror_switches = probe_config.get('mirror_switches', [])
         
         info("*** Creazione nodo probe per packet capture\n")
-        probe = net.addHost(probe_name, ip=probe_ip)
+        # Probe senza IP - sarà puramente passivo
+        probe = net.addHost(probe_name, ip=None)
         
-        # Connetti il probe a ogni switch e usa OVS mirror per copiare tutto il traffico.
-        for idx, subnet_state in enumerate(network_info['subnets']):
-            switch = subnet_state['switch']
+        # Connetti il probe solo agli switch specificati in mirror_switches
+        probe_links = []
+        for idx, switch_name in enumerate(mirror_switches):
+            switch = switch_map.get(switch_name)
+            if not switch:
+                info(f"  ! Warning: Switch '{switch_name}' non trovato, skip\n")
+                continue
+            
             probe_intf = f"{probe_name}-eth{idx}"
             switch_probe_intf = short_switch_intf(idx + 1, 'pr')
             net.addLink(
@@ -264,14 +392,15 @@ def create_network_from_topology(topology, max_subnets=10):
                 intfName1=probe_intf,
                 intfName2=switch_probe_intf
             )
-            network_info['probe_switch_ports'].append({
+            probe_links.append({
                 'switch': switch,
                 'switch_name': switch.name,
                 'port_name': switch_probe_intf,
                 'probe_intf': probe_intf,
             })
         
-        info(f"  - Probe {probe_name}: {probe_ip} (connesso a {len(network_info['probe_switch_ports'])} switch)\n")
+        network_info['probe_switch_ports'] = probe_links
+        info(f"  - Probe {probe_name}: passivo (connesso a {len(probe_links)} switch mirror)\n")
     
     return net, host_map, probe, network_info
 
@@ -292,7 +421,7 @@ def disable_ipv6(net, host_map, probe=None, router=None):
             if intf.name != 'lo':
                 host.cmd(f'sysctl -w net.ipv6.conf.{intf.name}.disable_ipv6=1 > /dev/null 2>&1')
     
-    # Disabilita IPv6 anche sul probe
+    # Disabilita IPv6 anche sul probe e assicura che sia passivo
     if probe:
         probe.cmd('sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null 2>&1')
         probe.cmd('sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null 2>&1')
@@ -303,7 +432,11 @@ def disable_ipv6(net, host_map, probe=None, router=None):
             if intf.name != 'lo':
                 probe.cmd(f'sysctl -w net.ipv6.conf.{intf.name}.disable_ipv6=1 > /dev/null 2>&1')
         
-        info("  - IPv6 disabilitato anche sul probe\n")
+        # Disabilita forwarding su probe per mantenerlo completamente passivo
+        probe.cmd('sysctl -w net.ipv4.ip_forward=0 > /dev/null 2>&1')
+        probe.cmd('sysctl -w net.ipv6.conf.all.forwarding=0 > /dev/null 2>&1')
+        
+        info("  - IPv6 disabilitato e forwarding disabilitato sul probe (passivo)\n")
 
     # Disabilita IPv6 anche sul router centrale
     if router:
@@ -365,6 +498,10 @@ def configure_l3_routing(network_info):
     client_networks = []
     internet_subnets = []
     internet_host_ips = []
+    
+    # Verifica se c'è monitoring switch
+    has_monitoring = 'monitoring_switch' in network_info and network_info['monitoring_switch'] is not None
+    monitoring_router_ip = "10.255.255.1"  # IP del router sull'interfaccia monitoring
 
     for subnet_state in network_info['subnets']:
         subnet = subnet_state['network']
@@ -375,19 +512,61 @@ def configure_l3_routing(network_info):
         if subnet_type == 'internet' or subnet == '0.0.0.0/0':
             internet_subnets.append(subnet_state)
             internet_host_ips.extend(subnet_state['hosts'])
-            for host_ip in subnet_state['hosts']:
-                router.cmd(f'ip route replace {host_ip}/32 dev {router_intf}')
-            info(
-                f"  - Route router verso {len(subnet_state['hosts'])} host internet "
-                f"via {router_intf} ({subnet_state['switch_name']})\n"
-            )
+            # Route specifiche per ogni host internet
+            if router_intf:  # Solo se collegato direttamente (senza monitoring)
+                for host_ip in subnet_state['hosts']:
+                    router.cmd(f'ip route replace {host_ip}/32 dev {router_intf}')
+                info(
+                    f"  - Route router verso {len(subnet_state['hosts'])} host internet "
+                    f"via {router_intf} ({subnet_state['switch_name']})\n"
+                )
+            elif has_monitoring:
+                # Internet switch collegato via monitoring: le route verranno aggiunte dopo
+                pass
         else:
+            # Subnet privata (client_subnet o private_subnet)
             client_networks.append(subnet)
-            router.cmd(f'ip route replace {subnet} dev {router_intf} src {router_ip}')
-            info(
-                f"  - Route router verso {subnet} via {router_intf} "
-                f"({subnet_state['switch_name']})\n"
-            )
+            if has_monitoring and router_intf is None:
+                # Subnet privata collegata via monitoring switch
+                # La route verrà aggiunta in blocco per tutte le private
+                pass
+            elif router_intf:
+                # Collegamento diretto al router (architettura vecchia)
+                router.cmd(f'ip route replace {subnet} dev {router_intf} src {router_ip}')
+                info(
+                    f"  - Route router verso {subnet} via {router_intf} "
+                    f"({subnet_state['switch_name']})\n"
+                )
+    
+    # Se c'è monitoring switch, aggiungi route per tutte le reti private
+    if has_monitoring:
+        monitoring_intf = network_info.get('monitoring_router_intf')
+        if monitoring_intf:
+            info(f"  - Monitoring switch interface sul router: {monitoring_intf}\n")
+            
+            # Aggiungi route esplicite per TUTTE le reti (private e internet) via monitoring switch
+            # (anche se con gli IP secondari potrebbero già essere configurate)
+            route_count = 0
+            internet_host_count = 0
+            for subnet_state in network_info['subnets']:
+                if subnet_state['router_intf'] is None:  # Tutte le subnet via monitoring
+                    subnet = subnet_state['network']
+                    router_ip = subnet_state['router_ip']
+                    subnet_type = subnet_state['type']
+                    
+                    if subnet_type == 'internet':
+                        # Per subnet internet, aggiungi route /32 per ogni host
+                        for host_ip in subnet_state['hosts']:
+                            router.cmd(f'ip route replace {host_ip}/32 dev {monitoring_intf} src {router_ip}')
+                            internet_host_count += 1
+                    else:
+                        # Per subnet private, aggiungi route per l'intera rete
+                        router.cmd(f'ip route replace {subnet} dev {monitoring_intf} src {router_ip}')
+                        route_count += 1
+            
+            info(f"  - Route router verso {route_count} reti private via monitoring switch ({monitoring_intf})\n")
+            if internet_host_count > 0:
+                info(f"  - Route router verso {internet_host_count} host internet via monitoring switch ({monitoring_intf})\n")
 
     overlap_host_routes = 0
     for ip, host_info in network_info['host_info'].items():
@@ -440,26 +619,93 @@ def configure_switches_standalone(net):
         switch.cmd(f'ovs-ofctl add-flow {switch.name} action=normal')
 
 
-def configure_probe_mirroring(network_info):
-    """Configura OVS mirror da ogni switch verso l'interfaccia locale del probe."""
+def configure_probe_monitoring(topology, probe, network_info):
+    """
+    Configura probe monitoring con OVS mirroring e tcpdump.
+    
+    For each switch listed in `probe.mirror_switches`:
+    - Add a link between the switch and the probe (already done in create_network_from_topology)
+    - Configure an Open vSwitch mirror that replicates all switch traffic to the probe interface
+    - Start tcpdump on the probe using the configured interface, output file and optional BPF filter
+    
+    The probe is passive and must not forward or generate application traffic.
+    
+    Args:
+        topology: topologia JSON con configurazione probe
+        probe: nodo probe Mininet
+        network_info: informazioni di rete con probe_switch_ports
+    
+    Returns:
+        tcpdump_proc: processo tcpdump avviato (per cleanup successivo)
+    """
     probe_ports = network_info.get('probe_switch_ports', [])
-    if not probe_ports:
-        return
+    if not probe_ports or not probe:
+        return None
 
+    probe_config = topology.get('probe', {})
+    
+    # Configura OVS mirroring per ogni switch
     info("*** Configurazione port mirroring per probe\n")
     for mirror_idx, probe_link in enumerate(probe_ports, start=1):
         switch = probe_link['switch']
         port_name = probe_link['port_name']
         mirror_name = f"probe_mirror_{mirror_idx}"
-        switch.cmd(
+        
+        # Configura OVS mirror: replica tutto il traffico dello switch verso la porta probe
+        result = switch.cmd(
             f'ovs-vsctl -- --id=@probeport get Port {port_name} '
             f'-- --id=@m create Mirror name={mirror_name} select-all=true output-port=@probeport '
             f'-- set Bridge {switch.name} mirrors=@m'
         )
         info(
             f"  - Mirror {switch.name}:{port_name} -> "
-            f"{probe_link['probe_intf']}\n"
+            f"{probe_link['probe_intf']} (select-all)\n"
         )
+        
+        # Debug: verifica configurazione mirror
+        mirror_status = switch.cmd(f'ovs-vsctl list Mirror {mirror_name}')
+        info(f"    DEBUG Mirror config:\n")
+        for line in mirror_status.strip().split('\n')[:5]:  # prime 5 righe
+            info(f"      {line}\n")
+        
+        # Debug: verifica porte switch
+        ports_status = switch.cmd(f'ovs-vsctl list-ports {switch.name}')
+        info(f"    DEBUG Ports on {switch.name}: {ports_status.strip()}\n")
+    
+    # Avvia tcpdump sul probe
+    capture_file = probe_config.get('capture_file', 'pcap/capture.pcap')
+    capture_filter = probe_config.get('capture_filter', '')
+    deduplication = probe_config.get('deduplication', True)
+    
+    info(f"*** Avvio packet capture sul probe\n")
+    info(f"  - File: {capture_file}\n")
+    
+    # Usa 'any' per catturare da tutte le interfacce mirror se ci sono multiple
+    interface = 'any' if len(probe_ports) > 1 else probe_ports[0]['probe_intf']
+    info(f"  - Interface: {interface}\n")
+    
+    # Costruisci comando tcpdump
+    tcpdump_args = ["tcpdump", "-i", interface, "-w", capture_file]
+    
+    # Aggiungi filtro BPF se specificato
+    if capture_filter:
+        # Forza IPv4 e combina con filtro custom
+        tcpdump_args.append(f"ip and ({capture_filter})")
+        info(f"  - Filtro: ip and ({capture_filter})\n")
+    else:
+        # Solo IPv4 (esclude IPv6, ARP, etc.)
+        tcpdump_args.append("ip")
+        info(f"  - Filtro: Solo IPv4 ('ip')\n")
+    
+    if deduplication:
+        info(f"  - Deduplication: abilitata (via interface 'any')\n")
+    
+    # Avvia tcpdump come processo background sul probe
+    tcpdump_proc = probe.popen(tcpdump_args)
+    time.sleep(1)  # Attendi avvio tcpdump
+    info("  - Packet capture avviata sul probe passivo\n")
+    
+    return tcpdump_proc
 
 
 def start_servers(net, host_map, implementation='scapy_burst'):
@@ -669,40 +915,10 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     info("*** Attesa disabilitazione completa IPv6...\n")
     time.sleep(2)
     
-    # Configura switch, routing e mirroring secondo la topologia JSON
+    # Configura switch, routing e probe monitoring secondo la topologia JSON
     configure_switches_standalone(net)
     configure_l3_routing(network_info)
-    configure_probe_mirroring(network_info)
-    
-    # Avvia packet capture sul probe
-    tcpdump_proc = None  # Dichiarato qui per poterlo usare alla fine
-    if probe:
-        probe_config = topology.get('probe', {})
-        capture_file = probe_config.get('capture_file', 'pcap/capture.pcap')
-        # Il probe è collegato a più switch: tcpdump su "any" vede tutte le interfacce mirror.
-        interface = 'any' if len(network_info.get('probe_switch_ports', [])) > 1 else probe_config.get('interface', 'probe-eth0')
-        capture_filter = probe_config.get('capture_filter', '')
-        
-        info(f"*** Avvio packet capture sul probe\n")
-        info(f"  - File: {capture_file}\n")
-        info(f"  - Interface: {interface}\n")
-        info(f"  - Filtro: Solo IPv4 ('ip')\n")
-        
-        # Costruisci comando tcpdump con filtro BPF per catturare solo IPv4
-        # Il filtro 'ip' esclude IPv6, ARP e altri protocolli
-        # Usa popen con lista di argomenti invece di cmd con & (KeyError: 'SHELL')
-        tcpdump_args = ["tcpdump", "-i", interface, "-w", capture_file]
-        
-        # Se c'è un filtro custom, combinalo con il filtro IPv4
-        if capture_filter:
-            tcpdump_args.append(f"ip and ({capture_filter})")
-        else:
-            tcpdump_args.append("ip")
-        
-        tcpdump_proc = probe.popen(tcpdump_args)
-        time.sleep(1)  # Attendi che tcpdump si avvii
-        info("  - Packet capture avviata (solo IPv4)\n")
-    
+       
     # Avvia server
     start_servers(net, host_map, implementation)
     
@@ -731,6 +947,15 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     
     # Adatta il CSV per compatibilità con client_scapy_burst_optimized.py
     adapted_csv = adapt_csv_columns(csv_file)
+
+    #Sleep per far terminare tutti i ping
+    info("*** Attesa per completamento ping...\n")
+    time.sleep(10)
+
+    info("*** Attivo il pprobe...\n")
+    # Configura probe monitoring: OVS mirroring + tcpdump
+    # La funzione restituisce il processo tcpdump per cleanup successivo
+    tcpdump_proc = configure_probe_monitoring(topology, probe, network_info)
     
     # Genera flows dinamicamente dagli IP effettivamente creati e dal CSV ADATTATO
     # Ignora i flows hardcoded nella topologia JSON (contengono IP obsoleti)

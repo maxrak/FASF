@@ -1,0 +1,63 @@
+digraph topology {
+  graph [
+    label="test4\nIP: 9 | Subnet client: - | Flussi: 8",
+    labelloc="t",
+    fontsize="20",
+    fontname="Helvetica",
+    rankdir="LR",
+    bgcolor="white",
+    overlap="false",
+    splines="true",
+    nodesep="0.45",
+    ranksep="1.0",
+    pad="0.25"
+  ];
+  node [fontname="Helvetica", fontsize="10", style="filled", margin="0.08,0.05"];
+  edge [fontname="Helvetica", fontsize="9", color="#6b7280"];
+
+  "router:gateway_router" [label="gateway_router", shape="diamond", fillcolor="#264653", color="#132a33", fontcolor="white", tooltip="Route traffic between monitoring switch (private subnets) and Internet"];
+  subgraph cluster_192_168_0_0_16 {
+    graph [label="192.168.0.0/16\nprivate_subnet", style="rounded,filled", color="#334155", fillcolor="#f8fafc", fontname="Helvetica", fontsize="12"];
+    "switch:s192_168_0_0" [label="s192_168_0_0", shape="box", fillcolor="#64748b", color="#334155", fontcolor="white", tooltip="Switch: s192_168_0_0\nNetwork: 192.168.0.0/16"];
+    "host:192.168.3.131" [label="192.168.3.131", shape="ellipse", fillcolor="#ede7f6", color="#6a4c93", fontcolor="#111827", tooltip="Host: 192.168.3.131\nSubnet: 192.168.0.0/16\nRuolo: client + server\nFlussi uscenti: 8\nFlussi entranti: 1"];
+    "switch:s192_168_0_0" -> "host:192.168.3.131" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+  }
+
+  subgraph cluster_0_0_0_0_0 {
+    graph [label="0.0.0.0/0\ninternet", style="rounded,filled", color="#bc6c25", fillcolor="#fff4e6", fontname="Helvetica", fontsize="12"];
+    "switch:s_internet" [label="s_internet", shape="box", fillcolor="#f4a261", color="#bc6c25", fontcolor="white", tooltip="Switch: s_internet\nNetwork: 0.0.0.0/0"];
+    "host:206.108.207.139" [label="206.108.207.139", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 206.108.207.139\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:206.108.207.139" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:63.215.202.48" [label="63.215.202.48", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 63.215.202.48\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:63.215.202.48" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:63.215.202.49" [label="63.215.202.49", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 63.215.202.49\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:63.215.202.49" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:65.55.239.163" [label="65.55.239.163", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 65.55.239.163\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:65.55.239.163" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:65.55.5.231" [label="65.55.5.231", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 65.55.5.231\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:65.55.5.231" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:65.55.5.232" [label="65.55.5.232", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 65.55.5.232\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 2"];
+    "switch:s_internet" -> "host:65.55.5.232" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:72.14.213.147" [label="72.14.213.147", shape="ellipse", fillcolor="#ffe8d6", color="#d9480f", fontcolor="#111827", tooltip="Host: 72.14.213.147\nSubnet: 0.0.0.0/0\nRuolo: server\nFlussi uscenti: 0\nFlussi entranti: 1"];
+    "switch:s_internet" -> "host:72.14.213.147" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+    "host:72.14.213.18" [label="72.14.213.18", shape="ellipse", fillcolor="#d8f3dc", color="#2d6a4f", fontcolor="#111827", tooltip="Host: 72.14.213.18\nSubnet: 0.0.0.0/0\nRuolo: client\nFlussi uscenti: 1\nFlussi entranti: 0"];
+    "switch:s_internet" -> "host:72.14.213.18" [dir="none", color="#6b7280", penwidth="1.2", tooltip="link host-switch"];
+  }
+  "router:gateway_router" -> "switch:s_internet" [dir="none", color="#6b7280", penwidth="1.8", tooltip="link router-switch"];
+
+  "switch:s_monitoring" [label="s_monitoring\n(monitoring)", shape="box", fillcolor="#8b5cf6", color="#5b21b6", fontcolor="white", penwidth="2.0", tooltip="Monitoring Switch: s_monitoring\nAggregation switch for all private subnets, connected to router"];
+  "router:gateway_router" -> "switch:s_monitoring" [dir="none", color="#5b21b6", penwidth="2.5", tooltip="link router-monitoring"];
+  "switch:s192_168_0_0" -> "switch:s_monitoring" [dir="none", color="#6b7280", penwidth="1.8", tooltip="link private-monitoring"];
+
+  "probe:probe" [label="probe\n", shape="note", fillcolor="#fff3b0", color="#b08900", fontcolor="#111827", tooltip="Probe: probe\nIP: -\nCapture: pcap/capture.pcap"];
+  "switch:s_monitoring" -> "probe:probe" [dir="none", color="#b08900", penwidth="1.6", tooltip="probe mirror from s_monitoring"];
+
+  "host:192.168.3.131" -> "host:206.108.207.139" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 206.108.207.139\nFlussi: 1\nPorte src: 55960\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:63.215.202.48" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 63.215.202.48\nFlussi: 1\nPorte src: 55966\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:63.215.202.49" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 63.215.202.49\nFlussi: 1\nPorte src: 55967\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:65.55.239.163" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 65.55.239.163\nFlussi: 1\nPorte src: 55958\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:65.55.5.231" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 65.55.5.231\nFlussi: 1\nPorte src: 55959\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:65.55.5.232" [label="2", color="#e76f51", fontcolor="#e76f51", penwidth="1.54", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 65.55.5.232\nFlussi: 2\nPorte src: 55957, 55962\nPorte dst: 80"];
+  "host:192.168.3.131" -> "host:72.14.213.147" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="192.168.3.131 -> 72.14.213.147\nFlussi: 1\nPorte src: 52152\nPorte dst: 443"];
+  "host:72.14.213.18" -> "host:192.168.3.131" [label="", color="#e76f51", fontcolor="#e76f51", penwidth="1.00", arrowsize="0.65", style="dashed", constraint="false", tooltip="72.14.213.18 -> 192.168.3.131\nFlussi: 1\nPorte src: 443\nPorte dst: 49673"];
+}

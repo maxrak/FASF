@@ -31,7 +31,7 @@ fi
 
 FLOW_NAME=$1
 IMPLEMENTATION=${2:-tcp_burst}  # Default: tcp_burst se non specificato
-
+LOG=shared/logs/$1-$(date +"%d-%m-%Y")
 echo "=== Replica Flusso ==="
 echo "Flusso: $FLOW_NAME"
 echo "Implementazione: $IMPLEMENTATION"
@@ -39,7 +39,7 @@ echo "======================="
 
 docker compose run --rm mininet python3 /app/replay_topology.py \
     topologies/$FLOW_NAME.json \
-    30 \
+    60 \
     flows/$FLOW_NAME.csv \
     20 \
     $IMPLEMENTATION

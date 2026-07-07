@@ -181,6 +181,23 @@ def group_ips_by_subnet(ips, subnet_mask=24):
     return dict(subnets)
 
 
+def is_private_ip(ip_str):
+    """
+    Verifica se un IP appartiene a una rete privata RFC 1918
+    
+    Args:
+        ip_str: stringa IP da verificare
+    
+    Returns:
+        bool: True se IP privato, False se pubblico
+    """
+    try:
+        ip_obj = ipaddress.ip_address(ip_str)
+        return ip_obj.is_private
+    except ValueError:
+        return False
+
+
 def find_inter_subnet_connections(ip_pairs, subnets_map):
     """
     Trova le connessioni tra sottoreti diverse
@@ -212,9 +229,11 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
     Genera un file JSON con la configurazione di rete per Mininet.
     
     Architettura:
-    - Subnet separate per client raggruppati per rete (es. 172.16.0.0/16, 192.168.0.0/16)
-    - Una subnet "Internet" per tutti i server di destinazione
-    - Un router centrale che connette le subnet client con Internet
+    - Subnet private: ogni subnet ha uno switch, tutti gli switch privati collegati a monitoring_switch
+    - Subnet pubblica (Internet): switch internet collegato direttamente al router
+    - monitoring_switch: aggrega tutte le subnet private, collegato al router
+    - Router centrale: connette monitoring_switch e internet_switch
+    - Probe: collegato solo al monitoring_switch per packet capture
     
     Args:
         all_ips: set di tutti gli IP trovati
@@ -223,31 +242,39 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
         dst_ips: set di IP destinazione (server)
         output_file: path del file JSON di output
     """
-    # Raggruppa IP sorgente per sottorete (client)
-    # Usa maschere variabili per raggruppare in modo intelligente
-    client_subnets = {}
-    for ip_str in src_ips:
+    # Raggruppa TUTTI gli IP (src e dst) per sottorete, distinguendo private da pubbliche
+    private_subnets = {}  # Subnet private (RFC 1918)
+    public_ips = []  # IP pubblici (vanno tutti nello switch internet)
+    
+    # Processa sia IP sorgente che destinazione
+    for ip_str in all_ips:
         try:
             ip_obj = ipaddress.ip_address(ip_str)
-            # Determina la maschera in base alla classe di rete
-            if ip_str.startswith('10.'):
-                # Rete privata classe A: /8
-                network = ipaddress.ip_network(f"{ip_str}/8", strict=False)
-            elif ip_str.startswith('172.16.') or ip_str.startswith('172.17.') or \
-                 any(ip_str.startswith(f'172.{i}.') for i in range(16, 32)):
-                # Rete privata classe B: /16
-                network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
-            elif ip_str.startswith('192.168.'):
-                # Rete privata classe C: /16 (per raggruppare tutte le 192.168.x.x)
-                network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
-            else:
-                # IP pubblici: raggruppali per /16
-                network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
             
-            subnet_key = str(network.network_address) + f"/{network.prefixlen}"
-            if subnet_key not in client_subnets:
-                client_subnets[subnet_key] = []
-            client_subnets[subnet_key].append(ip_str)
+            # Verifica se è IP privato
+            if is_private_ip(ip_str):
+                # Determina la maschera in base alla classe di rete privata
+                if ip_str.startswith('10.'):
+                    # Rete privata classe A: /8
+                    network = ipaddress.ip_network(f"{ip_str}/8", strict=False)
+                elif ip_str.startswith('172.16.') or ip_str.startswith('172.17.') or \
+                     any(ip_str.startswith(f'172.{i}.') for i in range(16, 32)):
+                    # Rete privata classe B: /16
+                    network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
+                elif ip_str.startswith('192.168.'):
+                    # Rete privata classe C: /16 (per raggruppare tutte le 192.168.x.x)
+                    network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
+                else:
+                    # Altre private (169.254.x.x link-local): /16
+                    network = ipaddress.ip_network(f"{ip_str}/16", strict=False)
+                
+                subnet_key = str(network.network_address) + f"/{network.prefixlen}"
+                if subnet_key not in private_subnets:
+                    private_subnets[subnet_key] = []
+                private_subnets[subnet_key].append(ip_str)
+            else:
+                # IP pubblico -> va nello switch internet
+                public_ips.append(ip_str)
         except ValueError:
             continue
     
@@ -263,67 +290,83 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
             "flow_count": data['count']
         })
     
-    # Costruisci la topologia
+    # Costruisci la topologia con monitoring switch
     topology = {
-        "description": "Network topology for Mininet - Client subnets + Internet",
-        "architecture": "client_subnets_with_central_router",
+        "description": "Network topology for Mininet - Private subnets + Monitoring Switch + Internet",
+        "architecture": "private_subnets_monitoring_switch_internet",
         "subnets": [],
+        "monitoring_switch": None,
         "routers": [],
-        "probe": {
-            "name": "probe",
-            "ip": "10.255.255.254/24",
-            "connection": "gateway_router",
-            "interface": "probe-eth0",
-            "capture_file": "pcap/capture.pcap",
-            "capture_filter": "",
-            "purpose": "Packet capture for traffic analysis"
-        },
         "flows": flows,
         "statistics": {
             "total_ips": len(all_ips),
-            "client_subnets": len(client_subnets),
-            "server_ips": len(dst_ips),
+            "private_subnets": len(private_subnets),
+            "public_ips": len(public_ips),
             "total_flows": len(flows)
         }
     }
     
-    # Sammple tutti gli IP già aggiunti nelle subnet client
-    client_ips_set = set()
-    for ips in client_subnets.values():
-        client_ips_set.update(ips)
+    # Lista degli switch delle subnet private (da collegare al monitoring switch)
+    private_switch_names = []
     
-    # Aggiungi subnet client
-    for subnet_addr, ips in sorted(client_subnets.items()):
+    # Aggiungi subnet private
+    for subnet_addr, ips in sorted(private_subnets.items()):
+        switch_name = f"s{subnet_addr.split('/')[0].replace('.', '_')}"
+        private_switch_names.append(switch_name)
         topology["subnets"].append({
-            "type": "client_subnet",
+            "type": "private_subnet",
             "network": subnet_addr,
-            "switch_name": f"s{subnet_addr.split('/')[0].replace('.', '_')}",
+            "switch_name": switch_name,
             "hosts": sorted(ips),
             "num_hosts": len(ips)
         })
     
-    # Aggiungi subnet Internet SOLO con IP di destinazione che NON sono già nelle subnet client
-    # Questo evita duplicati per gli IP che sono sia client che server
-    internet_only_ips = dst_ips - client_ips_set
-    
-    # Se ci sono IP solo destinazione, crea la subnet Internet
-    if internet_only_ips:
+    # Aggiungi subnet Internet se ci sono IP pubblici
+    if public_ips:
         topology["subnets"].append({
             "type": "internet",
             "network": "0.0.0.0/0",
             "switch_name": "s_internet",
-            "hosts": sorted(internet_only_ips),
-            "num_hosts": len(internet_only_ips)
+            "hosts": sorted(public_ips),
+            "num_hosts": len(public_ips)
         })
     
+    # Aggiungi monitoring switch (collega tutte le subnet private)
+    if private_switch_names:
+        topology["monitoring_switch"] = {
+            "name": "s_monitoring",
+            "type": "aggregation_switch",
+            "connects_to": private_switch_names,
+            "purpose": "Aggregation switch for all private subnets, connected to router"
+        }
+    
+    # Aggiungi il probe collegato SOLO al monitoring switch
+    if private_switch_names:
+        topology["probe"] = {
+            "name": "probe",
+            "mode": "ovs_mirror",
+            "capture_file": "pcap/capture.pcap",
+            "mirror_switches": ["s_monitoring"],  # Solo monitoring switch
+            "deduplication": True
+        }
+    else:
+        # Se non ci sono subnet private, probe collegato allo switch internet
+        topology["probe"] = {
+            "name": "probe",
+            "mode": "ovs_mirror",
+            "capture_file": "pcap/capture.pcap",
+            "mirror_switches": ["s_internet"],
+            "deduplication": True
+        }
+    
     # Aggiungi router centrale
-    client_networks = [s["network"] for s in topology["subnets"] if s["type"] == "client_subnet"]
+    # Il router è collegato a: monitoring_switch (per private) e s_internet (per pubbliche)
     topology["routers"].append({
         "id": "gateway_router",
         "type": "central_gateway",
-        "connects_clients": client_networks,
-        "connects_internet": "0.0.0.0/0",
-        "purpose": "Route traffic between client subnets and Internet"
+        "connects_monitoring": "s_monitoring" if private_switch_names else None,
+        "connects_internet": "s_internet" if public_ips else None,
+        "purpose": "Route traffic between monitoring switch (private subnets) and Internet"
     })
     
     # Salva JSON
@@ -334,28 +377,45 @@ def generate_network_topology(all_ips, ip_pairs, src_ips, dst_ips, output_file='
         
         # Stampa sommario
         print(f"\n🌐 CONFIGURAZIONE DI RETE GENERATA:")
-        print(f"   └─ Architettura: Client Subnets + Central Router" + (" + Internet" if internet_only_ips else ""))
-        print(f"   └─ {len(client_subnets)} subnet client")
-        if internet_only_ips:
-            print(f"   └─ 1 subnet Internet (con {len(internet_only_ips)} server)")
+        print(f"   └─ Architettura: Private Subnets -> Monitoring Switch -> Router <- Internet Switch")
+        print(f"   └─ {len(private_subnets)} subnet private")
+        if public_ips:
+            print(f"   └─ 1 switch Internet (con {len(public_ips)} host pubblici)")
         else:
-            print(f"   └─ Nessuna subnet Internet (tutti gli IP sono sia client che server)")
+            print(f"   └─ Nessun IP pubblico (solo subnet private)")
+        if private_switch_names:
+            print(f"   └─ 1 monitoring switch (aggrega {len(private_switch_names)} switch privati)")
         print(f"   └─ {len(all_ips)} host totali")
         print(f"   └─ {len(flows)} flussi di traffico")
         print(f"   └─ {len(topology['routers'])} router (gateway centrale)")
-        print(f"   └─ 1 nodo probe per packet capture")
+        print(f"   └─ 1 nodo probe per packet capture (mode: ovs_mirror)")
         
-        # Dettagli subnet client
-        print(f"\n📊 SUBNET CLIENT:")
-        for subnet_addr, ips in sorted(client_subnets.items()):
+        # Dettagli subnet private
+        print(f"\n📊 SUBNET PRIVATE:")
+        for subnet_addr, ips in sorted(private_subnets.items()):
             print(f"   └─ {subnet_addr}: {len(ips)} host")
+        
+        # Dettagli monitoring switch
+        if topology.get('monitoring_switch'):
+            print(f"\n🔄 MONITORING SWITCH:")
+            print(f"   └─ Nome: {topology['monitoring_switch']['name']}")
+            print(f"   └─ Collega {len(topology['monitoring_switch']['connects_to'])} switch privati:")
+            for sw in topology['monitoring_switch']['connects_to']:
+                print(f"       • {sw}")
+        
+        # Dettagli Internet
+        if public_ips:
+            print(f"\n🌐 INTERNET SWITCH:")
+            print(f"   └─ Nome: s_internet")
+            print(f"   └─ Host pubblici: {len(public_ips)}")
         
         # Dettagli probe
         print(f"\n🔍 PROBE CONFIGURATION:")
         print(f"   └─ Nome: {topology['probe']['name']}")
-        print(f"   └─ IP: {topology['probe']['ip']}")
+        print(f"   └─ Mode: {topology['probe']['mode']}")
         print(f"   └─ File capture: {topology['probe']['capture_file']}")
-        print(f"   └─ Connesso a: {topology['probe']['connection']}")
+        print(f"   └─ Collegato a: {topology['probe']['mirror_switches'][0]}")
+        print(f"   └─ Deduplication: {topology['probe']['deduplication']}")
         
     except Exception as e:
         print(f"❌ Errore durante il salvataggio: {e}")

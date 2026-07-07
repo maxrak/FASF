@@ -56,11 +56,14 @@ def sample_burst_size(params):
 
 
 def _set_linger_rst(sock):
-    """Evita lunghe TIME_WAIT lato client chiudendo con RST quando possibile."""
-    try:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
-    except Exception:
-        pass
+    """DISABILITATO: Causava chiusura con RST invece di FIN, impedendo a cicflowmeter di rilevare i flussi.
+    Per una corretta chiusura TCP con FIN, non impostiamo SO_LINGER con timeout 0."""
+    # Commentato per permettere chiusura corretta con FIN
+    # try:
+    #     sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
+    # except Exception:
+    #     pass
+    pass
 
 
 def tcp_handshake(src_ip, dst_ip, sport, dport):
@@ -75,7 +78,7 @@ def tcp_handshake(src_ip, dst_ip, sport, dport):
     except Exception:
         pass
     _set_linger_rst(s)
-    s.settimeout(5.0)
+    s.settimeout(500.0)
 
     try:
         s.bind((src_ip, int(sport)))
@@ -165,12 +168,38 @@ def generate_flow(row, ip_client, ip_server, params):
             if bsize == 0:
                 break
     finally:
+        # Chiusura corretta TCP con FIN (four-way handshake)
         try:
+            # 1. Invia FIN al server (chiude scrittura)
             sock.shutdown(socket.SHUT_WR)
-        except Exception:
-            pass
+            if logger:
+                logger.debug(f"[CLOSE] FIN inviato al server {ip_server}:{dport}")
+            
+            # 2. Leggi eventuali dati rimanenti fino a ricevere FIN dal server
+            sock.settimeout(2.0)  # Timeout breve per non bloccare troppo
+            try:
+                while True:
+                    data = sock.recv(4096)
+                    if not data:
+                        # EOF ricevuto: il server ha inviato FIN
+                        if logger:
+                            logger.debug(f"[CLOSE] FIN ricevuto dal server {ip_server}:{dport}")
+                        break
+            except socket.timeout:
+                if logger:
+                    logger.warning(f"[CLOSE] Timeout attesa FIN dal server {ip_server}:{dport}")
+            except Exception as e:
+                if logger:
+                    logger.debug(f"[CLOSE] Errore lettura finale: {e}")
+        except Exception as e:
+            if logger:
+                logger.warning(f"[CLOSE] Errore shutdown: {e}")
+        
+        # 3. Chiudi il socket
         try:
             sock.close()
+            if logger:
+                logger.debug(f"[CLOSE] Socket chiuso {ip_client}:{sport}")
         except Exception:
             pass
 

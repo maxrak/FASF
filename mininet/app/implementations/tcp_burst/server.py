@@ -68,6 +68,16 @@ def handle(conn, addr, local_port, logger=None):
         if logger:
             logger.error(f"[ERROR] {peer} -> :{local_port}: {e}")
     finally:
+        # Chiusura corretta TCP con FIN (four-way handshake)
+        try:
+            # Invia FIN al client prima di chiudere
+            conn.shutdown(socket.SHUT_RDWR)
+            if logger:
+                logger.debug(f"[CLOSE] FIN inviato a {peer}")
+        except Exception as e:
+            if logger:
+                logger.debug(f"[CLOSE] Shutdown error (connessione già chiusa?): {e}")
+        
         try:
             conn.close()
         except Exception:
@@ -149,7 +159,7 @@ if __name__ == '__main__':
     # Default: porte viste spesso nei dataset CIC/HTTP/HTTPS + fallback.
     # Per compatibilita' piena con dport arbitrari usa: --ports=1-65535, ma puo' richiedere root e molte fd.
     if ports is None:
-        ports = [53, 80, 443, 139, 161, 445, 1900, 5351, 5355, 5480, 7001, 8443, 9000]
+        ports = [53, 80, 443, 139, 161, 445, 1900, 5351, 5355, 5480, 7001, 8443, 8080, 9000,50000]
 
     signal.signal(signal.SIGINT, _signal_handler)
     signal.signal(signal.SIGTERM, _signal_handler)
