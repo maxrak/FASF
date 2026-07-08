@@ -651,15 +651,51 @@ def configure_probe_monitoring(topology, probe, network_info):
         port_name = probe_link['port_name']
         mirror_name = f"probe_mirror_{mirror_idx}"
         
-        # Configura OVS mirror: replica tutto il traffico dello switch verso la porta probe
-        result = switch.cmd(
-            f'ovs-vsctl -- --id=@probeport get Port {port_name} '
-            f'-- --id=@m create Mirror name={mirror_name} select-all=true output-port=@probeport '
-            f'-- set Bridge {switch.name} mirrors=@m'
-        )
+        # Ottieni tutte le porte dello switch (escludendo la porta probe)
+        all_ports_raw = switch.cmd(f'ovs-vsctl list-ports {switch.name}').strip().split('\n')
+        # Pulisci i nomi delle porte da whitespace/carriage return
+        all_ports = [p.strip() for p in all_ports_raw if p.strip()]
+        monitored_ports = [p for p in all_ports if p != port_name]
+        
+        info(f"  DEBUG: Porte trovate su {switch.name}: {all_ports}\n")
+        info(f"  DEBUG: Porta probe: {port_name}\n")
+        info(f"  DEBUG: Porte da monitorare: {monitored_ports}\n")
+        
+        # Costruisci comando OVS con select-src-port per evitare duplicati
+        # Monitora solo traffico in uscita (src) dalle porte, non in ingresso (dst)
+        port_get_cmds = []
+        port_refs = []
+        for idx, port in enumerate(monitored_ports):
+            # Ogni comando get deve essere preceduto da --
+            port_get_cmds.append(f'-- --id=@srcport{idx} get Port {port}')
+            port_refs.append(f'@srcport{idx}')
+        
+        # Formato corretto per OVS: [uuid1,uuid2,...] tra parentesi quadre
+        port_refs_str = '[' + ','.join(port_refs) + ']' if port_refs else '[]'
+        port_get_str = ' '.join(port_get_cmds) if port_get_cmds else ''
+        
+        # Configura OVS mirror: replica solo traffico source (evita duplicati)
+        if port_get_str:
+            ovs_cmd = (
+                f'ovs-vsctl -- --id=@probeport get Port {port_name} '
+                f'{port_get_str} '
+                f'-- --id=@m create Mirror name={mirror_name} select-src-port={port_refs_str} output-port=@probeport '
+                f'-- set Bridge {switch.name} mirrors=@m'
+            )
+        else:
+            # Se non ci sono porte da monitorare, usa select-all come fallback
+            ovs_cmd = (
+                f'ovs-vsctl -- --id=@probeport get Port {port_name} '
+                f'-- --id=@m create Mirror name={mirror_name} select-all=true output-port=@probeport '
+                f'-- set Bridge {switch.name} mirrors=@m'
+            )
+        
+        info(f"  DEBUG: Comando OVS: {ovs_cmd}\n")
+        result = switch.cmd(ovs_cmd)
+        info(f"  DEBUG: Risultato OVS: {result}\n")
         info(
             f"  - Mirror {switch.name}:{port_name} -> "
-            f"{probe_link['probe_intf']} (select-all)\n"
+            f"{probe_link['probe_intf']} (select-src-port, {len(monitored_ports)} porte monitorate)\n"
         )
         
         # Debug: verifica configurazione mirror
@@ -851,10 +887,11 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
             info(f"  ! Host non trovato per flusso {src_ip} -> {dst_ip}\n")
             continue
         
-        # Costruisce il path del file di configurazione per questo IP sorgente
-        # Formato: {base_name}_{src_ip}.config
+        # Costruisce il path del file di configurazione per questa coppia src->dst
+        # Formato: {base_name}_{src_ip}_{dst_ip}.config
         src_ip_safe = src_ip.replace('.', '_').replace(':', '_')
-        config_file = f"{config_dir}/{base_name}_{src_ip_safe}.config"
+        dst_ip_safe = dst_ip.replace('.', '_').replace(':', '_')
+        config_file = f"{config_dir}/{base_name}_{src_ip_safe}_{dst_ip_safe}.config"
         
         info(f"  - Traffico da {src_ip} a {dst_ip}\n")
         info(f"    Config: {config_file}\n")
@@ -952,7 +989,7 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     info("*** Attesa per completamento ping...\n")
     time.sleep(10)
 
-    info("*** Attivo il pprobe...\n")
+    info("*** Attivo il probe...\n")
     # Configura probe monitoring: OVS mirroring + tcpdump
     # La funzione restituisce il processo tcpdump per cleanup successivo
     tcpdump_proc = configure_probe_monitoring(topology, probe, network_info)

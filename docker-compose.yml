@@ -30,7 +30,7 @@ services:
       - ./shared/output_flows:/app/output_flows
       - ./shared/flows_params:/app/flows_params
       - ./shared/topologies:/app/topologies
-      - ./shared/results:/results
+      - ./shared/results:/app/results
 
   optimizer:
     build: ./optimizer

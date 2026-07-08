@@ -1,86 +1,84 @@
-2026-07-07 09:37:20 - INFO - ============================================================
-2026-07-07 09:37:20 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
-2026-07-07 09:37:20 - INFO - IP Client: 192.168.3.131
-2026-07-07 09:37:20 - INFO - Timestamp: 2026-07-07 09:37:20.034108
-2026-07-07 09:37:20 - INFO - ============================================================
-2026-07-07 09:37:20 - INFO - Avvio client socket: CSV=/tmp/flows_adapted.csv, Client=192.168.3.131, Server=65.55.239.163
-2026-07-07 09:37:20 - INFO - [FLOW] Avvio flusso TCP reale 192.168.3.131:55958 -> 65.55.239.163:80
-2026-07-07 09:37:20 - INFO - [HANDSHAKE] connect TCP reale: 192.168.3.131:55958 -> 65.55.239.163:80
-2026-07-07 09:37:20 - INFO - [HANDSHAKE] Connessione stabilita: 192.168.3.131:55958 -> 65.55.239.163:80
-2026-07-07 09:37:20 - DEBUG - [BURST] Generazione burst di 14 segmenti applicativi
-2026-07-07 09:37:20 - DEBUG - [DATA] sendall 1/14: 192.168.3.131:55958 -> 65.55.239.163:82026-07-072026-07-07 09:37:23 - DEBUG - [CLOSE] FIN inviato al server 63.215.202.49:80
-2026-07-07 09:37:23 - DEBUG - [CLOSE] FIN ricevuto dal server 63.215.202.49:80
-2026-07-07 09:2026-07-07 09:37:24 - DEBUG - [BURST] Generazione burst di 6 segmenti applicativi
-2026-07-07 09:2026-07-07 09:37:25 - DEBUG - [BURST] Generazione burst di 8 segmenti applicativi
-2026-07-07 09:37:25 - DEBUG - [DAT2026-07-07 09:2026-07-07 09:37:26 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:26 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.12026-07-07 09:32026-07-07 09:37:29 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:29 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.139:80 size=7B
-2026-07-07 09:37:32 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:32 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.139:80 size=66B
-2026-07-07 09:37:35 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:35 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.139:80 size=62B
-2026-07-07 09:37:37 - DEBUG - [BURST] Generazione burst di 5 segmenti applicativi
-2026-07-07 09:37:37 - DEBUG - [DATA] sendall 1/5: 192.168.3.131:55960 -> 206.108.207.139:80 size=63B
-2026-07-07 09:37:37 - DEBUG - [DATA] sendall 2/5: 192.168.3.131:55960 -> 206.108.207.139:80 size=50B
-2026-07-07 09:37:37 - DEBUG - [DATA] sendall 3/5: 192.168.3.131:55960 -> 206.108.207.139:80 size=27B
-2026-07-07 09:37:37 - DEBUG - [DATA] sendall 4/5: 192.168.3.131:55960 -> 206.108.207.139:80 size=345B
-2026-07-07 09:37:37 - DEBUG - [DATA] sendall 5/5: 192.168.3.131:55960 -> 206.108.207.139:80 size=50B
-2026-07-07 09:37:40 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:40 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.139:80 size=105B
-2026-07-07 09:37:43 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
-2026-07-07 09:37:43 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:55960 -> 206.108.207.139:80 size=90B
-2026-07-07 09:37:43 - DEBUG - [DATA] sendall 2/2: 192.168.3.131:55960 -> 206.108.207.139:80 size=67B
-2026-07-07 09:37:46 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
-2026-07-07 09:37:46 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55960 -> 206.108.207.139:80 size=105B
-2026-07-07 09:37:46 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55960 -> 206.108.207.139:80 size=103B
-2026-07-07 09:37:46 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55960 -> 206.108.207.139:80 size=529B
-2026-07-07 09:37:49 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
-2026-07-07 09:37:49 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55960 -> 206.108.207.139:80 size=55B
-2026-07-07 09:37:49 - DEBUG - [DATA] sendall 2/3: 192.168.3.132026-07-07 09:37:52 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:52 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=60B
-2026-07-07 09:37:54 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:37:54 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=4B
-2026-07-07 09:37:58 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
-2026-07-07 09:37:58 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=2B
-2026-07-07 09:37:58 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=9B
-2026-07-07 09:37:58 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=4B
-2026-07-07 09:38:00 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:00 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=34B
-2026-07-07 09:38:03 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:03 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=14B
-2026-07-07 09:38:06 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:06 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=50B
-2026-07-07 09:38:09 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:09 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:443 size=27B
-2026-07-07 09:38:12 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
-2026-07-07 09:38:12 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:52152 -> 72.14.213.147:443 size=62B
-2026-07-07 09:38:12 - DEBUG - [DATA] sendall 2/2: 192.168.3.131:52152 -> 72.14.213.147:443 size=155B
-2026-07-07 09:38:15 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
-2026-07-07 09:38:15 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:52152 -> 72.14.213.147:443 size=1B
-2026-07-07 09:38:15 - DEBUG - [DATA] sendall 2/2: 192.168.3.131:52152 -> 72.14.213.147:443 size=33B
-2026-07-07 09:38:18 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
-2026-07-07 09:38:18 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=5B
-2026-07-07 09:38:18 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=25B
-2026-07-07 09:38:18 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:52152 -> 72.14.213.147:443 size=36B
-168.3.131:55960 -> 206.108.207.139:80 size=48B
-2026-07-07 09:38:20 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:20 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55960 -> 206.108.207.139:80 size=131B
-endall 1/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=106B
-2026-07-07 09:38:18 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=55B
-2026-07-07 09:38:18 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=414B
-80 size=152B
-2026-07-07 09:38:19 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:19 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55957 -> 65.55.5.232:80 size=65B
-63:80 size=320B
-2026-07-07 09:38:06 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:06 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=100B
-2026-07-07 09:38:09 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:09 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=52B
-2026-07-07 09:38:11 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:11 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=501B
-2026-07-07 09:38:13 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:13 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=374B
-2026-07-07 09:38:16 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:16 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=295B
-2026-07-07 09:38:20 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
-2026-07-07 09:38:20 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 size=72B
+2026-07-08 13:10:00 - INFO - ============================================================
+2026-07-08 13:10:00 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
+2026-07-08 13:10:00 - INFO - IP Client: 192.168.3.131
+2026-07-08 13:10:00 - INFO - Timestamp: 2026-07-08 13:10:00.211380
+2026-07-08 13:10:00 - INFO - ============================================================
+2026-07-08 13:10:00 - INFO - Avvio client socket: CSV=/tmp/flows_adapted.csv, Client=192.168.3.131, Server=72.14.213.14202026-07-08 13:10:00 - INFO - [FLOW] Avvio flusso TCP reale 192.168.3.131:52152 -> 72.14.213.147:443
+2026-07-08 13:10:00 - INFO - [HANDSHAKE] connect TCP reale: 192.168.3.131:52152 -> 72.14.213.147:443
+2026-07-08 13:10:00 - INFO - [HANDSHAKE] Connessione stabilita: 192.168.3.131:52152 -> 72.14.213.147:443
+2026-07-08 13:10:00 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:00 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:52152 -> 72.14.213.147:2026-07-082026-07-08 13:10:03 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
+2026-07-08 13:10:03 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:55958 -> 65.55.239.163:80 size=101B
+2022026-07-08 13:10:03 - DEBUG - [DATA] sendall 2/8: 192.168.3.131:52152 -> 72.14.213.147:443 size=12026-07-08 13:10:06 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:06 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55958 -> 65.55.239.163:80 size=157B
+2026-07-08 13:10:06 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55958 -> 65.55.239.163:80 size=242026-07-08 13:10:06 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
+2026-07-08 13:10:06 -2026-07-08 13:10:09 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:09 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55958 -> 65.55.239.163:80 si2026-072026-07-08 13:10:12 - DEBUG - [BURST] Generazione burst di 6 segmenti applicativi
+2026-07-08 13:10:12 - DEBUG - [DATA] sendall 1/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=594B
+2026-07-08 13:10:12 - DEBUG - [DATA] sendall 2/6: 192.168.3.131:55958 -> 65.55.239.163:82026-07-08 2026-07-08 13:10:12 - DEBUG - [DATA] sendall 3/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=67B
+2026-07-08 13:10:12 - DEBUG - [DATA] sendall 4/6: 192.168.3.131:55958 -> 65.55.239.1632026-07-08 13:10:12 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
+2026-07-08 13:10:12 - DEBUG - [D2026-07-08 13:10:12 - DEBUG - [DATA] sendall 6/6: 192.168.3.131:552026-07-08 13:10:12 - DEBUG - [DAT2026-07-08 13:10:15 - DEBUG - [BURST] Generazione burst di 2 seg2026-07-08 13:10:15 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:15 - DEBUG - [DATA] 2026-07-08 13:10:15 - DEBUG - [DATA] sendall 2/2: 192.168.3.12026-07-08 13:10:18 - DEBUG - [BURST] 2026-07-08 13:10:18 - DEBUG - [BURST] Genera2026-07-08 13:10:18 - DEBUG - [DATA] s2026-07-08 13:10:18 - DEBUG - [DATA] sendall 1/1: 192.168.3.2026-07-08 13:10:21 - DEBUG - [BURST] Ge2026-07-08 13:10:21 - DEBUG - [BURST] Gene2026-07-08 13:10:21 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:55959 -> 65.55.5.231:80 size=453B
+2026-07-08 13:10:21 - DEBUG - [DATA] sendall 2/2: 192.168.3.131:55959 -> 65.55.5.231:80 size=67B
+2026-07-08 13:10:24 - DEBUG - [BURST] Generazione burst di 4 segmenti applicativi
+2026-07-08 13:10:24 - DEBUG - [DATA] sendall 1/4: 192.168.3.132026-07-08 13:10:24 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:24 - DEBUG - [DATA] sendall 1/1: 1922026-07-08 13:10:24 - DEBUG - [DATA] sendall 3/2026-07-08 13:10:27 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:27 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:552026-07-08 13:10:27 - DEBUG - [BUR2026-07-08 13:10:30 - DEBUG - [BURST] Generazione burst di 2 segmenti applicativi
+2026-07-08 13:10:30 - DEBUG - [DATA] sendall 1/2: 192.168.3.131:55958 -> 65.55.239.163:80 size=52B
+2026-07-08 13:10:30 - DEBUG - [DATA] sendall 2/2: 192.168.3.1312026-07-08 13:10:30 - DEBUG - [BURST]2026-07-08 13:10:33 - DEBUG - [BURST] Generazione burst di 6 segmenti applicativi
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 1/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=778B
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 2/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=122B
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 3/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=257B
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 4/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=27B
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 5/6: 192.2026-07-08 13:10:33 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:33 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:2026-07-08 13:10:36 - DEBUG - [BURST] Generazione burst di 10 segmenti applicativi
+2026-07-08 13:10:36 - DEBUG - [DATA] sendall 1/10: 192.168.3.131:55958 -> 65.55.239.163:80 size=94B
+2026-07-08 13:10:36 - DEBUG - [DATA] sendall 2/10: 192.168.3.131:55958 -> 65.55.239.163:80 size=275B
+2026-07-08 13:10:36 - DEBUG - [DATA] sendall 3/10: 192.168.3.131:55958 -> 65.55.239.163:80 size=346B
+2026-07-08 13:10:36 - D2026-07-08 13:10:39 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:39 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=109B
+2026-07-08 13:10:39 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=262B
+2026-07-08 13:10:39 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=342B
+2026-07-08 13:10:42 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:42 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55959 -> 65.55.5.231:80 size=170B
+2026-07-08 13:10:45 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:45 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=485B
+2026-07-08 13:10:45 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=98B
+2026-07-08 13:10:45 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=401B
+2026-07-08 13:10:48 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:48 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55959 -> 65.55.5.231:80 size=81B
+2026-07-08 13:10:51 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:51 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=1110B
+2026-07-08 13:10:51 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=555B
+2026-07-08 13:10:51 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=474B
+2026-07-08 13:10:54 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:54 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=227B
+2026-07-08 13:10:54 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=236B
+2026-07-08 13:10:54 - DEBUG - [DATA] sendall 3/3: 192.168.3.131:55959 -> 65.55.5.231:80 size=289B
+2026-07-08 13:10:58 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 1/1: 192.168.3.131:55959 -> 65.55.5.231:80 size=933B
+.131:55957 -> 65.55.5.232:80 size=80B
+2026-07-08 13:10:49 - DEBUG - [DATA] sendall 2/5: 192.168.3.131:55957 -> 65.55.5.232:80 size=690B
+2026-07-08 13:10:49 - DEBUG - [DATA] sendall 3/5: 192.168.3.131:55957 -> 65.55.5.232:80 size=372B
+2026-07-08 13:10:49 - DEBUG - [DATA] sendall 4/5: 2026-07-08 13:10:49 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:49 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:2026-07-08 13:10:52 - DEBUG - [BURST] Generazione burst di 5 segmenti applicativi
+2026-07-08 13:10:52 - DEBUG - [DATA] sendall 1/5: 192.168.3.131:55957 -> 65.55.5.232:80 size=90B
+2026-07-08 13:10:52 - DEBUG - [DATA] sendall 2/5: 192.162026-07-08 13:10:52 - DEBUG - [BURST] Generazione burst di 4 segmenti applicativi
+2026-07-08 13:10:52 - DEBUG - [DATA] sendall 1/4: 192.168.3.131:52152 -> 72.14.213.147:443 size=6B
+2026-07-08 13:10:52 - DEBUG - [DATA] sendall 2/4: 192.168.3.131:52152 -> 72.14.213.147:443 size=5B
+2026-07-08 13:10:52 - DEBUG - [DATA] sendall 3/4: 192.162026-07-08 13:10:55 - DEBUG - [BURST] Generazione burst di 1 segmenti applicativi
+2026-07-08 13:10:55 - DEBUG - [DATA] sendall 1/1: 192.168.3.12026-07-08 13:10:55 - DEBUG - [BURST]2026-07-08 13:10:58 - DEBUG - [BURST] Generazione burst di 3 segmenti applicativi
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 1/3: 192.168.3.131:55957 -> 65.55.5.232:80 size=225B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 2/3: 192.168.3.131:55957 -> 65.55.5.232:80 si2026-07-08 13:10:58 - DEBUG - [BURST] Generazione burst di 6 segmenti applicativi
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 1/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=51B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 2/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=142B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 3/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=416B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 4/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=41B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 5/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=1116B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 6/6: 192.168.3.131:55958 -> 65.55.239.163:80 size=133B
+026-07-08 13:10:58 - DEBUG - [DATA] sendall 3/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=41B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 4/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=399B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 5/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=219B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 6/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=160B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 7/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=128B
+2026-07-08 13:10:58 - DEBUG - [DATA] sendall 8/8: 192.168.3.131:55960 -> 206.108.207.139:80 size=1028B

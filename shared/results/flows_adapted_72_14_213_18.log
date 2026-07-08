@@ -1,8 +1,8 @@
-2026-07-07 09:37:20 - INFO - ============================================================
-2026-07-07 09:37:20 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
-2026-07-07 09:37:20 - INFO - IP Client: 72.14.213.18
-2026-07-07 09:37:20 - INFO - Timestamp: 2026-07-07 09:37:20.047458
-2026-07-07 09:37:20 - INFO - ============================================================
-2026-07-07 09:37:20 - INFO - Avvio client socket: CSV=/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
-2026-07-07 09:37:20 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
-2026-07-07 09:37:20 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use
+2026-07-07 13:25:34 - INFO - ============================================================
+2026-07-07 13:25:34 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
+2026-07-07 13:25:34 - INFO - IP Client: 72.14.213.18
+2026-07-07 13:25:34 - INFO - Timestamp: 2026-07-07 13:25:34.648744
+2026-07-07 13:25:34 - INFO - ============================================================
+2026-07-07 13:25:34 - INFO - Avvio client socket: CSV=/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
+2026-07-07 13:25:34 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
+2026-07-07 13:25:34 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use

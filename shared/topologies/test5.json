@@ -1,0 +1,141 @@
+{
+  "description": "Network topology for Mininet - Private subnets + Monitoring Switch + Internet",
+  "architecture": "private_subnets_monitoring_switch_internet",
+  "subnets": [
+    {
+      "type": "private_subnet",
+      "network": "192.168.0.0/16",
+      "switch_name": "s192_168_0_0",
+      "hosts": [
+        "192.168.3.131"
+      ],
+      "num_hosts": 1
+    },
+    {
+      "type": "internet",
+      "network": "0.0.0.0/0",
+      "switch_name": "s_internet",
+      "hosts": [
+        "206.108.207.139",
+        "63.215.202.48",
+        "63.215.202.49",
+        "65.55.239.163",
+        "65.55.5.231",
+        "65.55.5.232",
+        "72.14.213.147"
+      ],
+      "num_hosts": 7
+    }
+  ],
+  "monitoring_switch": {
+    "name": "s_monitoring",
+    "type": "aggregation_switch",
+    "connects_to": [
+      "s192_168_0_0"
+    ],
+    "purpose": "Aggregation switch for all private subnets, connected to router"
+  },
+  "routers": [
+    {
+      "id": "gateway_router",
+      "type": "central_gateway",
+      "connects_monitoring": "s_monitoring",
+      "connects_internet": "s_internet",
+      "purpose": "Route traffic between monitoring switch (private subnets) and Internet"
+    }
+  ],
+  "flows": [
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "63.215.202.48",
+      "src_ports": [
+        "55966"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "63.215.202.49",
+      "src_ports": [
+        "55967"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.239.163",
+      "src_ports": [
+        "55958"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.5.232",
+      "src_ports": [
+        "55957"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "65.55.5.231",
+      "src_ports": [
+        "55959"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "206.108.207.139",
+      "src_ports": [
+        "55960"
+      ],
+      "dst_ports": [
+        "80"
+      ],
+      "flow_count": 1
+    },
+    {
+      "src_ip": "192.168.3.131",
+      "dst_ip": "72.14.213.147",
+      "src_ports": [
+        "52152"
+      ],
+      "dst_ports": [
+        "443"
+      ],
+      "flow_count": 1
+    }
+  ],
+  "statistics": {
+    "total_ips": 8,
+    "private_subnets": 1,
+    "public_ips": 7,
+    "total_flows": 7
+  },
+  "probe": {
+    "name": "probe",
+    "mode": "ovs_mirror",
+    "capture_file": "pcap/capture.pcap",
+    "mirror_switches": [
+      "s_monitoring"
+    ],
+    "deduplication": true
+  }
+}
