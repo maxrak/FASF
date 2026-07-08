@@ -20,7 +20,7 @@ services:
     build: ./cicflowmeter
     volumes:
       - ./shared/pcap:/app/pcap
-      - ./shared/output_flows:/flows
+      - ./shared/output_flows:/app/flows
 
   evaluator:
     build: ./evaluator

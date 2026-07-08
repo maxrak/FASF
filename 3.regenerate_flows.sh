@@ -34,7 +34,7 @@ fi
 
 TEST_NAME="$1"
 PCAP_FILE="pcap/capture_${TEST_NAME}.pcap"
-OUTPUT_FILE="/flows/regenerated_${TEST_NAME}.csv"
+OUTPUT_DIR="flows/"
 
 # Verifica che il file pcap esista
 if [ ! -f "shared/${PCAP_FILE}" ]; then
@@ -51,5 +51,5 @@ echo "📂 File PCAP: shared/${PCAP_FILE}"
 echo "📝 Output CSV: shared/output_flows/regenerated_${TEST_NAME}.csv"
 echo ""
 
-docker compose run --rm cicflowmeter bash ./cicflowmeter.sh "${PCAP_FILE}" "${OUTPUT_FILE}" 
-awk -F, '$3 != "0"' shared/output_flows/regenerated_${TEST_NAME}.csv/capture_"${TEST_NAME}".pcap_Flow.csv >shared/output_flows/regenerated_${TEST_NAME}_clean.csv
+docker compose run --rm cicflowmeter bash ./cicflowmeter.sh "${PCAP_FILE}" "${OUTPUT_DIR}" 
+awk -F, '$3 != "0"' shared/output_flows/capture_${TEST_NAME}.pcap_Flow.csv >shared/output_flows/regenerated_${TEST_NAME}_clean.csv
