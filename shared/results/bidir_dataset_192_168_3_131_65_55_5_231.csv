@@ -1,2 +1,2 @@
 flow_id,sport,dport,scheduled_offset_s,forward_bytes_target,forward_bytes_sent,forward_messages_sent,bursts_sent,reverse_bytes_requested,reverse_bytes_received,reverse_messages_received,rx_protocol_errors,rx_errors,status
-0,55959,80,0.674646,5734,5734,16,5,7668,7668,8,0,0,ok
+0,55959,80,0.674646,5734,5734,16,6,7668,7668,9,0,0,ok

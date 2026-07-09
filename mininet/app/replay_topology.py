@@ -655,14 +655,47 @@ def configure_probe_monitoring(topology, probe, network_info):
         all_ports_raw = switch.cmd(f'ovs-vsctl list-ports {switch.name}').strip().split('\n')
         # Pulisci i nomi delle porte da whitespace/carriage return
         all_ports = [p.strip() for p in all_ports_raw if p.strip()]
-        monitored_ports = [p for p in all_ports if p != port_name]
+        
+        # Filtra le porte per escludere:
+        # 1. La porta probe
+        # 2. La porta "mon-gw" (porta verso il gateway sul monitoring switch)
+        # 3. Le porte verso s_internet (pattern specifici per s_internet)
+        # Manteniamo tutte le altre porte (verso host locali e verso altri switch di subnet)
+        monitored_ports = []
+        excluded_ports = []
+        
+        for p in all_ports:
+            # Escludi porta probe
+            if p == port_name:
+                excluded_ports.append((p, "porta probe"))
+                continue
+            
+            # Escludi porta mon-gw (collegamento al gateway)
+            if p == 'mon-gw':
+                excluded_ports.append((p, "collegamento gateway"))
+                continue
+            
+            # Escludi porte verso s_internet (iniziano con pattern specifico per s_internet)
+            # Assumiamo che s_internet abbia porte con naming specifico da identificare
+            # Per sicurezza, escludiamo solo se il nome contiene "inet" o simili pattern
+            if 'inet' in p.lower():
+                excluded_ports.append((p, "collegamento s_internet"))
+                continue
+            
+            # Questa è una porta da monitorare
+            monitored_ports.append(p)
         
         info(f"  DEBUG: Porte trovate su {switch.name}: {all_ports}\n")
         info(f"  DEBUG: Porta probe: {port_name}\n")
+        info(f"  DEBUG: Porte escluse: {[f'{p[0]} ({p[1]})' for p in excluded_ports]}\n")
         info(f"  DEBUG: Porte da monitorare: {monitored_ports}\n")
         
-        # Costruisci comando OVS con select-src-port E select-dst-port per traffico bidirezionale
+        # Configura OVS mirror: monitora sia src che dst per traffico bidirezionale
         # Questo cattura sia il traffico in uscita che in ingresso, ma ogni pacchetto è catturato una sola volta
+        if not monitored_ports:
+            info(f"  - ATTENZIONE: Nessuna porta da monitorare su {switch.name}, mirror non configurato\n")
+            continue
+        
         port_get_cmds = []
         port_refs = []
         for idx, port in enumerate(monitored_ports):
@@ -671,25 +704,17 @@ def configure_probe_monitoring(topology, probe, network_info):
             port_refs.append(f'@port{idx}')
         
         # Formato corretto per OVS: [uuid1,uuid2,...] tra parentesi quadre
-        port_refs_str = '[' + ','.join(port_refs) + ']' if port_refs else '[]'
-        port_get_str = ' '.join(port_get_cmds) if port_get_cmds else ''
+        port_refs_str = '[' + ','.join(port_refs) + ']'
+        port_get_str = ' '.join(port_get_cmds)
         
-        # Configura OVS mirror: monitora sia src che dst per traffico bidirezionale
-        if port_get_str:
-            ovs_cmd = (
-                f'ovs-vsctl -- --id=@probeport get Port {port_name} '
-                f'{port_get_str} '
-                f'-- --id=@m create Mirror name={mirror_name} '
-                f'select-src-port={port_refs_str} select-dst-port={port_refs_str} output-port=@probeport '
-                f'-- set Bridge {switch.name} mirrors=@m'
-            )
-        else:
-            # Se non ci sono porte da monitorare, usa select-all come fallback
-            ovs_cmd = (
-                f'ovs-vsctl -- --id=@probeport get Port {port_name} '
-                f'-- --id=@m create Mirror name={mirror_name} select-all=true output-port=@probeport '
-                f'-- set Bridge {switch.name} mirrors=@m'
-            )
+        # Configura OVS mirror: monitora SOLO le porte specificate (select-src-port)
+        ovs_cmd = (
+            f'ovs-vsctl -- --id=@probeport get Port {port_name} '
+            f'{port_get_str} '
+            f'-- --id=@m create Mirror name={mirror_name} '
+            f'select-src-port={port_refs_str} output-port=@probeport '
+            f'-- set Bridge {switch.name} mirrors=@m'
+        )
         
         info(f"  DEBUG: Comando OVS: {ovs_cmd}\n")
         result = switch.cmd(ovs_cmd)
@@ -717,8 +742,10 @@ def configure_probe_monitoring(topology, probe, network_info):
     info(f"*** Avvio packet capture sul probe\n")
     info(f"  - File: {capture_file}\n")
     
-    # Usa 'any' per catturare da tutte le interfacce mirror se ci sono multiple
-    interface = 'any' if len(probe_ports) > 1 else probe_ports[0]['probe_intf']
+    # Usa solo la prima interfaccia probe invece di 'any' per evitare di catturare traffico Docker
+    interface = probe_ports[0]['probe_intf']
+    if len(probe_ports) > 1:
+        info(f"  - NOTA: {len(probe_ports)} probe ports presenti, cattura solo su {interface}\n")
     info(f"  - Interface: {interface}\n")
     
     # Costruisci comando tcpdump
@@ -734,8 +761,8 @@ def configure_probe_monitoring(topology, probe, network_info):
         tcpdump_args.append("ip")
         info(f"  - Filtro: Solo IPv4 ('ip')\n")
     
-    if deduplication:
-        info(f"  - Deduplication: abilitata (via interface 'any')\n")
+    if deduplication and len(probe_ports) == 1:
+        info(f"  - Deduplication: abilitata (cattura su singola interfaccia)\n")
     
     # Avvia tcpdump come processo background sul probe
     tcpdump_proc = probe.popen(tcpdump_args)

@@ -3,24 +3,24 @@
 
 ## Aree piu' critiche
 
-- dimensioni/lunghezze: errore relativo medio 54020.67% su 8 feature.
-- throughput/rate: errore relativo medio 858.71% su 1 feature.
-- TCP/flag/window: errore relativo medio 568.57% su 17 feature.
-- conteggi pacchetti: errore relativo medio 556.53% su 27 feature.
-- altro: errore relativo medio 296.82% su 10 feature.
+- dimensioni/lunghezze: errore relativo medio 7036.20% su 8 feature.
+- throughput/rate: errore relativo medio 1135.72% su 1 feature.
+- conteggi pacchetti: errore relativo medio 663.06% su 27 feature.
+- TCP/flag/window: errore relativo medio 545.88% su 17 feature.
+- altro: errore relativo medio 289.69% su 10 feature.
 
 ## Feature peggiori
 
-- Bwd Bulk Rate Avg (dimensioni/lunghezze): errore relativo medio 321904.45%, sovrastima.
-- Bwd Packets/s (conteggi pacchetti): errore relativo medio 3810.86%, sovrastima.
-- Flow Packets/s (conteggi pacchetti): errore relativo medio 3244.37%, sovrastima.
-- Fwd Packets/s (conteggi pacchetti): errore relativo medio 3066.36%, sovrastima.
-- Bwd Header Length (dimensioni/lunghezze): errore relativo medio 1149.66%, sovrastima.
-- Fwd Act Data Pkts (altro): errore relativo medio 1149.66%, sovrastima.
-- Fwd PSH Flags (TCP/flag/window): errore relativo medio 1149.66%, sovrastima.
-- Fwd Header Length (dimensioni/lunghezze): errore relativo medio 918.17%, sovrastima.
-- Flow Bytes/s (throughput/rate): errore relativo medio 858.71%, sovrastima.
-- PSH Flag Count (TCP/flag/window): errore relativo medio 817.20%, sovrastima.
+- Bwd Bulk Rate Avg (dimensioni/lunghezze): errore relativo medio 40133.39%, sovrastima.
+- Bwd Packets/s (conteggi pacchetti): errore relativo medio 4664.81%, sovrastima.
+- Flow Packets/s (conteggi pacchetti): errore relativo medio 3956.74%, sovrastima.
+- Fwd Packets/s (conteggi pacchetti): errore relativo medio 3710.12%, sovrastima.
+- Fwd Act Data Pkts (altro): errore relativo medio 1146.49%, sovrastima.
+- Fwd PSH Flags (TCP/flag/window): errore relativo medio 1146.49%, sovrastima.
+- Flow Bytes/s (throughput/rate): errore relativo medio 1135.72%, sovrastima.
+- Bwd Header Length (dimensioni/lunghezze): errore relativo medio 1075.32%, sovrastima.
+- Fwd Header Length (dimensioni/lunghezze): errore relativo medio 874.25%, sovrastima.
+- PSH Flag Count (TCP/flag/window): errore relativo medio 785.06%, sovrastima.
 
 ## Lettura diagnostica
 
