@@ -1,0 +1,34 @@
+2026-07-09 11:15:49 - INFO - ======================================================================
+2026-07-09 11:15:49 - INFO - CLIENT BIDIRECTIONAL FLOW EMULATOR
+2026-07-09 11:15:49 - INFO - CSV: /tmp/flows_adapted.csv
+2026-07-09 11:15:49 - INFO - Client IP: 192.168.3.131
+2026-07-09 11:15:49 - INFO - Timestamp: 2026-07-09 11:15:49.845383
+2026-07-09 11:15:49 - INFO - ======================================================================
+2026-07-09 11:15:51 - INFO - [FLOW 0] start offset=1.324410s 192.168.3.131:55967->63.215.202.49:80 fwd_target=640 pkts=4 bursts=2 min=1 max=640 mean=160.00 bwd_target=4202 bwd_alloc=[3381, 821]
+2026-07-09 11:15:51 - INFO - [BURST 0:0] Inviando burst con 3 pkts, richiedendo 3381 bytes reverse
+2026-07-09 11:15:51 - DEBUG - [REVERSE_REQ] flow=0 burst=0 pkt=0 requesting 3381 reverse bytes
+2026-07-09 11:1522026-07-09 11:15:53 - INFO - [BURST 0:1] Inviando burst con 1 pkts, richiedendo 1 bytes reverse
+2026-07-09 11:15:53 - DEBUG - [REVERSE_REQ] flow=0 burst=1 pkt=0 requesting 1 reverse bytes
+2026-07-09 11:15:56 - INFO - [BURST 0:2] Inviando burst con 1 pkts, richiedendo 599 bytes reverse
+2026-07-09 11:15:56 - DEBUG - [REVERSE_REQ] flow=0 burst=2 pkt=0 requesting 599 reverse bytes22026-07-09 11:15:59 - INFO - [BURST 0:3] Inviando burst con 1 pkts, richiedendo 599 bytes reverse
+2026-07-09 11:15:59 - DEBUG - [REVERSE_REQ] flow=0 burst=3 pkt=0 requesting 599 reverse bytes22026-07-09 12026-07-09 11:16:02 - INFO - [BURST 0:4] Inviando burst con 3 pkts, richiedendo 772 bytes reverse
+2026-07-09 11:16:02 - DEBUG - [REVERSE_REQ] flow=0 burst=4 pkt=0 requesting 772 re2026-07-09 11:16:05 - INFO - [BURST 0:5] Inviando burst con 1 pkts, richiedendo 1 bytes reverse
+2026-07-09 11:16:05 - DEBUG - [REVERSE_REQ] flow=0 burst=5 pkt=0 requesting 1 reverse bytes
+ bytes
+VERSE_REQ] flow=0 burst=5 pkt=0 requesting 2467 reverse bytes
+2026-07-09 11:16:08 - INFO - [BURST 0:6] Inviando burst con 1 pkts, richiedendo 19 bytes reverse
+2026-07-09 11:16:08 - DEBUG - [REVERSE_REQ] flow=0 burst=6 pkt=0 requesting 19 reverse bytes
+2026-07-09 11:16:11 - INFO - [BURST 0:7] Inviando burst con 2 pkts, richiedendo 2280 bytes reverse
+2026-07-09 11:16:11 - DEBUG - [REVERSE_REQ] flow=0 burst=7 pkt=0 requesting 2280 reverse bytes
+2026-07-09 11:16:14 - INFO - [BURST 0:8] Inviando burst con 1 pkts, richiedendo 19 bytes reverse
+2026-07-09 11:16:14 - DEBUG - [REVERSE_REQ] flow=0 burst=8 pkt=0 requesting 19 reverse bytes
+2026-07-09 11:16:17 - INFO - [BURST 0:9] Inviando burst con 3 pkts, richiedendo 3588 bytes reverse
+2026-07-09 11:16:17 - DEBUG - [REVERSE_REQ] flow=0 burst=9 pkt=0 requesting 3588 reverse bytes
+2026-07-09 11:16:20 - INFO - [BURST 0:10] Inviando burst con 3 pkts, richiedendo 3420 bytes reverse
+2026-07-09 11:16:20 - DEBUG - [REVERSE_REQ] flow=0 burst=10 pkt=0 requesting 3420 reverse bytes
+2026-07-09 11:16:23 - INFO - [BURST 0:11] Inviando burst con 2 pkts, richiedendo 37 bytes reverse
+2026-07-09 11:16:23 - DEBUG - [REVERSE_REQ] flow=0 burst=11 pkt=0 requesting 37 reverse bytes
+2026-07-09 11:16:26 - INFO - [BURST 0:12] Inviando burst con 4 pkts, richiedendo 1495 bytes reverse
+2026-07-09 11:16:26 - DEBUG - [REVERSE_REQ] flow=0 burst=12 pkt=0 requesting 1495 reverse bytes
+2026-07-09 11:16:29 - INFO - [BURST 0:13] Inviando burst con 2 pkts, richiedendo 1047 bytes reverse
+2026-07-09 11:16:29 - DEBUG - [REVERSE_REQ] flow=0 burst=13 pkt=0 requesting 1047 reverse bytes

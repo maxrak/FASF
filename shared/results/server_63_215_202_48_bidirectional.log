@@ -1,0 +1,38 @@
+2026-07-09 11:14:34 - INFO - ======================================================================
+2026-07-09 11:14:34 - INFO - SERVER BIDIRECTIONAL FLOW EMULATOR
+2026-07-09 11:14:34 - INFO - Server IP: 63.215.202.48
+2026-07-09 11:14:34 - INFO - Timestamp: 2026-07-09 11:14:34.769527
+2026-07-09 11:14:34 - INFO - ======================================================================
+2026-07-09 11:14:34 - INFO - Bind IP: 63.215.202.48
+2026-07-09 11:14:34 - INFO - Interfaccia (ignorata): h3-eth0
+2026-07-09 11:14:34 - INFO - Porte: [53, 80, 139, 161, 443, 445, 1900, 5351, 5355, 5480, 7001, 8080, 8443, 9000, 50000]
+2026-07-09 11:14:34 - INFO - Numero totale porte: 15
+2026-07-09 11:14:34 - INFO - Reverse chunk size: 1448
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:53
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:80
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:139
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:161
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:443
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:445
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:1900
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:5355
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:5351
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:5480
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:7001
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:8080
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:8443
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:9000
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.48:50000
+2026-07-09 11:14:34 - INFO - Tutte le 15 porte avviate con successo
+2026-07-09 11:14:35 - INFO - Server pronto ad accettare connessioni
+2026-07-09 11:15:50 - INFO - [ACCEPT] 192.168.3.131:55966 -> local_port=80
+2026-07-09 11:15:50 - DEBUG - [DATA] 192.168.3.131:55966 -> :80 flow=0 burst=0 payload=78 received=78 reverse_request=95
+2026-07-09 11:15:50 - INFO - [REVERSE_START] :80 -> 192.168.3.131:55966 flow=0 burst=0 sending 95 bytes...
+2026-07-09 11:15:50 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:55966 flow=0 burst=0 bytes=95 messages=1
+2026-07-09 11:15:50 - DEBUG - [DATA] 192.168.3.131:55966 -> :80 flow=0 burst=1 payload=1 received=1 reverse_request=529
+2026-07-09 11:15:50 - INFO - [REVERSE_START] :80 -> 192.168.3.131:55966 flow=0 burst=1 sending 529 bytes...
+2026-07-09 11:15:50 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:55966 flow=0 burst=1 bytes=529 messages=1
+2026-07-09 11:15:50 - DEBUG - [DATA] 192.168.3.131:55966 -> :80 flow=0 burst=1 payload=277 received=277 reverse_request=0
+2026-07-09 11:15:50 - DEBUG - [DATA] 192.168.3.131:55966 -> :80 flow=0 burst=1 payload=159 received=159 reverse_request=0
+2026-07-09 11:15:50 - DEBUG - [CLOSE] 192.168.3.131:55966 -> :80 header=None (connessione chiusa)
+2026-07-09 11:15:50 - INFO - [CLOSE] 192.168.3.131:55966 -> :80, rx_payload=515, rx_messages=4, reverse_bytes=624, reverse_messages=2

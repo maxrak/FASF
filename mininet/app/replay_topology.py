@@ -661,25 +661,26 @@ def configure_probe_monitoring(topology, probe, network_info):
         info(f"  DEBUG: Porta probe: {port_name}\n")
         info(f"  DEBUG: Porte da monitorare: {monitored_ports}\n")
         
-        # Costruisci comando OVS con select-src-port per evitare duplicati
-        # Monitora solo traffico in uscita (src) dalle porte, non in ingresso (dst)
+        # Costruisci comando OVS con select-src-port E select-dst-port per traffico bidirezionale
+        # Questo cattura sia il traffico in uscita che in ingresso, ma ogni pacchetto è catturato una sola volta
         port_get_cmds = []
         port_refs = []
         for idx, port in enumerate(monitored_ports):
             # Ogni comando get deve essere preceduto da --
-            port_get_cmds.append(f'-- --id=@srcport{idx} get Port {port}')
-            port_refs.append(f'@srcport{idx}')
+            port_get_cmds.append(f'-- --id=@port{idx} get Port {port}')
+            port_refs.append(f'@port{idx}')
         
         # Formato corretto per OVS: [uuid1,uuid2,...] tra parentesi quadre
         port_refs_str = '[' + ','.join(port_refs) + ']' if port_refs else '[]'
         port_get_str = ' '.join(port_get_cmds) if port_get_cmds else ''
         
-        # Configura OVS mirror: replica solo traffico source (evita duplicati)
+        # Configura OVS mirror: monitora sia src che dst per traffico bidirezionale
         if port_get_str:
             ovs_cmd = (
                 f'ovs-vsctl -- --id=@probeport get Port {port_name} '
                 f'{port_get_str} '
-                f'-- --id=@m create Mirror name={mirror_name} select-src-port={port_refs_str} output-port=@probeport '
+                f'-- --id=@m create Mirror name={mirror_name} '
+                f'select-src-port={port_refs_str} select-dst-port={port_refs_str} output-port=@probeport '
                 f'-- set Bridge {switch.name} mirrors=@m'
             )
         else:
@@ -695,7 +696,7 @@ def configure_probe_monitoring(topology, probe, network_info):
         info(f"  DEBUG: Risultato OVS: {result}\n")
         info(
             f"  - Mirror {switch.name}:{port_name} -> "
-            f"{probe_link['probe_intf']} (select-src-port, {len(monitored_ports)} porte monitorate)\n"
+            f"{probe_link['probe_intf']} (select-src+dst-port, {len(monitored_ports)} porte monitorate)\n"
         )
         
         # Debug: verifica configurazione mirror

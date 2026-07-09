@@ -1,0 +1,38 @@
+2026-07-09 11:14:34 - INFO - ======================================================================
+2026-07-09 11:14:34 - INFO - SERVER BIDIRECTIONAL FLOW EMULATOR
+2026-07-09 11:14:34 - INFO - Server IP: 63.215.202.49
+2026-07-09 11:14:34 - INFO - Timestamp: 2026-07-09 11:14:34.768506
+2026-07-09 11:14:34 - INFO - ======================================================================
+2026-07-09 11:14:34 - INFO - Bind IP: 63.215.202.49
+2026-07-09 11:14:34 - INFO - Interfaccia (ignorata): h4-eth0
+2026-07-09 11:14:34 - INFO - Porte: [53, 80, 139, 161, 443, 445, 1900, 5351, 5355, 5480, 7001, 8080, 8443, 9000, 50000]
+2026-07-09 11:14:34 - INFO - Numero totale porte: 15
+2026-07-09 11:14:34 - INFO - Reverse chunk size: 1448
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:53
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:80
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:139
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:161
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:443
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:445
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:1900
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:5355
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:5480
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:5351
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:7001
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:8080
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:8443
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:9000
+2026-07-09 11:14:34 - INFO - [LISTEN] 63.215.202.49:50000
+2026-07-09 11:14:34 - INFO - Tutte le 15 porte avviate con successo
+2026-07-09 11:14:35 - INFO - Server pronto ad accettare connessioni
+2026-07-09 11:15:51 - INFO - [ACCEPT] 192.168.3.131:55967 -> local_port=80
+2026-07-09 11:15:51 - DEBUG - [DATA] 192.168.3.131:55967 -> :80 flow=0 burst=0 payload=329 received=329 reverse_request=3381
+2026-07-09 11:15:51 - INFO - [REVERSE_START] :80 -> 192.168.3.131:55967 flow=0 burst=0 sending 3381 bytes...
+2026-07-09 11:15:51 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:55967 flow=0 burst=0 bytes=3381 messages=3
+2026-07-09 11:15:51 - DEBUG - [DATA] 192.168.3.131:55967 -> :80 flow=0 burst=0 payload=1 received=1 reverse_request=0
+2026-07-09 11:15:51 - DEBUG - [DATA] 192.168.3.131:55967 -> :80 flow=0 burst=0 payload=185 received=185 reverse_request=0
+2026-07-09 11:15:51 - DEBUG - [DATA] 192.168.3.131:55967 -> :80 flow=0 burst=1 payload=125 received=125 reverse_request=821
+2026-07-09 11:15:51 - INFO - [REVERSE_START] :80 -> 192.168.3.131:55967 flow=0 burst=1 sending 821 bytes...
+2026-07-09 11:15:51 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:55967 flow=0 burst=1 bytes=821 messages=1
+2026-07-09 11:15:51 - DEBUG - [CLOSE] 192.168.3.131:55967 -> :80 header=None (connessione chiusa)
+2026-07-09 11:15:51 - INFO - [CLOSE] 192.168.3.131:55967 -> :80, rx_payload=640, rx_messages=4, reverse_bytes=4202, reverse_messages=4
