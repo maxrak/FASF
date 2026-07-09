@@ -19,7 +19,7 @@ Output principali:
     - feature_error_summary.csv: errori aggregati per feature
     - cell_differences.csv: differenze feature-per-feature per ogni coppia
     - suggestions.md: indicazioni pratiche su dove intervenire nel simulatore
-    - report.html: report HTML sintetico
+    - report.html: report HTML sintetico interattivo
 
 Esempio:
     python flow_compare_tool.py original.csv simulated.csv -o comparison_report
@@ -69,7 +69,6 @@ def normalize_keys(df: pd.DataFrame, key_cols: Sequence[str]) -> pd.DataFrame:
         if "IP" in c:
             out[c] = out[c].astype(str).str.strip()
         else:
-            # Le porte possono arrivare come 443, 443.0 o stringhe.
             out[c] = pd.to_numeric(out[c], errors="coerce").astype("Int64").astype(str)
     return out
 
@@ -246,18 +245,114 @@ def make_suggestions(summary: pd.DataFrame, missing_count: int, extra_count: int
     return "\n".join(lines) + "\n"
 
 
-def write_html_report(out_dir: Path, matched: pd.DataFrame, missing: pd.DataFrame, extra: pd.DataFrame, summary: pd.DataFrame) -> None:
-    html = ["<html><head><meta charset='utf-8'><title>Flow comparison report</title>",
-            "<style>body{font-family:Arial,sans-serif;margin:30px} table{border-collapse:collapse} td,th{border:1px solid #ddd;padding:6px} th{background:#f2f2f2}</style>",
-            "</head><body>", "<h1>Flow comparison report</h1>"]
-    html.append(f"<p>Coppie abbinate: <b>{len(matched)}</b><br>Flussi originali mancanti: <b>{len(missing)}</b><br>Flussi simulati extra: <b>{len(extra)}</b></p>")
-    html.append("<h2>Feature con errore maggiore</h2>")
-    html.append(summary.head(20).to_html(index=False) if not summary.empty else "<p>Nessuna feature confrontabile.</p>")
-    html.append("<h2>Flussi mancanti</h2>")
-    html.append(missing.head(20).to_html(index=False) if not missing.empty else "<p>Nessuno.</p>")
-    html.append("<h2>Flussi extra</h2>")
-    html.append(extra.head(20).to_html(index=False) if not extra.empty else "<p>Nessuno.</p>")
-    html.append("</body></html>")
+def write_html_report(out_dir: Path, matched: pd.DataFrame, missing: pd.DataFrame, extra: pd.DataFrame, summary: pd.DataFrame, cell_df: pd.DataFrame, key_cols: List[str]) -> None:
+    html = [
+        "<!DOCTYPE html>",
+        "<html>",
+        "<head>",
+        "<meta charset='utf-8'>",
+        "<title>Report di Confronto Flussi</title>",
+        "<link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css' rel='stylesheet'>",
+        "<link href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css' rel='stylesheet'>",
+        "<style>",
+        "body { margin: 20px; font-family: system-ui, -apple-system, sans-serif; background-color: #f8f9fa; }",
+        ".container-fluid { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }",
+        ".table-wrapper { margin-top: 20px; padding-top: 20px; }",
+        "table.dataTable thead th { background-color: #343a40; color: white; }",
+        ".nav-tabs .nav-link { font-weight: 600; color: #495057; }",
+        "</style>",
+        "</head>",
+        "<body>",
+        "<div class='container-fluid'>",
+        "<h2 class='mb-4 text-primary'>Report Analitico di Confronto Flussi</h2>",
+        f"<div class='alert alert-info'>Coppie abbinate: <b>{len(matched)}</b> | Flussi originali mancanti: <b>{len(missing)}</b> | Flussi simulati extra: <b>{len(extra)}</b></div>"
+    ]
+
+    # Tabs navigation
+    html.extend([
+        "<ul class='nav nav-tabs' id='reportTabs' role='tablist'>",
+        "<li class='nav-item' role='presentation'><button class='nav-link active' id='summary-tab' data-bs-toggle='tab' data-bs-target='#summary' type='button' role='tab'>Media Errori (Feature)</button></li>",
+        "<li class='nav-item' role='presentation'><button class='nav-link' id='flow-tab' data-bs-toggle='tab' data-bs-target='#flow' type='button' role='tab'>Dettaglio Flusso per Flusso</button></li>",
+        "<li class='nav-item' role='presentation'><button class='nav-link' id='missing-tab' data-bs-toggle='tab' data-bs-target='#missing' type='button' role='tab'>Flussi Mancanti</button></li>",
+        "<li class='nav-item' role='presentation'><button class='nav-link' id='extra-tab' data-bs-toggle='tab' data-bs-target='#extra' type='button' role='tab'>Flussi Extra</button></li>",
+        "</ul>",
+        "<div class='tab-content' id='reportTabsContent'>"
+    ])
+
+    # TAB 1: Media Errori (Summary)
+    html.append("<div class='tab-pane fade show active table-wrapper' id='summary' role='tabpanel'>")
+    html.append("<h4 class='mb-3'>Errori Medi Aggregati sulle Feature</h4>")
+    if not summary.empty:
+        sum_disp = summary[['feature', 'group', 'mae', 'mean_relative_error_pct', 'mean_signed_error']].copy()
+        sum_disp = sum_disp.rename(columns={
+            'feature': 'Feature', 'group': 'Gruppo', 'mae': 'Errore Assoluto Medio (MAE)',
+            'mean_relative_error_pct': 'Errore Relativo Medio (%)', 'mean_signed_error': 'Errore Medio con Segno'
+        })
+        html.append(sum_disp.to_html(index=False, classes='table table-striped table-hover datatable', float_format="%.4f", na_rep="-"))
+    else:
+        html.append("<p>Nessuna feature confrontabile trovata.</p>")
+    html.append("</div>")
+
+    # TAB 2: Dettaglio Flusso per Flusso
+    html.append("<div class='tab-pane fade table-wrapper' id='flow' role='tabpanel'>")
+    html.append("<h4 class='mb-3'>Dettaglio Errori per Singolo Flusso</h4>")
+    if not cell_df.empty:
+        flow_disp = cell_df.copy()
+        
+        # Genera il nome del flusso unendo le chiavi (es. IP:Port -> IP:Port se si usano le classiche 4 tuple)
+        def make_flow_name(r):
+            if len(key_cols) == 4:
+                return f"{r.get(key_cols[0], '')}:{r.get(key_cols[1], '')} &rarr; {r.get(key_cols[2], '')}:{r.get(key_cols[3], '')}"
+            return " | ".join(str(r.get(k, '')) for k in key_cols)
+            
+        flow_disp['Endpoint Flusso'] = flow_disp.apply(make_flow_name, axis=1)
+        flow_disp['relative_error_pct'] = flow_disp['relative_error'] * 100
+        
+        cols_to_show = ['pair_id', 'Endpoint Flusso', 'feature', 'original_value', 'simulated_value', 'absolute_error', 'relative_error_pct']
+        cols_to_show = [c for c in cols_to_show if c in flow_disp.columns]
+        
+        flow_disp = flow_disp[cols_to_show].rename(columns={
+            'pair_id': 'ID Coppia', 'feature': 'Feature',
+            'original_value': 'Valore Originale', 'simulated_value': 'Valore Simulato',
+            'absolute_error': 'Errore Assoluto', 'relative_error_pct': 'Errore Relativo (%)'
+        })
+        
+        html.append(flow_disp.to_html(index=False, classes='table table-striped table-hover datatable', float_format="%.4f", na_rep="-", escape=False))
+    else:
+        html.append("<p>Nessun dettaglio disponibile.</p>")
+    html.append("</div>")
+
+    # TAB 3: Flussi Mancanti
+    html.append("<div class='tab-pane fade table-wrapper' id='missing' role='tabpanel'>")
+    html.append("<h4 class='mb-3'>Flussi Originali Non Riprodotti (Primi 1000)</h4>")
+    html.append(missing.head(1000).to_html(index=False, classes='table table-striped table-hover datatable') if not missing.empty else "<p>Tutti i flussi originali sono stati abbinati!</p>")
+    html.append("</div>")
+
+    # TAB 4: Flussi Extra
+    html.append("<div class='tab-pane fade table-wrapper' id='extra' role='tabpanel'>")
+    html.append("<h4 class='mb-3'>Flussi Simulati in Eccesso (Primi 1000)</h4>")
+    html.append(extra.head(1000).to_html(index=False, classes='table table-striped table-hover datatable') if not extra.empty else "<p>Nessun flusso simulato in eccesso!</p>")
+    html.append("</div>")
+
+    # Script JS per attivare i tab e le DataTables
+    html.extend([
+        "</div>", # Fine tab-content
+        "</div>", # Fine container
+        "<script src='https://code.jquery.com/jquery-3.7.0.min.js'></script>",
+        "<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js'></script>",
+        "<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>",
+        "<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>",
+        "<script>",
+        "$(document).ready(function() {",
+        "    $('.datatable').DataTable({",
+        "        pageLength: 50,",
+        "        language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json' }",
+        "    });",
+        "});",
+        "</script>",
+        "</body></html>"
+    ])
+    
     (out_dir / "report.html").write_text("\n".join(html), encoding="utf-8")
 
 
@@ -339,7 +434,9 @@ def main() -> int:
     cell_df.to_csv(out_dir / "cell_differences.csv", index=False)
     summary.to_csv(out_dir / "feature_error_summary.csv", index=False)
     (out_dir / "suggestions.md").write_text(make_suggestions(summary, len(missing), len(extra)), encoding="utf-8")
-    write_html_report(out_dir, matched, missing, extra, summary)
+    
+    # Chiamata alla funzione HTML aggiornata
+    write_html_report(out_dir, matched, missing, extra, summary, cell_df, args.key_cols)
 
     print(f"Report scritto in: {out_dir.resolve()}")
     print(f"Coppie abbinate: {len(matched)}")

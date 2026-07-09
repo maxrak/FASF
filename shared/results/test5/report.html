@@ -1,290 +1,6173 @@
-<html><head><meta charset='utf-8'><title>Flow comparison report</title>
-<style>body{font-family:Arial,sans-serif;margin:30px} table{border-collapse:collapse} td,th{border:1px solid #ddd;padding:6px} th{background:#f2f2f2}</style>
-</head><body>
-<h1>Flow comparison report</h1>
-<p>Coppie abbinate: <b>7</b><br>Flussi originali mancanti: <b>0</b><br>Flussi simulati extra: <b>0</b></p>
-<h2>Feature con errore maggiore</h2>
-<table border="1" class="dataframe">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Report di Confronto Flussi</title>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css' rel='stylesheet'>
+<link href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css' rel='stylesheet'>
+<style>
+body { margin: 20px; font-family: system-ui, -apple-system, sans-serif; background-color: #f8f9fa; }
+.container-fluid { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+.table-wrapper { margin-top: 20px; padding-top: 20px; }
+table.dataTable thead th { background-color: #343a40; color: white; }
+.nav-tabs .nav-link { font-weight: 600; color: #495057; }
+</style>
+</head>
+<body>
+<div class='container-fluid'>
+<h2 class='mb-4 text-primary'>Report Analitico di Confronto Flussi</h2>
+<div class='alert alert-info'>Coppie abbinate: <b>7</b> | Flussi originali mancanti: <b>0</b> | Flussi simulati extra: <b>0</b></div>
+<ul class='nav nav-tabs' id='reportTabs' role='tablist'>
+<li class='nav-item' role='presentation'><button class='nav-link active' id='summary-tab' data-bs-toggle='tab' data-bs-target='#summary' type='button' role='tab'>Media Errori (Feature)</button></li>
+<li class='nav-item' role='presentation'><button class='nav-link' id='flow-tab' data-bs-toggle='tab' data-bs-target='#flow' type='button' role='tab'>Dettaglio Flusso per Flusso</button></li>
+<li class='nav-item' role='presentation'><button class='nav-link' id='missing-tab' data-bs-toggle='tab' data-bs-target='#missing' type='button' role='tab'>Flussi Mancanti</button></li>
+<li class='nav-item' role='presentation'><button class='nav-link' id='extra-tab' data-bs-toggle='tab' data-bs-target='#extra' type='button' role='tab'>Flussi Extra</button></li>
+</ul>
+<div class='tab-content' id='reportTabsContent'>
+<div class='tab-pane fade show active table-wrapper' id='summary' role='tabpanel'>
+<h4 class='mb-3'>Errori Medi Aggregati sulle Feature</h4>
+<table border="1" class="dataframe table table-striped table-hover datatable">
   <thead>
     <tr style="text-align: right;">
-      <th>feature</th>
-      <th>group</th>
-      <th>matched_pairs</th>
-      <th>mae</th>
-      <th>rmse</th>
-      <th>median_abs_error</th>
-      <th>max_abs_error</th>
-      <th>mean_relative_error</th>
-      <th>median_relative_error</th>
-      <th>mean_signed_error</th>
-      <th>mean_relative_error_pct</th>
+      <th>Feature</th>
+      <th>Gruppo</th>
+      <th>Errore Assoluto Medio (MAE)</th>
+      <th>Errore Relativo Medio (%)</th>
+      <th>Errore Medio con Segno</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Bwd Bulk Rate Avg</td>
-      <td>dimensioni/lunghezze</td>
-      <td>7</td>
-      <td>3.627707e+07</td>
-      <td>4.703688e+07</td>
-      <td>2.885470e+07</td>
-      <td>9.750000e+07</td>
-      <td>401.333861</td>
-      <td>401.333861</td>
-      <td>3.627707e+07</td>
-      <td>40133.386082</td>
+      <td>Active Std</td>
+      <td>durata/timing</td>
+      <td>1513352.5814</td>
+      <td>1158.2525</td>
+      <td>791659.0404</td>
     </tr>
     <tr>
-      <td>Bwd Packets/s</td>
-      <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>2.469698e+02</td>
-      <td>4.630005e+02</td>
-      <td>4.812679e+00</td>
-      <td>1.002977e+03</td>
-      <td>46.648126</td>
-      <td>36.485778</td>
-      <td>2.469698e+02</td>
-      <td>4664.812637</td>
+      <td>Active Max</td>
+      <td>durata/timing</td>
+      <td>2786476.7143</td>
+      <td>994.1360</td>
+      <td>1345931.2857</td>
     </tr>
     <tr>
-      <td>Flow Packets/s</td>
-      <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>5.701462e+02</td>
-      <td>1.065979e+03</td>
-      <td>1.009608e+01</td>
-      <td>2.281000e+03</td>
-      <td>39.567440</td>
-      <td>34.512777</td>
-      <td>5.701462e+02</td>
-      <td>3956.743972</td>
+      <td>Bwd IAT Min</td>
+      <td>durata/timing</td>
+      <td>27616.2857</td>
+      <td>871.0543</td>
+      <td>-27600.2857</td>
     </tr>
     <tr>
-      <td>Fwd Packets/s</td>
-      <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>3.231764e+02</td>
-      <td>6.030992e+02</td>
-      <td>5.730800e+00</td>
-      <td>1.278023e+03</td>
-      <td>37.101187</td>
-      <td>28.963906</td>
-      <td>3.231764e+02</td>
-      <td>3710.118669</td>
-    </tr>
-    <tr>
-      <td>Fwd Act Data Pkts</td>
-      <td>altro</td>
-      <td>7</td>
-      <td>5.114286e+01</td>
-      <td>6.228506e+01</td>
-      <td>4.400000e+01</td>
-      <td>1.270000e+02</td>
-      <td>11.464853</td>
-      <td>11.000000</td>
-      <td>5.114286e+01</td>
-      <td>1146.485261</td>
-    </tr>
-    <tr>
-      <td>Fwd PSH Flags</td>
-      <td>TCP/flag/window</td>
-      <td>7</td>
-      <td>5.114286e+01</td>
-      <td>6.228506e+01</td>
-      <td>4.400000e+01</td>
-      <td>1.270000e+02</td>
-      <td>11.464853</td>
-      <td>11.000000</td>
-      <td>5.114286e+01</td>
-      <td>1146.485261</td>
-    </tr>
-    <tr>
-      <td>Flow Bytes/s</td>
-      <td>throughput/rate</td>
-      <td>7</td>
-      <td>5.666695e+04</td>
-      <td>1.211125e+05</td>
-      <td>1.808526e+03</td>
-      <td>3.106105e+05</td>
-      <td>11.357219</td>
-      <td>10.073563</td>
-      <td>5.666695e+04</td>
-      <td>1135.721936</td>
-    </tr>
-    <tr>
-      <td>Bwd Header Length</td>
-      <td>dimensioni/lunghezze</td>
-      <td>7</td>
-      <td>1.944571e+03</td>
-      <td>2.375430e+03</td>
-      <td>1.464000e+03</td>
-      <td>4.904000e+03</td>
-      <td>10.753230</td>
-      <td>10.619048</td>
-      <td>1.944571e+03</td>
-      <td>1075.322994</td>
-    </tr>
-    <tr>
-      <td>Fwd Header Length</td>
-      <td>dimensioni/lunghezze</td>
-      <td>7</td>
-      <td>2.422286e+03</td>
-      <td>2.895621e+03</td>
-      <td>1.940000e+03</td>
-      <td>5.924000e+03</td>
-      <td>8.742523</td>
-      <td>7.989247</td>
-      <td>2.422286e+03</td>
-      <td>874.252290</td>
-    </tr>
-    <tr>
-      <td>PSH Flag Count</td>
-      <td>TCP/flag/window</td>
-      <td>7</td>
-      <td>7.814286e+01</td>
-      <td>9.905049e+01</td>
-      <td>6.000000e+01</td>
-      <td>2.130000e+02</td>
-      <td>7.850583</td>
-      <td>6.250000</td>
-      <td>7.814286e+01</td>
-      <td>785.058309</td>
-    </tr>
-    <tr>
-      <td>Total Bwd packets</td>
-      <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>5.457143e+01</td>
-      <td>6.454677e+01</td>
-      <td>4.300000e+01</td>
-      <td>1.250000e+02</td>
-      <td>6.630726</td>
-      <td>6.500000</td>
-      <td>5.457143e+01</td>
-      <td>663.072562</td>
-    </tr>
-    <tr>
-      <td>ACK Flag Count</td>
-      <td>TCP/flag/window</td>
-      <td>7</td>
-      <td>1.235714e+02</td>
-      <td>1.469689e+02</td>
-      <td>9.800000e+01</td>
-      <td>2.940000e+02</td>
-      <td>6.119776</td>
-      <td>5.869565</td>
-      <td>1.235714e+02</td>
-      <td>611.977567</td>
-    </tr>
-    <tr>
-      <td>Total Fwd Packet</td>
-      <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>7.000000e+01</td>
-      <td>8.338893e+01</td>
-      <td>5.600000e+01</td>
-      <td>1.700000e+02</td>
-      <td>5.495635</td>
-      <td>4.777778</td>
-      <td>7.000000e+01</td>
-      <td>549.563492</td>
-    </tr>
-    <tr>
-      <td>Bwd PSH Flags</td>
-      <td>TCP/flag/window</td>
-      <td>7</td>
-      <td>2.700000e+01</td>
-      <td>3.753665e+01</td>
-      <td>1.600000e+01</td>
-      <td>8.600000e+01</td>
-      <td>5.317347</td>
-      <td>4.000000</td>
-      <td>2.700000e+01</td>
-      <td>531.734694</td>
+      <td>Active Mean</td>
+      <td>durata/timing</td>
+      <td>1188599.8095</td>
+      <td>597.2663</td>
+      <td>312193.7143</td>
     </tr>
     <tr>
       <td>Bwd Init Win Bytes</td>
       <td>altro</td>
-      <td>7</td>
-      <td>3.593857e+04</td>
-      <td>3.595507e+04</td>
-      <td>3.525000e+04</td>
-      <td>3.772000e+04</td>
-      <td>4.936130</td>
-      <td>4.304029</td>
-      <td>3.593857e+04</td>
-      <td>493.612975</td>
+      <td>35938.5714</td>
+      <td>493.6130</td>
+      <td>35938.5714</td>
     </tr>
     <tr>
-      <td>Subflow Bwd Packets</td>
+      <td>Bwd Header Length</td>
+      <td>dimensioni/lunghezze</td>
+      <td>537.1429</td>
+      <td>302.7820</td>
+      <td>153.1429</td>
+    </tr>
+    <tr>
+      <td>Flow IAT Min</td>
+      <td>durata/timing</td>
+      <td>46.2857</td>
+      <td>221.7048</td>
+      <td>-43.1429</td>
+    </tr>
+    <tr>
+      <td>Fwd Header Length</td>
+      <td>dimensioni/lunghezze</td>
+      <td>455.4286</td>
+      <td>208.1683</td>
+      <td>314.8571</td>
+    </tr>
+    <tr>
+      <td>Bwd Packets/s</td>
       <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>7.047619e+00</td>
-      <td>9.118597e+00</td>
-      <td>9.666667e+00</td>
-      <td>1.550000e+01</td>
-      <td>4.716349</td>
-      <td>5.800000</td>
-      <td>6.452381e+00</td>
-      <td>471.634921</td>
+      <td>8.8630</td>
+      <td>207.5961</td>
+      <td>8.7217</td>
     </tr>
     <tr>
-      <td>FWD Init Win Bytes</td>
+      <td>Bwd PSH Flags</td>
+      <td>TCP/flag/window</td>
+      <td>10.4286</td>
+      <td>199.2857</td>
+      <td>-0.4286</td>
+    </tr>
+    <tr>
+      <td>PSH Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>15.5714</td>
+      <td>177.4417</td>
+      <td>2.4286</td>
+    </tr>
+    <tr>
+      <td>Total Bwd packets</td>
+      <td>conteggi pacchetti</td>
+      <td>18.5714</td>
+      <td>167.6927</td>
+      <td>-1.4286</td>
+    </tr>
+    <tr>
+      <td>Flow Packets/s</td>
+      <td>conteggi pacchetti</td>
+      <td>21.9542</td>
+      <td>160.6684</td>
+      <td>21.7843</td>
+    </tr>
+    <tr>
+      <td>Fwd Act Data Pkts</td>
       <td>altro</td>
-      <td>7</td>
-      <td>3.414800e+04</td>
-      <td>3.414800e+04</td>
-      <td>3.414800e+04</td>
-      <td>3.414800e+04</td>
-      <td>4.168457</td>
-      <td>4.168457</td>
-      <td>3.414800e+04</td>
-      <td>416.845703</td>
+      <td>5.1429</td>
+      <td>155.0454</td>
+      <td>2.8571</td>
+    </tr>
+    <tr>
+      <td>Fwd PSH Flags</td>
+      <td>TCP/flag/window</td>
+      <td>5.1429</td>
+      <td>155.0454</td>
+      <td>2.8571</td>
+    </tr>
+    <tr>
+      <td>ACK Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>31.2857</td>
+      <td>145.5321</td>
+      <td>3.2857</td>
+    </tr>
+    <tr>
+      <td>Fwd Packets/s</td>
+      <td>conteggi pacchetti</td>
+      <td>13.0911</td>
+      <td>136.5409</td>
+      <td>13.0625</td>
     </tr>
     <tr>
       <td>Bwd Act Data Pkts</td>
       <td>altro</td>
-      <td>7</td>
-      <td>2.485714e+01</td>
-      <td>3.325228e+01</td>
-      <td>1.600000e+01</td>
-      <td>7.300000e+01</td>
-      <td>3.683160</td>
-      <td>4.000000</td>
-      <td>2.485714e+01</td>
-      <td>368.316006</td>
+      <td>12.0000</td>
+      <td>123.2704</td>
+      <td>-2.5714</td>
+    </tr>
+    <tr>
+      <td>Total Fwd Packet</td>
+      <td>conteggi pacchetti</td>
+      <td>12.7143</td>
+      <td>116.7845</td>
+      <td>4.7143</td>
+    </tr>
+    <tr>
+      <td>Subflow Bwd Packets</td>
+      <td>conteggi pacchetti</td>
+      <td>3.2908</td>
+      <td>115.1621</td>
+      <td>-0.6378</td>
+    </tr>
+    <tr>
+      <td>Bwd IAT Mean</td>
+      <td>durata/timing</td>
+      <td>5476990.7346</td>
+      <td>105.6182</td>
+      <td>-3769353.4836</td>
+    </tr>
+    <tr>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>1215506.0331</td>
+      <td>100.0000</td>
+      <td>1211631.1427</td>
+    </tr>
+    <tr>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>2241.7333</td>
+      <td>100.0000</td>
+      <td>593.7905</td>
+    </tr>
+    <tr>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>conteggi pacchetti</td>
+      <td>4.4286</td>
+      <td>100.0000</td>
+      <td>1.8571</td>
+    </tr>
+    <tr>
+      <td>FIN Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>1.0000</td>
+      <td>100.0000</td>
+      <td>0.4286</td>
+    </tr>
+    <tr>
+      <td>Fwd IAT Min</td>
+      <td>durata/timing</td>
+      <td>410.4286</td>
+      <td>94.1134</td>
+      <td>-410.4286</td>
+    </tr>
+    <tr>
+      <td>Bwd IAT Total</td>
+      <td>durata/timing</td>
+      <td>20176221.8571</td>
+      <td>93.8762</td>
+      <td>-20073957.2857</td>
+    </tr>
+    <tr>
+      <td>Active Min</td>
+      <td>durata/timing</td>
+      <td>249591.2857</td>
+      <td>93.5491</td>
+      <td>-249591.2857</td>
+    </tr>
+    <tr>
+      <td>Flow IAT Mean</td>
+      <td>durata/timing</td>
+      <td>1513595.7515</td>
+      <td>82.5408</td>
+      <td>-954343.1415</td>
+    </tr>
+    <tr>
+      <td>Fwd IAT Mean</td>
+      <td>durata/timing</td>
+      <td>2126065.1474</td>
+      <td>63.8807</td>
+      <td>-1389693.9508</td>
+    </tr>
+    <tr>
+      <td>Bwd Packet Length Mean</td>
+      <td>conteggi pacchetti</td>
+      <td>394.1581</td>
+      <td>61.3154</td>
+      <td>-394.1581</td>
+    </tr>
+    <tr>
+      <td>Bwd Segment Size Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>394.1581</td>
+      <td>61.3154</td>
+      <td>-394.1581</td>
+    </tr>
+    <tr>
+      <td>Average Packet Size</td>
+      <td>conteggi pacchetti</td>
+      <td>248.2907</td>
+      <td>61.2062</td>
+      <td>-248.2907</td>
+    </tr>
+    <tr>
+      <td>Packet Length Mean</td>
+      <td>conteggi pacchetti</td>
+      <td>248.2907</td>
+      <td>61.2062</td>
+      <td>-248.2907</td>
+    </tr>
+    <tr>
+      <td>Fwd Seg Size Min</td>
+      <td>altro</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+      <td>12.0000</td>
+    </tr>
+    <tr>
+      <td>Bwd IAT Max</td>
+      <td>durata/timing</td>
+      <td>10209972.2857</td>
+      <td>56.5607</td>
+      <td>-10149607.7143</td>
+    </tr>
+    <tr>
+      <td>Idle Min</td>
+      <td>durata/timing</td>
+      <td>4742124.8571</td>
+      <td>56.5210</td>
+      <td>2156833.4286</td>
+    </tr>
+    <tr>
+      <td>Idle Std</td>
+      <td>durata/timing</td>
+      <td>9799847.6315</td>
+      <td>52.3532</td>
+      <td>-8613624.6176</td>
+    </tr>
+    <tr>
+      <td>Fwd Packet Length Mean</td>
+      <td>conteggi pacchetti</td>
+      <td>135.7288</td>
+      <td>52.2067</td>
+      <td>-135.7288</td>
+    </tr>
+    <tr>
+      <td>Fwd Segment Size Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>135.7288</td>
+      <td>52.2067</td>
+      <td>-135.7288</td>
+    </tr>
+    <tr>
+      <td>Packet Length Variance</td>
+      <td>conteggi pacchetti</td>
+      <td>118176.9559</td>
+      <td>50.4358</td>
+      <td>-118176.9559</td>
+    </tr>
+    <tr>
+      <td>Down/Up Ratio</td>
+      <td>altro</td>
+      <td>0.4115</td>
+      <td>47.0679</td>
+      <td>-0.0568</td>
+    </tr>
+    <tr>
+      <td>Subflow Bwd Bytes</td>
+      <td>conteggi pacchetti</td>
+      <td>1339.7891</td>
+      <td>46.1511</td>
+      <td>-1246.7891</td>
     </tr>
     <tr>
       <td>Subflow Fwd Packets</td>
       <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>9.571429e+00</td>
-      <td>1.167449e+01</td>
-      <td>1.133333e+01</td>
-      <td>1.850000e+01</td>
-      <td>3.316111</td>
-      <td>4.400000</td>
-      <td>9.571429e+00</td>
-      <td>331.611111</td>
+      <td>1.3724</td>
+      <td>45.9577</td>
+      <td>0.5629</td>
+    </tr>
+    <tr>
+      <td>Subflow Fwd Bytes</td>
+      <td>conteggi pacchetti</td>
+      <td>360.2636</td>
+      <td>41.6103</td>
+      <td>-360.2636</td>
+    </tr>
+    <tr>
+      <td>Bwd IAT Std</td>
+      <td>durata/timing</td>
+      <td>3436099.3129</td>
+      <td>39.8831</td>
+      <td>-2182180.1580</td>
+    </tr>
+    <tr>
+      <td>Fwd IAT Std</td>
+      <td>durata/timing</td>
+      <td>2392162.8672</td>
+      <td>34.2737</td>
+      <td>-2392162.8672</td>
+    </tr>
+    <tr>
+      <td>Flow IAT Std</td>
+      <td>durata/timing</td>
+      <td>2038406.4078</td>
+      <td>34.1400</td>
+      <td>-1867982.2615</td>
     </tr>
     <tr>
       <td>Total Length of Fwd Packet</td>
       <td>conteggi pacchetti</td>
-      <td>7</td>
-      <td>3.653286e+03</td>
-      <td>4.320061e+03</td>
-      <td>3.330000e+03</td>
-      <td>7.159000e+03</td>
-      <td>1.291508</td>
-      <td>1.188437</td>
-      <td>3.653286e+03</td>
-      <td>129.150782</td>
+      <td>871.2857</td>
+      <td>32.2191</td>
+      <td>-821.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd Packet Length Std</td>
+      <td>conteggi pacchetti</td>
+      <td>99.4311</td>
+      <td>30.8189</td>
+      <td>-91.0311</td>
+    </tr>
+    <tr>
+      <td>Packet Length Std</td>
+      <td>conteggi pacchetti</td>
+      <td>142.2718</td>
+      <td>30.6869</td>
+      <td>-142.2718</td>
+    </tr>
+    <tr>
+      <td>Bwd Packet Length Std</td>
+      <td>conteggi pacchetti</td>
+      <td>124.1665</td>
+      <td>26.7178</td>
+      <td>-51.4257</td>
+    </tr>
+    <tr>
+      <td>Idle Mean</td>
+      <td>durata/timing</td>
+      <td>5553762.0595</td>
+      <td>25.1965</td>
+      <td>-5553762.0595</td>
+    </tr>
+    <tr>
+      <td>Fwd IAT Total</td>
+      <td>durata/timing</td>
+      <td>20255102.8571</td>
+      <td>24.4127</td>
+      <td>-20250941.7143</td>
+    </tr>
+    <tr>
+      <td>Flow Duration</td>
+      <td>durata/timing</td>
+      <td>20255058.8571</td>
+      <td>24.4127</td>
+      <td>-20250897.7143</td>
+    </tr>
+    <tr>
+      <td>Total Connection Flow Time</td>
+      <td>altro</td>
+      <td>20255058.8571</td>
+      <td>24.4127</td>
+      <td>-20250897.7143</td>
+    </tr>
+    <tr>
+      <td>Flow Bytes/s</td>
+      <td>throughput/rate</td>
+      <td>106.7226</td>
+      <td>20.5983</td>
+      <td>-19.4856</td>
+    </tr>
+    <tr>
+      <td>Idle Max</td>
+      <td>durata/timing</td>
+      <td>10046169.4286</td>
+      <td>20.2001</td>
+      <td>-10044794.5714</td>
+    </tr>
+    <tr>
+      <td>Flow IAT Max</td>
+      <td>durata/timing</td>
+      <td>10057492.0000</td>
+      <td>20.0842</td>
+      <td>-10033795.4286</td>
+    </tr>
+    <tr>
+      <td>FWD Init Win Bytes</td>
+      <td>altro</td>
+      <td>1572.5714</td>
+      <td>19.1964</td>
+      <td>-1572.5714</td>
+    </tr>
+    <tr>
+      <td>Total Length of Bwd Packet</td>
+      <td>conteggi pacchetti</td>
+      <td>4583.7143</td>
+      <td>16.3162</td>
+      <td>-4412.8571</td>
+    </tr>
+    <tr>
+      <td>Fwd IAT Max</td>
+      <td>durata/timing</td>
+      <td>10041417.7143</td>
+      <td>15.1394</td>
+      <td>-10038249.7143</td>
+    </tr>
+    <tr>
+      <td>Packet Length Max</td>
+      <td>conteggi pacchetti</td>
+      <td>134.1429</td>
+      <td>9.5555</td>
+      <td>-127.8571</td>
+    </tr>
+    <tr>
+      <td>Bwd Packet Length Max</td>
+      <td>conteggi pacchetti</td>
+      <td>126.4286</td>
+      <td>8.7572</td>
+      <td>-126.4286</td>
+    </tr>
+    <tr>
+      <td>Fwd Packet Length Max</td>
+      <td>conteggi pacchetti</td>
+      <td>23.4286</td>
+      <td>3.6311</td>
+      <td>14.2857</td>
+    </tr>
+    <tr>
+      <td>ICMP Code</td>
+      <td>altro</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>ICMP Type</td>
+      <td>altro</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Protocol</td>
+      <td>identita/topologia</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>SYN Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>117559.0297</td>
+      <td>-</td>
+      <td>117559.0297</td>
+    </tr>
+    <tr>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>dimensioni/lunghezze</td>
+      <td>384.0000</td>
+      <td>-</td>
+      <td>384.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>conteggi pacchetti</td>
+      <td>2.0000</td>
+      <td>-</td>
+      <td>2.0000</td>
+    </tr>
+    <tr>
+      <td>Total TCP Retrans. Count</td>
+      <td>TCP/flag/window</td>
+      <td>1.0000</td>
+      <td>-</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.5714</td>
+      <td>-</td>
+      <td>0.5714</td>
+    </tr>
+    <tr>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.4286</td>
+      <td>-</td>
+      <td>0.4286</td>
+    </tr>
+    <tr>
+      <td>Bwd Packet Length Min</td>
+      <td>conteggi pacchetti</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Bwd RST Flags</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Bwd Seg Size Min</td>
+      <td>altro</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Bwd URG Flags</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>CWR Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>ECE Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd Packet Length Min</td>
+      <td>conteggi pacchetti</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd RST Flags</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Fwd URG Flags</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>Packet Length Min</td>
+      <td>conteggi pacchetti</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>RST Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>URG Flag Count</td>
+      <td>TCP/flag/window</td>
+      <td>0.0000</td>
+      <td>-</td>
+      <td>0.0000</td>
     </tr>
   </tbody>
 </table>
-<h2>Flussi mancanti</h2>
-<p>Nessuno.</p>
-<h2>Flussi extra</h2>
-<p>Nessuno.</p>
+</div>
+<div class='tab-pane fade table-wrapper' id='flow' role='tabpanel'>
+<h4 class='mb-3'>Dettaglio Errori per Singolo Flusso</h4>
+<table border="1" class="dataframe table table-striped table-hover datatable">
+  <thead>
+    <tr style="text-align: right;">
+      <th>ID Coppia</th>
+      <th>Endpoint Flusso</th>
+      <th>Feature</th>
+      <th>Valore Originale</th>
+      <th>Valore Simulato</th>
+      <th>Errore Assoluto</th>
+      <th>Errore Relativo (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow Duration</td>
+      <td>349350.0000</td>
+      <td>358055.0000</td>
+      <td>8705.0000</td>
+      <td>2.4918</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total Fwd Packet</td>
+      <td>4.0000</td>
+      <td>10.0000</td>
+      <td>6.0000</td>
+      <td>150.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total Bwd packets</td>
+      <td>2.0000</td>
+      <td>7.0000</td>
+      <td>5.0000</td>
+      <td>250.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>515.0000</td>
+      <td>603.0000</td>
+      <td>88.0000</td>
+      <td>17.0874</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>624.0000</td>
+      <td>646.0000</td>
+      <td>22.0000</td>
+      <td>3.5256</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>515.0000</td>
+      <td>537.0000</td>
+      <td>22.0000</td>
+      <td>4.2718</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>128.7500</td>
+      <td>60.3000</td>
+      <td>68.4500</td>
+      <td>53.1650</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>257.5000</td>
+      <td>167.8161</td>
+      <td>89.6839</td>
+      <td>34.8287</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>624.0000</td>
+      <td>624.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>312.0000</td>
+      <td>92.2857</td>
+      <td>219.7143</td>
+      <td>70.4212</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>441.2346</td>
+      <td>234.6073</td>
+      <td>206.6274</td>
+      <td>46.8294</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow Bytes/s</td>
+      <td>3260.3406</td>
+      <td>3488.2909</td>
+      <td>227.9503</td>
+      <td>6.9916</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow Packets/s</td>
+      <td>17.1748</td>
+      <td>47.4787</td>
+      <td>30.3040</td>
+      <td>176.4450</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow IAT Mean</td>
+      <td>69870.0000</td>
+      <td>22378.4375</td>
+      <td>47491.5625</td>
+      <td>67.9713</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow IAT Std</td>
+      <td>83827.6373</td>
+      <td>71796.7919</td>
+      <td>12030.8454</td>
+      <td>14.3519</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow IAT Max</td>
+      <td>205615.0000</td>
+      <td>283741.0000</td>
+      <td>78126.0000</td>
+      <td>37.9963</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Flow IAT Min</td>
+      <td>132.0000</td>
+      <td>14.0000</td>
+      <td>118.0000</td>
+      <td>89.3939</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd IAT Total</td>
+      <td>349350.0000</td>
+      <td>358055.0000</td>
+      <td>8705.0000</td>
+      <td>2.4918</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>116450.0000</td>
+      <td>39783.8889</td>
+      <td>76666.1111</td>
+      <td>65.8361</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd IAT Std</td>
+      <td>143892.1209</td>
+      <td>94275.4623</td>
+      <td>49616.6586</td>
+      <td>34.4818</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd IAT Max</td>
+      <td>277486.0000</td>
+      <td>283762.0000</td>
+      <td>6276.0000</td>
+      <td>2.2617</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd IAT Min</td>
+      <td>499.0000</td>
+      <td>61.0000</td>
+      <td>438.0000</td>
+      <td>87.7756</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd IAT Total</td>
+      <td>72502.0000</td>
+      <td>357128.0000</td>
+      <td>284626.0000</td>
+      <td>392.5768</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>72502.0000</td>
+      <td>59521.3333</td>
+      <td>12980.6667</td>
+      <td>17.9039</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd IAT Std</td>
+      <td>0.0000</td>
+      <td>113344.4848</td>
+      <td>113344.4848</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd IAT Max</td>
+      <td>72502.0000</td>
+      <td>283778.0000</td>
+      <td>211276.0000</td>
+      <td>291.4071</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd IAT Min</td>
+      <td>72502.0000</td>
+      <td>138.0000</td>
+      <td>72364.0000</td>
+      <td>99.8097</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>3.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>1.0000</td>
+      <td>2.0000</td>
+      <td>1.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Header Length</td>
+      <td>92.0000</td>
+      <td>328.0000</td>
+      <td>236.0000</td>
+      <td>256.5217</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Header Length</td>
+      <td>44.0000</td>
+      <td>232.0000</td>
+      <td>188.0000</td>
+      <td>427.2727</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packets/s</td>
+      <td>11.4498</td>
+      <td>27.9287</td>
+      <td>16.4788</td>
+      <td>143.9220</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packets/s</td>
+      <td>5.7249</td>
+      <td>19.5501</td>
+      <td>13.8252</td>
+      <td>241.4908</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Packet Length Max</td>
+      <td>624.0000</td>
+      <td>624.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Packet Length Mean</td>
+      <td>189.8333</td>
+      <td>73.4706</td>
+      <td>116.3627</td>
+      <td>61.2973</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Packet Length Std</td>
+      <td>296.1016</td>
+      <td>191.6892</td>
+      <td>104.4124</td>
+      <td>35.2623</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Packet Length Variance</td>
+      <td>87676.1667</td>
+      <td>36744.7647</td>
+      <td>50931.4020</td>
+      <td>58.0904</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>PSH Flag Count</td>
+      <td>2.0000</td>
+      <td>6.0000</td>
+      <td>4.0000</td>
+      <td>200.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>ACK Flag Count</td>
+      <td>5.0000</td>
+      <td>16.0000</td>
+      <td>11.0000</td>
+      <td>220.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Down/Up Ratio</td>
+      <td>0.5000</td>
+      <td>0.7000</td>
+      <td>0.2000</td>
+      <td>40.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Average Packet Size</td>
+      <td>189.8333</td>
+      <td>73.4706</td>
+      <td>116.3627</td>
+      <td>61.2973</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>128.7500</td>
+      <td>60.3000</td>
+      <td>68.4500</td>
+      <td>53.1650</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>312.0000</td>
+      <td>92.2857</td>
+      <td>219.7143</td>
+      <td>70.4212</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>7240.0000</td>
+      <td>952.0000</td>
+      <td>11.6211</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>8190.0000</td>
+      <td>43440.0000</td>
+      <td>35250.0000</td>
+      <td>430.4029</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>3.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>1.0000</td>
+      <td>2.0000</td>
+      <td>1.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Active Mean</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Active Std</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Active Max</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Active Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Idle Mean</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Idle Std</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Idle Max</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Idle Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>192.168.3.131:55966 &rarr; 63.215.202.48:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>349350.0000</td>
+      <td>358055.0000</td>
+      <td>8705.0000</td>
+      <td>2.4918</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow Duration</td>
+      <td>140612.0000</td>
+      <td>146471.0000</td>
+      <td>5859.0000</td>
+      <td>4.1668</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total Fwd Packet</td>
+      <td>4.0000</td>
+      <td>15.0000</td>
+      <td>11.0000</td>
+      <td>275.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total Bwd packets</td>
+      <td>4.0000</td>
+      <td>11.0000</td>
+      <td>7.0000</td>
+      <td>175.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>640.0000</td>
+      <td>728.0000</td>
+      <td>88.0000</td>
+      <td>13.7500</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>4202.0000</td>
+      <td>4290.0000</td>
+      <td>88.0000</td>
+      <td>2.0942</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>640.0000</td>
+      <td>662.0000</td>
+      <td>22.0000</td>
+      <td>3.4375</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>160.0000</td>
+      <td>48.5333</td>
+      <td>111.4667</td>
+      <td>69.6667</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>320.0000</td>
+      <td>169.9504</td>
+      <td>150.0496</td>
+      <td>46.8905</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>1460.0000</td>
+      <td>1051.0000</td>
+      <td>409.0000</td>
+      <td>28.0137</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>1050.5000</td>
+      <td>390.0000</td>
+      <td>660.5000</td>
+      <td>62.8748</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>705.3422</td>
+      <td>523.7402</td>
+      <td>181.6020</td>
+      <td>25.7467</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow Bytes/s</td>
+      <td>34435.1833</td>
+      <td>34259.3414</td>
+      <td>175.8419</td>
+      <td>0.5106</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow Packets/s</td>
+      <td>56.8941</td>
+      <td>177.5095</td>
+      <td>120.6154</td>
+      <td>211.9996</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow IAT Mean</td>
+      <td>20087.4286</td>
+      <td>5858.8400</td>
+      <td>14228.5886</td>
+      <td>70.8333</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow IAT Std</td>
+      <td>33878.6768</td>
+      <td>19016.2678</td>
+      <td>14862.4090</td>
+      <td>43.8695</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow IAT Max</td>
+      <td>71062.0000</td>
+      <td>69930.0000</td>
+      <td>1132.0000</td>
+      <td>1.5930</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Flow IAT Min</td>
+      <td>1.0000</td>
+      <td>6.0000</td>
+      <td>5.0000</td>
+      <td>500.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd IAT Total</td>
+      <td>140612.0000</td>
+      <td>146471.0000</td>
+      <td>5859.0000</td>
+      <td>4.1668</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>46870.6667</td>
+      <td>10462.2143</td>
+      <td>36408.4524</td>
+      <td>77.6785</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd IAT Std</td>
+      <td>40309.8114</td>
+      <td>24815.2329</td>
+      <td>15494.5784</td>
+      <td>38.4387</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd IAT Max</td>
+      <td>71914.0000</td>
+      <td>69930.0000</td>
+      <td>1984.0000</td>
+      <td>2.7589</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd IAT Min</td>
+      <td>371.0000</td>
+      <td>22.0000</td>
+      <td>349.0000</td>
+      <td>94.0701</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd IAT Total</td>
+      <td>72300.0000</td>
+      <td>145600.0000</td>
+      <td>73300.0000</td>
+      <td>101.3831</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>24100.0000</td>
+      <td>14560.0000</td>
+      <td>9540.0000</td>
+      <td>39.5851</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd IAT Std</td>
+      <td>41044.6544</td>
+      <td>29602.6989</td>
+      <td>11441.9555</td>
+      <td>27.8768</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd IAT Max</td>
+      <td>71492.0000</td>
+      <td>71242.0000</td>
+      <td>250.0000</td>
+      <td>0.3497</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd IAT Min</td>
+      <td>1.0000</td>
+      <td>35.0000</td>
+      <td>34.0000</td>
+      <td>3400.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>3.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>1.0000</td>
+      <td>8.0000</td>
+      <td>7.0000</td>
+      <td>700.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Header Length</td>
+      <td>92.0000</td>
+      <td>488.0000</td>
+      <td>396.0000</td>
+      <td>430.4348</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Header Length</td>
+      <td>84.0000</td>
+      <td>360.0000</td>
+      <td>276.0000</td>
+      <td>328.5714</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packets/s</td>
+      <td>28.4471</td>
+      <td>102.4094</td>
+      <td>73.9623</td>
+      <td>259.9996</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packets/s</td>
+      <td>28.4471</td>
+      <td>75.1002</td>
+      <td>46.6531</td>
+      <td>163.9997</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Packet Length Max</td>
+      <td>1460.0000</td>
+      <td>1051.0000</td>
+      <td>409.0000</td>
+      <td>28.0137</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Packet Length Mean</td>
+      <td>605.2500</td>
+      <td>193.0000</td>
+      <td>412.2500</td>
+      <td>68.1124</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Packet Length Std</td>
+      <td>695.4653</td>
+      <td>394.3278</td>
+      <td>301.1375</td>
+      <td>43.3001</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Packet Length Variance</td>
+      <td>483671.9286</td>
+      <td>155494.4000</td>
+      <td>328177.5286</td>
+      <td>67.8513</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>PSH Flag Count</td>
+      <td>2.0000</td>
+      <td>12.0000</td>
+      <td>10.0000</td>
+      <td>500.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>ACK Flag Count</td>
+      <td>7.0000</td>
+      <td>25.0000</td>
+      <td>18.0000</td>
+      <td>257.1429</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Down/Up Ratio</td>
+      <td>1.0000</td>
+      <td>0.7333</td>
+      <td>0.2667</td>
+      <td>26.6667</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Average Packet Size</td>
+      <td>605.2500</td>
+      <td>193.0000</td>
+      <td>412.2500</td>
+      <td>68.1124</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>160.0000</td>
+      <td>48.5333</td>
+      <td>111.4667</td>
+      <td>69.6667</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>1050.5000</td>
+      <td>390.0000</td>
+      <td>660.5000</td>
+      <td>62.8748</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>2145.0000</td>
+      <td>2145.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>2962707.1823</td>
+      <td>2962707.1823</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>7240.0000</td>
+      <td>952.0000</td>
+      <td>11.6211</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>8190.0000</td>
+      <td>43440.0000</td>
+      <td>35250.0000</td>
+      <td>430.4029</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>3.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>3.0000</td>
+      <td>8.0000</td>
+      <td>5.0000</td>
+      <td>166.6667</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Active Mean</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Active Std</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Active Max</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Active Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Idle Mean</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Idle Std</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Idle Max</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Idle Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>192.168.3.131:55967 &rarr; 63.215.202.49:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>140612.0000</td>
+      <td>146471.0000</td>
+      <td>5859.0000</td>
+      <td>4.1668</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow Duration</td>
+      <td>64034137.0000</td>
+      <td>38741778.0000</td>
+      <td>25292359.0000</td>
+      <td>39.4982</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total Fwd Packet</td>
+      <td>10.0000</td>
+      <td>14.0000</td>
+      <td>4.0000</td>
+      <td>40.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total Bwd packets</td>
+      <td>5.0000</td>
+      <td>11.0000</td>
+      <td>6.0000</td>
+      <td>120.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>3466.0000</td>
+      <td>1156.0000</td>
+      <td>2310.0000</td>
+      <td>66.6474</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>1644.0000</td>
+      <td>1670.0000</td>
+      <td>26.0000</td>
+      <td>1.5815</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>1122.0000</td>
+      <td>1090.0000</td>
+      <td>32.0000</td>
+      <td>2.8520</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>346.6000</td>
+      <td>82.5714</td>
+      <td>264.0286</td>
+      <td>76.1767</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>473.9571</td>
+      <td>290.1060</td>
+      <td>183.8511</td>
+      <td>38.7907</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>411.0000</td>
+      <td>411.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>328.8000</td>
+      <td>151.8182</td>
+      <td>176.9818</td>
+      <td>53.8266</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>183.8048</td>
+      <td>194.1555</td>
+      <td>10.3507</td>
+      <td>5.6314</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow Bytes/s</td>
+      <td>79.8012</td>
+      <td>72.9445</td>
+      <td>6.8567</td>
+      <td>8.5922</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow Packets/s</td>
+      <td>0.2343</td>
+      <td>0.6453</td>
+      <td>0.4110</td>
+      <td>175.4741</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow IAT Mean</td>
+      <td>4573866.9286</td>
+      <td>1614240.7500</td>
+      <td>2959626.1786</td>
+      <td>64.7073</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow IAT Std</td>
+      <td>9496872.7082</td>
+      <td>5469746.8287</td>
+      <td>4027125.8796</td>
+      <td>42.4048</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow IAT Max</td>
+      <td>26059282.0000</td>
+      <td>19919966.0000</td>
+      <td>6139316.0000</td>
+      <td>23.5590</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Flow IAT Min</td>
+      <td>57.0000</td>
+      <td>3.0000</td>
+      <td>54.0000</td>
+      <td>94.7368</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd IAT Total</td>
+      <td>64034137.0000</td>
+      <td>38741778.0000</td>
+      <td>25292359.0000</td>
+      <td>39.4982</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>7114904.1111</td>
+      <td>2980136.7692</td>
+      <td>4134767.3419</td>
+      <td>58.1142</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd IAT Std</td>
+      <td>11235504.0453</td>
+      <td>7275528.4055</td>
+      <td>3959975.6398</td>
+      <td>35.2452</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd IAT Max</td>
+      <td>26059282.0000</td>
+      <td>19919966.0000</td>
+      <td>6139316.0000</td>
+      <td>23.5590</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd IAT Min</td>
+      <td>350.0000</td>
+      <td>9.0000</td>
+      <td>341.0000</td>
+      <td>97.4286</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd IAT Total</td>
+      <td>63755023.0000</td>
+      <td>38741016.0000</td>
+      <td>25014007.0000</td>
+      <td>39.2346</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>15938755.7500</td>
+      <td>3874101.6000</td>
+      <td>12064654.1500</td>
+      <td>75.6938</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd IAT Std</td>
+      <td>12708332.2395</td>
+      <td>8170129.8146</td>
+      <td>4538202.4249</td>
+      <td>35.7104</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd IAT Max</td>
+      <td>26346350.0000</td>
+      <td>19921007.0000</td>
+      <td>6425343.0000</td>
+      <td>24.3880</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd IAT Min</td>
+      <td>80437.0000</td>
+      <td>35.0000</td>
+      <td>80402.0000</td>
+      <td>99.9565</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>4.0000</td>
+      <td>8.0000</td>
+      <td>4.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Header Length</td>
+      <td>212.0000</td>
+      <td>456.0000</td>
+      <td>244.0000</td>
+      <td>115.0943</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Header Length</td>
+      <td>104.0000</td>
+      <td>360.0000</td>
+      <td>256.0000</td>
+      <td>246.1538</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packets/s</td>
+      <td>0.1562</td>
+      <td>0.3614</td>
+      <td>0.2052</td>
+      <td>131.3982</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packets/s</td>
+      <td>0.0781</td>
+      <td>0.2839</td>
+      <td>0.2058</td>
+      <td>263.6258</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Packet Length Max</td>
+      <td>1122.0000</td>
+      <td>1090.0000</td>
+      <td>32.0000</td>
+      <td>2.8520</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Packet Length Mean</td>
+      <td>340.6667</td>
+      <td>113.0400</td>
+      <td>227.6267</td>
+      <td>66.8180</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Packet Length Std</td>
+      <td>392.6022</td>
+      <td>250.0501</td>
+      <td>142.5522</td>
+      <td>36.3096</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Packet Length Variance</td>
+      <td>154136.5238</td>
+      <td>62525.0400</td>
+      <td>91611.4838</td>
+      <td>59.4353</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>PSH Flag Count</td>
+      <td>8.0000</td>
+      <td>12.0000</td>
+      <td>4.0000</td>
+      <td>50.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>ACK Flag Count</td>
+      <td>14.0000</td>
+      <td>24.0000</td>
+      <td>10.0000</td>
+      <td>71.4286</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Down/Up Ratio</td>
+      <td>0.5000</td>
+      <td>0.7857</td>
+      <td>0.2857</td>
+      <td>57.1429</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Average Packet Size</td>
+      <td>340.6667</td>
+      <td>113.0400</td>
+      <td>227.6267</td>
+      <td>66.8180</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>346.6000</td>
+      <td>82.5714</td>
+      <td>264.0286</td>
+      <td>76.1767</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>328.8000</td>
+      <td>151.8182</td>
+      <td>176.9818</td>
+      <td>53.8266</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>804.0000</td>
+      <td>804.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>841884.8168</td>
+      <td>841884.8168</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>3.3333</td>
+      <td>7.0000</td>
+      <td>3.6667</td>
+      <td>110.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>1155.3333</td>
+      <td>578.0000</td>
+      <td>577.3333</td>
+      <td>49.9711</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>1.6667</td>
+      <td>5.5000</td>
+      <td>3.8333</td>
+      <td>230.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>548.0000</td>
+      <td>835.0000</td>
+      <td>287.0000</td>
+      <td>52.3723</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>7240.0000</td>
+      <td>952.0000</td>
+      <td>11.6211</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>8190.0000</td>
+      <td>43440.0000</td>
+      <td>35250.0000</td>
+      <td>430.4029</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>4.0000</td>
+      <td>8.0000</td>
+      <td>4.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Active Mean</td>
+      <td>305839.0000</td>
+      <td>3455.5000</td>
+      <td>302383.5000</td>
+      <td>98.8702</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Active Std</td>
+      <td>44177.5286</td>
+      <td>893.0759</td>
+      <td>43284.4528</td>
+      <td>97.9784</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Active Max</td>
+      <td>356343.0000</td>
+      <td>4087.0000</td>
+      <td>352256.0000</td>
+      <td>98.8531</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Active Min</td>
+      <td>274369.0000</td>
+      <td>2824.0000</td>
+      <td>271545.0000</td>
+      <td>98.9707</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Idle Mean</td>
+      <td>20945493.6667</td>
+      <td>19365440.0000</td>
+      <td>1580053.6667</td>
+      <td>7.5436</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Idle Std</td>
+      <td>8632180.9024</td>
+      <td>784218.1899</td>
+      <td>7847962.7125</td>
+      <td>90.9152</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Idle Max</td>
+      <td>26059282.0000</td>
+      <td>19919966.0000</td>
+      <td>6139316.0000</td>
+      <td>23.5590</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Idle Min</td>
+      <td>10979050.0000</td>
+      <td>18810914.0000</td>
+      <td>7831864.0000</td>
+      <td>71.3346</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>192.168.3.131:55958 &rarr; 65.55.239.163:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>64034137.0000</td>
+      <td>38741778.0000</td>
+      <td>25292359.0000</td>
+      <td>39.4982</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow Duration</td>
+      <td>64318712.0000</td>
+      <td>55050988.0000</td>
+      <td>9267724.0000</td>
+      <td>14.4091</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total Fwd Packet</td>
+      <td>18.0000</td>
+      <td>34.0000</td>
+      <td>16.0000</td>
+      <td>88.8889</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total Bwd packets</td>
+      <td>9.0000</td>
+      <td>22.0000</td>
+      <td>13.0000</td>
+      <td>144.4444</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>6367.0000</td>
+      <td>5781.0000</td>
+      <td>586.0000</td>
+      <td>9.2037</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>10425.0000</td>
+      <td>10601.0000</td>
+      <td>176.0000</td>
+      <td>1.6882</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>1067.0000</td>
+      <td>1089.0000</td>
+      <td>22.0000</td>
+      <td>2.0619</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>353.7222</td>
+      <td>170.0294</td>
+      <td>183.6928</td>
+      <td>51.9314</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>419.7790</td>
+      <td>355.3197</td>
+      <td>64.4593</td>
+      <td>15.3555</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>1442.0000</td>
+      <td>1442.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>1158.3333</td>
+      <td>481.8636</td>
+      <td>676.4697</td>
+      <td>58.4003</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>483.4700</td>
+      <td>644.0547</td>
+      <td>160.5847</td>
+      <td>33.2150</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow Bytes/s</td>
+      <td>261.0749</td>
+      <td>297.5787</td>
+      <td>36.5038</td>
+      <td>13.9821</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow Packets/s</td>
+      <td>0.4198</td>
+      <td>1.0172</td>
+      <td>0.5975</td>
+      <td>142.3240</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow IAT Mean</td>
+      <td>2473796.6154</td>
+      <td>1000927.0545</td>
+      <td>1472869.5608</td>
+      <td>59.5388</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow IAT Std</td>
+      <td>6942329.1934</td>
+      <td>3847900.6957</td>
+      <td>3094428.4977</td>
+      <td>44.5733</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow IAT Max</td>
+      <td>25113158.0000</td>
+      <td>23078644.0000</td>
+      <td>2034514.0000</td>
+      <td>8.1014</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Flow IAT Min</td>
+      <td>62.0000</td>
+      <td>4.0000</td>
+      <td>58.0000</td>
+      <td>93.5484</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd IAT Total</td>
+      <td>64318712.0000</td>
+      <td>55050848.0000</td>
+      <td>9267864.0000</td>
+      <td>14.4093</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>3783453.6471</td>
+      <td>1668207.5152</td>
+      <td>2115246.1319</td>
+      <td>55.9078</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd IAT Std</td>
+      <td>8369327.9141</td>
+      <td>4882397.7032</td>
+      <td>3486930.2109</td>
+      <td>41.6632</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd IAT Max</td>
+      <td>25113158.0000</td>
+      <td>23078644.0000</td>
+      <td>2034514.0000</td>
+      <td>8.1014</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd IAT Min</td>
+      <td>339.0000</td>
+      <td>17.0000</td>
+      <td>322.0000</td>
+      <td>94.9853</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd IAT Total</td>
+      <td>64103709.0000</td>
+      <td>55050545.0000</td>
+      <td>9053164.0000</td>
+      <td>14.1227</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>8012963.6250</td>
+      <td>2621454.5238</td>
+      <td>5391509.1012</td>
+      <td>67.2848</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd IAT Std</td>
+      <td>11201223.9951</td>
+      <td>5961473.6571</td>
+      <td>5239750.3381</td>
+      <td>46.7784</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd IAT Max</td>
+      <td>25335494.0000</td>
+      <td>23084104.0000</td>
+      <td>2251390.0000</td>
+      <td>8.8863</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd IAT Min</td>
+      <td>19947.0000</td>
+      <td>29.0000</td>
+      <td>19918.0000</td>
+      <td>99.8546</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>8.0000</td>
+      <td>16.0000</td>
+      <td>8.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>8.0000</td>
+      <td>16.0000</td>
+      <td>8.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Header Length</td>
+      <td>372.0000</td>
+      <td>1096.0000</td>
+      <td>724.0000</td>
+      <td>194.6237</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Header Length</td>
+      <td>184.0000</td>
+      <td>724.0000</td>
+      <td>540.0000</td>
+      <td>293.4783</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packets/s</td>
+      <td>0.2799</td>
+      <td>0.6176</td>
+      <td>0.3378</td>
+      <td>120.6880</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packets/s</td>
+      <td>0.1399</td>
+      <td>0.3996</td>
+      <td>0.2597</td>
+      <td>185.5962</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Packet Length Max</td>
+      <td>1442.0000</td>
+      <td>1442.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Packet Length Mean</td>
+      <td>621.9259</td>
+      <td>292.5357</td>
+      <td>329.3902</td>
+      <td>52.9629</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Packet Length Std</td>
+      <td>580.1189</td>
+      <td>507.6884</td>
+      <td>72.4305</td>
+      <td>12.4855</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Packet Length Variance</td>
+      <td>336537.9174</td>
+      <td>257747.4896</td>
+      <td>78790.4278</td>
+      <td>23.4121</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>PSH Flag Count</td>
+      <td>16.0000</td>
+      <td>32.0000</td>
+      <td>16.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>ACK Flag Count</td>
+      <td>26.0000</td>
+      <td>55.0000</td>
+      <td>29.0000</td>
+      <td>111.5385</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Down/Up Ratio</td>
+      <td>0.5000</td>
+      <td>0.6471</td>
+      <td>0.1471</td>
+      <td>29.4118</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Average Packet Size</td>
+      <td>621.9259</td>
+      <td>292.5357</td>
+      <td>329.3902</td>
+      <td>52.9629</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>353.7222</td>
+      <td>170.0294</td>
+      <td>183.6928</td>
+      <td>51.9314</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>1158.3333</td>
+      <td>481.8636</td>
+      <td>676.4697</td>
+      <td>58.4003</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>1154.0000</td>
+      <td>1154.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>210545.5209</td>
+      <td>210545.5209</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>2696.3333</td>
+      <td>2696.3333</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>2945739.2571</td>
+      <td>2945739.2571</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>6.0000</td>
+      <td>5.6667</td>
+      <td>0.3333</td>
+      <td>5.5556</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>2122.3333</td>
+      <td>963.5000</td>
+      <td>1158.8333</td>
+      <td>54.6019</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>3.0000</td>
+      <td>3.6667</td>
+      <td>0.6667</td>
+      <td>22.2222</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>3475.0000</td>
+      <td>1766.8333</td>
+      <td>1708.1667</td>
+      <td>49.1559</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>7240.0000</td>
+      <td>952.0000</td>
+      <td>11.6211</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>8190.0000</td>
+      <td>43440.0000</td>
+      <td>35250.0000</td>
+      <td>430.4029</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>8.0000</td>
+      <td>16.0000</td>
+      <td>8.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>8.0000</td>
+      <td>16.0000</td>
+      <td>8.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Active Mean</td>
+      <td>1034117.0000</td>
+      <td>1969061.0000</td>
+      <td>934944.0000</td>
+      <td>90.4099</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Active Std</td>
+      <td>466665.1228</td>
+      <td>3407201.1752</td>
+      <td>2940536.0525</td>
+      <td>630.1170</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Active Max</td>
+      <td>1444767.0000</td>
+      <td>5903358.0000</td>
+      <td>4458591.0000</td>
+      <td>308.6028</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Active Min</td>
+      <td>526631.0000</td>
+      <td>1482.0000</td>
+      <td>525149.0000</td>
+      <td>99.7186</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Idle Mean</td>
+      <td>20220506.0000</td>
+      <td>15712439.3333</td>
+      <td>4508066.6667</td>
+      <td>22.2945</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Idle Std</td>
+      <td>8234585.6661</td>
+      <td>6722318.0713</td>
+      <td>1512267.5948</td>
+      <td>18.3648</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Idle Max</td>
+      <td>25113158.0000</td>
+      <td>23078644.0000</td>
+      <td>2034514.0000</td>
+      <td>8.1014</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Idle Min</td>
+      <td>10713382.0000</td>
+      <td>9909471.0000</td>
+      <td>803911.0000</td>
+      <td>7.5038</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>192.168.3.131:55957 &rarr; 65.55.5.232:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>64318712.0000</td>
+      <td>55050988.0000</td>
+      <td>9267724.0000</td>
+      <td>14.4091</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow Duration</td>
+      <td>65181701.0000</td>
+      <td>52540978.0000</td>
+      <td>12640723.0000</td>
+      <td>19.3931</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total Fwd Packet</td>
+      <td>16.0000</td>
+      <td>25.0000</td>
+      <td>9.0000</td>
+      <td>56.2500</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total Bwd packets</td>
+      <td>8.0000</td>
+      <td>21.0000</td>
+      <td>13.0000</td>
+      <td>162.5000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>5734.0000</td>
+      <td>4600.0000</td>
+      <td>1134.0000</td>
+      <td>19.7768</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>7668.0000</td>
+      <td>7822.0000</td>
+      <td>154.0000</td>
+      <td>2.0083</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>1069.0000</td>
+      <td>1091.0000</td>
+      <td>22.0000</td>
+      <td>2.0580</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>358.3750</td>
+      <td>184.0000</td>
+      <td>174.3750</td>
+      <td>48.6571</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>431.8311</td>
+      <td>377.2797</td>
+      <td>54.5514</td>
+      <td>12.6326</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>1353.0000</td>
+      <td>1353.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>958.5000</td>
+      <td>372.4762</td>
+      <td>586.0238</td>
+      <td>61.1397</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>449.3427</td>
+      <td>533.0000</td>
+      <td>83.6573</td>
+      <td>18.6177</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow Bytes/s</td>
+      <td>205.6099</td>
+      <td>236.4250</td>
+      <td>30.8151</td>
+      <td>14.9872</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow Packets/s</td>
+      <td>0.3682</td>
+      <td>0.8755</td>
+      <td>0.5073</td>
+      <td>137.7793</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow IAT Mean</td>
+      <td>2833987.0000</td>
+      <td>1167577.2889</td>
+      <td>1666409.7111</td>
+      <td>58.8009</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow IAT Std</td>
+      <td>7509392.9705</td>
+      <td>4490414.9648</td>
+      <td>3018978.0058</td>
+      <td>40.2027</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow IAT Max</td>
+      <td>26332013.0000</td>
+      <td>25777652.0000</td>
+      <td>554361.0000</td>
+      <td>2.1053</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Flow IAT Min</td>
+      <td>54.0000</td>
+      <td>6.0000</td>
+      <td>48.0000</td>
+      <td>88.8889</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd IAT Total</td>
+      <td>65181701.0000</td>
+      <td>52540943.0000</td>
+      <td>12640758.0000</td>
+      <td>19.3931</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>4345446.7333</td>
+      <td>2189205.9583</td>
+      <td>2156240.7750</td>
+      <td>49.6207</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd IAT Std</td>
+      <td>9032234.2842</td>
+      <td>6021922.8864</td>
+      <td>3010311.3978</td>
+      <td>33.3285</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd IAT Max</td>
+      <td>26332013.0000</td>
+      <td>25777652.0000</td>
+      <td>554361.0000</td>
+      <td>2.1053</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd IAT Min</td>
+      <td>383.0000</td>
+      <td>22.0000</td>
+      <td>361.0000</td>
+      <td>94.2559</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd IAT Total</td>
+      <td>64964530.0000</td>
+      <td>52540442.0000</td>
+      <td>12424088.0000</td>
+      <td>19.1244</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>9280647.1429</td>
+      <td>2627022.1000</td>
+      <td>6653625.0429</td>
+      <td>71.6935</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd IAT Std</td>
+      <td>11902972.5211</td>
+      <td>6537825.4015</td>
+      <td>5365147.1196</td>
+      <td>45.0740</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd IAT Max</td>
+      <td>26545051.0000</td>
+      <td>25782544.0000</td>
+      <td>762507.0000</td>
+      <td>2.8725</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd IAT Min</td>
+      <td>19849.0000</td>
+      <td>36.0000</td>
+      <td>19813.0000</td>
+      <td>99.8186</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>7.0000</td>
+      <td>12.0000</td>
+      <td>5.0000</td>
+      <td>71.4286</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>7.0000</td>
+      <td>14.0000</td>
+      <td>7.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Header Length</td>
+      <td>332.0000</td>
+      <td>808.0000</td>
+      <td>476.0000</td>
+      <td>143.3735</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Header Length</td>
+      <td>164.0000</td>
+      <td>692.0000</td>
+      <td>528.0000</td>
+      <td>321.9512</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packets/s</td>
+      <td>0.2455</td>
+      <td>0.4758</td>
+      <td>0.2304</td>
+      <td>93.8419</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packets/s</td>
+      <td>0.1227</td>
+      <td>0.3997</td>
+      <td>0.2770</td>
+      <td>225.6543</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Packet Length Max</td>
+      <td>1353.0000</td>
+      <td>1353.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Packet Length Mean</td>
+      <td>558.4167</td>
+      <td>270.0435</td>
+      <td>288.3732</td>
+      <td>51.6412</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Packet Length Std</td>
+      <td>516.3136</td>
+      <td>459.5497</td>
+      <td>56.7639</td>
+      <td>10.9941</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Packet Length Variance</td>
+      <td>266579.7319</td>
+      <td>211185.9536</td>
+      <td>55393.7783</td>
+      <td>20.7794</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>PSH Flag Count</td>
+      <td>14.0000</td>
+      <td>26.0000</td>
+      <td>12.0000</td>
+      <td>85.7143</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>ACK Flag Count</td>
+      <td>23.0000</td>
+      <td>45.0000</td>
+      <td>22.0000</td>
+      <td>95.6522</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Down/Up Ratio</td>
+      <td>0.5000</td>
+      <td>0.8400</td>
+      <td>0.3400</td>
+      <td>68.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Average Packet Size</td>
+      <td>558.4167</td>
+      <td>270.0435</td>
+      <td>288.3732</td>
+      <td>51.6412</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>358.3750</td>
+      <td>184.0000</td>
+      <td>174.3750</td>
+      <td>48.6571</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>958.5000</td>
+      <td>372.4762</td>
+      <td>586.0238</td>
+      <td>61.1397</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>1446.0000</td>
+      <td>1446.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>596534.6535</td>
+      <td>596534.6535</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>3254.0000</td>
+      <td>3254.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>1200738.0074</td>
+      <td>1200738.0074</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>4.0000</td>
+      <td>6.2500</td>
+      <td>2.2500</td>
+      <td>56.2500</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>1433.5000</td>
+      <td>1150.0000</td>
+      <td>283.5000</td>
+      <td>19.7768</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>2.0000</td>
+      <td>5.2500</td>
+      <td>3.2500</td>
+      <td>162.5000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>1917.0000</td>
+      <td>1955.5000</td>
+      <td>38.5000</td>
+      <td>2.0083</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>7240.0000</td>
+      <td>952.0000</td>
+      <td>11.6211</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>8190.0000</td>
+      <td>43440.0000</td>
+      <td>35250.0000</td>
+      <td>430.4029</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>7.0000</td>
+      <td>12.0000</td>
+      <td>5.0000</td>
+      <td>71.4286</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>7.0000</td>
+      <td>14.0000</td>
+      <td>7.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Active Mean</td>
+      <td>623114.3333</td>
+      <td>15331.5000</td>
+      <td>607782.8333</td>
+      <td>97.5395</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Active Std</td>
+      <td>466130.9687</td>
+      <td>20570.7406</td>
+      <td>445560.2281</td>
+      <td>95.5869</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Active Max</td>
+      <td>1137993.0000</td>
+      <td>46030.0000</td>
+      <td>1091963.0000</td>
+      <td>95.9552</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Active Min</td>
+      <td>229833.0000</td>
+      <td>2170.0000</td>
+      <td>227663.0000</td>
+      <td>99.0558</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Idle Mean</td>
+      <td>20619008.6667</td>
+      <td>13119472.5000</td>
+      <td>7499536.1667</td>
+      <td>36.3720</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Idle Std</td>
+      <td>8605148.9041</td>
+      <td>9310739.9382</td>
+      <td>705591.0342</td>
+      <td>8.1996</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Idle Max</td>
+      <td>26332013.0000</td>
+      <td>25777652.0000</td>
+      <td>554361.0000</td>
+      <td>2.1053</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Idle Min</td>
+      <td>10721926.0000</td>
+      <td>5764643.0000</td>
+      <td>4957283.0000</td>
+      <td>46.2350</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>192.168.3.131:55959 &rarr; 65.55.5.231:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>65181701.0000</td>
+      <td>52540978.0000</td>
+      <td>12640723.0000</td>
+      <td>19.3931</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow Duration</td>
+      <td>63999930.0000</td>
+      <td>52841166.0000</td>
+      <td>11158764.0000</td>
+      <td>17.4356</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total Fwd Packet</td>
+      <td>12.0000</td>
+      <td>27.0000</td>
+      <td>15.0000</td>
+      <td>125.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total Bwd packets</td>
+      <td>7.0000</td>
+      <td>23.0000</td>
+      <td>16.0000</td>
+      <td>228.5714</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>2802.0000</td>
+      <td>2349.0000</td>
+      <td>453.0000</td>
+      <td>16.1670</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>2088.0000</td>
+      <td>2220.0000</td>
+      <td>132.0000</td>
+      <td>6.3218</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packet Length Max</td>
+      <td>804.0000</td>
+      <td>826.0000</td>
+      <td>22.0000</td>
+      <td>2.7363</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>233.5000</td>
+      <td>87.0000</td>
+      <td>146.5000</td>
+      <td>62.7409</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packet Length Std</td>
+      <td>352.0794</td>
+      <td>228.0572</td>
+      <td>124.0222</td>
+      <td>35.2256</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packet Length Max</td>
+      <td>522.0000</td>
+      <td>522.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>298.2857</td>
+      <td>96.5217</td>
+      <td>201.7640</td>
+      <td>67.6412</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packet Length Std</td>
+      <td>279.0207</td>
+      <td>187.1839</td>
+      <td>91.8369</td>
+      <td>32.9140</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow Bytes/s</td>
+      <td>76.4063</td>
+      <td>86.4667</td>
+      <td>10.0603</td>
+      <td>13.1669</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow Packets/s</td>
+      <td>0.2969</td>
+      <td>0.9462</td>
+      <td>0.6494</td>
+      <td>218.7304</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow IAT Mean</td>
+      <td>3555551.6667</td>
+      <td>1078391.1429</td>
+      <td>2477160.5238</td>
+      <td>69.6702</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow IAT Std</td>
+      <td>7476934.4997</td>
+      <td>3971999.7945</td>
+      <td>3504934.7052</td>
+      <td>46.8766</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow IAT Max</td>
+      <td>25974974.0000</td>
+      <td>25979786.0000</td>
+      <td>4812.0000</td>
+      <td>0.0185</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Flow IAT Min</td>
+      <td>41.0000</td>
+      <td>6.0000</td>
+      <td>35.0000</td>
+      <td>85.3659</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd IAT Total</td>
+      <td>63999930.0000</td>
+      <td>52841033.0000</td>
+      <td>11158897.0000</td>
+      <td>17.4358</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd IAT Mean</td>
+      <td>5818175.4545</td>
+      <td>2032347.4231</td>
+      <td>3785828.0315</td>
+      <td>65.0690</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd IAT Std</td>
+      <td>8975463.1866</td>
+      <td>5319126.6501</td>
+      <td>3656336.5365</td>
+      <td>40.7370</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd IAT Max</td>
+      <td>25974974.0000</td>
+      <td>25979786.0000</td>
+      <td>4812.0000</td>
+      <td>0.0185</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd IAT Min</td>
+      <td>341.0000</td>
+      <td>26.0000</td>
+      <td>315.0000</td>
+      <td>92.3754</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd IAT Total</td>
+      <td>63790420.0000</td>
+      <td>52840499.0000</td>
+      <td>10949921.0000</td>
+      <td>17.1655</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd IAT Mean</td>
+      <td>10631736.6667</td>
+      <td>2401840.8636</td>
+      <td>8229895.8030</td>
+      <td>77.4088</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd IAT Std</td>
+      <td>10233120.4727</td>
+      <td>5723684.1627</td>
+      <td>4509436.3099</td>
+      <td>44.0671</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd IAT Max</td>
+      <td>26194295.0000</td>
+      <td>25985234.0000</td>
+      <td>209061.0000</td>
+      <td>0.7981</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd IAT Min</td>
+      <td>777.0000</td>
+      <td>16.0000</td>
+      <td>761.0000</td>
+      <td>97.9408</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd PSH Flags</td>
+      <td>4.0000</td>
+      <td>13.0000</td>
+      <td>9.0000</td>
+      <td>225.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd PSH Flags</td>
+      <td>4.0000</td>
+      <td>12.0000</td>
+      <td>8.0000</td>
+      <td>200.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Header Length</td>
+      <td>252.0000</td>
+      <td>872.0000</td>
+      <td>620.0000</td>
+      <td>246.0317</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Header Length</td>
+      <td>152.0000</td>
+      <td>780.0000</td>
+      <td>628.0000</td>
+      <td>413.1579</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packets/s</td>
+      <td>0.1875</td>
+      <td>0.5110</td>
+      <td>0.3235</td>
+      <td>172.5145</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packets/s</td>
+      <td>0.1094</td>
+      <td>0.4353</td>
+      <td>0.3259</td>
+      <td>297.9577</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Packet Length Max</td>
+      <td>804.0000</td>
+      <td>826.0000</td>
+      <td>22.0000</td>
+      <td>2.7363</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Packet Length Mean</td>
+      <td>257.3684</td>
+      <td>91.3800</td>
+      <td>165.9884</td>
+      <td>64.4945</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Packet Length Std</td>
+      <td>320.5230</td>
+      <td>208.2100</td>
+      <td>112.3130</td>
+      <td>35.0405</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Packet Length Variance</td>
+      <td>102735.0234</td>
+      <td>43351.4241</td>
+      <td>59383.5993</td>
+      <td>57.8027</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>FIN Flag Count</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>2.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>PSH Flag Count</td>
+      <td>8.0000</td>
+      <td>25.0000</td>
+      <td>17.0000</td>
+      <td>212.5000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>ACK Flag Count</td>
+      <td>18.0000</td>
+      <td>49.0000</td>
+      <td>31.0000</td>
+      <td>172.2222</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Down/Up Ratio</td>
+      <td>0.5833</td>
+      <td>0.8519</td>
+      <td>0.2685</td>
+      <td>46.0317</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Average Packet Size</td>
+      <td>257.3684</td>
+      <td>91.3800</td>
+      <td>165.9884</td>
+      <td>64.4945</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>233.5000</td>
+      <td>87.0000</td>
+      <td>146.5000</td>
+      <td>62.7409</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>298.2857</td>
+      <td>96.5217</td>
+      <td>201.7640</td>
+      <td>67.6412</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>88.0000</td>
+      <td>88.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>15833.0335</td>
+      <td>15833.0335</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>1025.0000</td>
+      <td>1025.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>543910.8517</td>
+      <td>543910.8517</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Subflow Fwd Packets</td>
+      <td>3.0000</td>
+      <td>3.8571</td>
+      <td>0.8571</td>
+      <td>28.5714</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>700.5000</td>
+      <td>335.5714</td>
+      <td>364.9286</td>
+      <td>52.0954</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Subflow Bwd Packets</td>
+      <td>1.7500</td>
+      <td>3.2857</td>
+      <td>1.5357</td>
+      <td>87.7551</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>522.0000</td>
+      <td>317.1429</td>
+      <td>204.8571</td>
+      <td>39.2447</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>5792.0000</td>
+      <td>2400.0000</td>
+      <td>29.2969</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>5840.0000</td>
+      <td>43440.0000</td>
+      <td>37600.0000</td>
+      <td>643.8356</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>4.0000</td>
+      <td>13.0000</td>
+      <td>9.0000</td>
+      <td>225.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>4.0000</td>
+      <td>12.0000</td>
+      <td>8.0000</td>
+      <td>200.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Active Mean</td>
+      <td>166098.0000</td>
+      <td>4483931.3333</td>
+      <td>4317833.3333</td>
+      <td>2599.5697</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Active Std</td>
+      <td>105329.6436</td>
+      <td>5232334.2674</td>
+      <td>5127004.6238</td>
+      <td>4867.5800</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Active Max</td>
+      <td>229085.0000</td>
+      <td>10233922.0000</td>
+      <td>10004837.0000</td>
+      <td>4367.3034</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Active Min</td>
+      <td>8496.0000</td>
+      <td>2534.0000</td>
+      <td>5962.0000</td>
+      <td>70.1742</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Idle Mean</td>
+      <td>15780577.7500</td>
+      <td>13129746.3333</td>
+      <td>2650831.4167</td>
+      <td>16.7981</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Idle Std</td>
+      <td>7781623.8583</td>
+      <td>11227813.3727</td>
+      <td>3446189.5144</td>
+      <td>44.2863</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Idle Max</td>
+      <td>25974974.0000</td>
+      <td>25979786.0000</td>
+      <td>4812.0000</td>
+      <td>0.0185</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Idle Min</td>
+      <td>8501699.0000</td>
+      <td>5214373.0000</td>
+      <td>3287326.0000</td>
+      <td>38.6667</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>192.168.3.131:55960 &rarr; 206.108.207.139:80</td>
+      <td>Total Connection Flow Time</td>
+      <td>63999930.0000</td>
+      <td>52841166.0000</td>
+      <td>11158764.0000</td>
+      <td>17.4356</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Protocol</td>
+      <td>6.0000</td>
+      <td>6.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow Duration</td>
+      <td>113493805.0000</td>
+      <td>30082527.0000</td>
+      <td>83411278.0000</td>
+      <td>73.4941</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total Fwd Packet</td>
+      <td>34.0000</td>
+      <td>6.0000</td>
+      <td>28.0000</td>
+      <td>82.3529</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total Bwd packets</td>
+      <td>75.0000</td>
+      <td>5.0000</td>
+      <td>70.0000</td>
+      <td>93.3333</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total Length of Fwd Packet</td>
+      <td>1737.0000</td>
+      <td>297.0000</td>
+      <td>1440.0000</td>
+      <td>82.9016</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total Length of Bwd Packet</td>
+      <td>32464.0000</td>
+      <td>976.0000</td>
+      <td>31488.0000</td>
+      <td>96.9936</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packet Length Max</td>
+      <td>275.0000</td>
+      <td>297.0000</td>
+      <td>22.0000</td>
+      <td>8.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packet Length Mean</td>
+      <td>51.0882</td>
+      <td>49.5000</td>
+      <td>1.5882</td>
+      <td>3.1088</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packet Length Std</td>
+      <td>91.8498</td>
+      <td>121.2497</td>
+      <td>29.3999</td>
+      <td>32.0087</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packet Length Max</td>
+      <td>1430.0000</td>
+      <td>954.0000</td>
+      <td>476.0000</td>
+      <td>33.2867</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packet Length Mean</td>
+      <td>432.8533</td>
+      <td>195.2000</td>
+      <td>237.6533</td>
+      <td>54.9039</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packet Length Std</td>
+      <td>558.7958</td>
+      <td>424.2891</td>
+      <td>134.5067</td>
+      <td>24.0708</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow Bytes/s</td>
+      <td>301.3468</td>
+      <td>42.3169</td>
+      <td>259.0299</td>
+      <td>85.9574</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow Packets/s</td>
+      <td>0.9604</td>
+      <td>0.3657</td>
+      <td>0.5947</td>
+      <td>61.9264</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow IAT Mean</td>
+      <td>1050868.5648</td>
+      <td>3008252.7000</td>
+      <td>1957384.1352</td>
+      <td>186.2635</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow IAT Std</td>
+      <td>8901427.2012</td>
+      <td>9497911.7132</td>
+      <td>596484.5121</td>
+      <td>6.7010</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow IAT Max</td>
+      <td>91629941.0000</td>
+      <td>30039758.0000</td>
+      <td>61590183.0000</td>
+      <td>67.2162</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Flow IAT Min</td>
+      <td>1.0000</td>
+      <td>7.0000</td>
+      <td>6.0000</td>
+      <td>600.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd IAT Total</td>
+      <td>113493805.0000</td>
+      <td>30082527.0000</td>
+      <td>83411278.0000</td>
+      <td>73.4941</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd IAT Mean</td>
+      <td>3439206.2121</td>
+      <td>6016505.4000</td>
+      <td>2577299.1879</td>
+      <td>74.9388</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd IAT Std</td>
+      <td>16019093.0175</td>
+      <td>13452617.9688</td>
+      <td>2566475.0487</td>
+      <td>16.0214</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd IAT Max</td>
+      <td>91629941.0000</td>
+      <td>30081280.0000</td>
+      <td>61548661.0000</td>
+      <td>67.1709</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd IAT Min</td>
+      <td>763.0000</td>
+      <td>16.0000</td>
+      <td>747.0000</td>
+      <td>97.9030</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd IAT Total</td>
+      <td>113475161.0000</td>
+      <td>30040714.0000</td>
+      <td>83434447.0000</td>
+      <td>73.5266</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd IAT Mean</td>
+      <td>1533448.1216</td>
+      <td>7510178.5000</td>
+      <td>5976730.3784</td>
+      <td>389.7576</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd IAT Std</td>
+      <td>10744351.7777</td>
+      <td>15019724.3350</td>
+      <td>4275372.5573</td>
+      <td>39.7918</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd IAT Max</td>
+      <td>91649744.0000</td>
+      <td>30039765.0000</td>
+      <td>61609979.0000</td>
+      <td>67.2233</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd IAT Min</td>
+      <td>1.0000</td>
+      <td>23.0000</td>
+      <td>22.0000</td>
+      <td>2200.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd PSH Flags</td>
+      <td>9.0000</td>
+      <td>1.0000</td>
+      <td>8.0000</td>
+      <td>88.8889</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd PSH Flags</td>
+      <td>40.0000</td>
+      <td>2.0000</td>
+      <td>38.0000</td>
+      <td>95.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd URG Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd RST Flags</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Header Length</td>
+      <td>692.0000</td>
+      <td>200.0000</td>
+      <td>492.0000</td>
+      <td>71.0983</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Header Length</td>
+      <td>1512.0000</td>
+      <td>168.0000</td>
+      <td>1344.0000</td>
+      <td>88.8889</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packets/s</td>
+      <td>0.2996</td>
+      <td>0.1995</td>
+      <td>0.1001</td>
+      <td>33.4221</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packets/s</td>
+      <td>0.6608</td>
+      <td>0.1662</td>
+      <td>0.4946</td>
+      <td>74.8483</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Packet Length Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Packet Length Max</td>
+      <td>1430.0000</td>
+      <td>954.0000</td>
+      <td>476.0000</td>
+      <td>33.2867</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Packet Length Mean</td>
+      <td>313.7706</td>
+      <td>115.7273</td>
+      <td>198.0434</td>
+      <td>63.1172</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Packet Length Std</td>
+      <td>498.0957</td>
+      <td>291.8027</td>
+      <td>206.2930</td>
+      <td>41.4163</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Packet Length Variance</td>
+      <td>248099.2895</td>
+      <td>85148.8182</td>
+      <td>162950.4713</td>
+      <td>65.6795</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>FIN Flag Count</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>SYN Flag Count</td>
+      <td>2.0000</td>
+      <td>2.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>RST Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>PSH Flag Count</td>
+      <td>49.0000</td>
+      <td>3.0000</td>
+      <td>46.0000</td>
+      <td>93.8776</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>ACK Flag Count</td>
+      <td>108.0000</td>
+      <td>10.0000</td>
+      <td>98.0000</td>
+      <td>90.7407</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>URG Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>CWR Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>ECE Flag Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Down/Up Ratio</td>
+      <td>2.2059</td>
+      <td>0.8333</td>
+      <td>1.3725</td>
+      <td>62.2222</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Average Packet Size</td>
+      <td>313.7706</td>
+      <td>115.7273</td>
+      <td>198.0434</td>
+      <td>63.1172</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Segment Size Avg</td>
+      <td>51.0882</td>
+      <td>49.5000</td>
+      <td>1.5882</td>
+      <td>3.1088</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Segment Size Avg</td>
+      <td>432.8533</td>
+      <td>195.2000</td>
+      <td>237.6533</td>
+      <td>54.9039</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Bytes/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Packet/Bulk Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Bulk Rate Avg</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Bytes/Bulk Avg</td>
+      <td>5767.8000</td>
+      <td>0.0000</td>
+      <td>5767.8000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Packet/Bulk Avg</td>
+      <td>9.0000</td>
+      <td>0.0000</td>
+      <td>9.0000</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Bulk Rate Avg</td>
+      <td>13562.1166</td>
+      <td>0.0000</td>
+      <td>13562.1166</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Subflow Fwd Packets</td>
+      <td>8.5000</td>
+      <td>6.0000</td>
+      <td>2.5000</td>
+      <td>29.4118</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Subflow Fwd Bytes</td>
+      <td>434.2500</td>
+      <td>297.0000</td>
+      <td>137.2500</td>
+      <td>31.6062</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Subflow Bwd Packets</td>
+      <td>18.7500</td>
+      <td>5.0000</td>
+      <td>13.7500</td>
+      <td>73.3333</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Subflow Bwd Bytes</td>
+      <td>8116.0000</td>
+      <td>976.0000</td>
+      <td>7140.0000</td>
+      <td>87.9744</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>FWD Init Win Bytes</td>
+      <td>8192.0000</td>
+      <td>4344.0000</td>
+      <td>3848.0000</td>
+      <td>46.9727</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Init Win Bytes</td>
+      <td>5720.0000</td>
+      <td>43440.0000</td>
+      <td>37720.0000</td>
+      <td>659.4406</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Act Data Pkts</td>
+      <td>9.0000</td>
+      <td>1.0000</td>
+      <td>8.0000</td>
+      <td>88.8889</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Act Data Pkts</td>
+      <td>53.0000</td>
+      <td>2.0000</td>
+      <td>51.0000</td>
+      <td>96.2264</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd Seg Size Min</td>
+      <td>20.0000</td>
+      <td>32.0000</td>
+      <td>12.0000</td>
+      <td>60.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd Seg Size Min</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Active Mean</td>
+      <td>2158502.0000</td>
+      <td>1247.0000</td>
+      <td>2157255.0000</td>
+      <td>99.9422</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Active Std</td>
+      <td>2037082.7127</td>
+      <td>0.0000</td>
+      <td>2037082.7127</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Active Max</td>
+      <td>3598937.0000</td>
+      <td>1247.0000</td>
+      <td>3597690.0000</td>
+      <td>99.9654</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Active Min</td>
+      <td>718067.0000</td>
+      <td>1247.0000</td>
+      <td>716820.0000</td>
+      <td>99.8263</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Idle Mean</td>
+      <td>52677604.5000</td>
+      <td>30039758.0000</td>
+      <td>22637846.5000</td>
+      <td>42.9743</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Idle Std</td>
+      <td>55086922.5644</td>
+      <td>0.0000</td>
+      <td>55086922.5644</td>
+      <td>100.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Idle Max</td>
+      <td>91629941.0000</td>
+      <td>30039758.0000</td>
+      <td>61590183.0000</td>
+      <td>67.2162</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Idle Min</td>
+      <td>13725268.0000</td>
+      <td>30039758.0000</td>
+      <td>16314490.0000</td>
+      <td>118.8646</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>ICMP Code</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>ICMP Type</td>
+      <td>-1.0000</td>
+      <td>-1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Fwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Bwd TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total TCP Retrans. Count</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>192.168.3.131:52152 &rarr; 72.14.213.147:443</td>
+      <td>Total Connection Flow Time</td>
+      <td>113493805.0000</td>
+      <td>30082527.0000</td>
+      <td>83411278.0000</td>
+      <td>73.4941</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class='tab-pane fade table-wrapper' id='missing' role='tabpanel'>
+<h4 class='mb-3'>Flussi Originali Non Riprodotti (Primi 1000)</h4>
+<p>Tutti i flussi originali sono stati abbinati!</p>
+</div>
+<div class='tab-pane fade table-wrapper' id='extra' role='tabpanel'>
+<h4 class='mb-3'>Flussi Simulati in Eccesso (Primi 1000)</h4>
+<p>Nessun flusso simulato in eccesso!</p>
+</div>
+</div>
+</div>
+<script src='https://code.jquery.com/jquery-3.7.0.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+<script>
+$(document).ready(function() {
+    $('.datatable').DataTable({
+        pageLength: 50,
+        language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json' }
+    });
+});
+</script>
 </body></html>

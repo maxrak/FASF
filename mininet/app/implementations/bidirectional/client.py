@@ -14,7 +14,6 @@ import pandas as pd
 
 MAGIC = b"FEMU"
 VERSION = 1
-# magic(4), version(1), flags(1), reverse_bytes(4), payload_len(4), flow_id(4), burst_id(4)
 HEADER_STRUCT = struct.Struct("!4sBBIIII")
 HEADER_SIZE = HEADER_STRUCT.size
 FLAG_REVERSE = 0x01
@@ -30,8 +29,8 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     os.makedirs("/results", exist_ok=True)
     csv_basename = os.path.splitext(os.path.basename(csv_file))[0]
     ip_safe = ip_client.replace(".", "_").replace(":", "_")
-    log_file = f"/results/{csv_basename}_{ip_safe}_bidirectional.log"
-    logger = logging.getLogger(f"client_bidir_{ip_safe}")
+    log_file = f"/results/{csv_basename}_{ip_safe}_feature_aware.log"
+    logger = logging.getLogger(f"client_feature_aware_{ip_safe}")
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
     fh = logging.FileHandler(log_file, mode="w")
@@ -44,7 +43,7 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     logger.addHandler(fh)
     logger.addHandler(ch)
     logger.info("=" * 70)
-    logger.info("CLIENT BIDIRECTIONAL FLOW EMULATOR")
+    logger.info("CLIENT FEATURE-AWARE BIDIRECTIONAL FLOW EMULATOR")
     logger.info(f"CSV: {csv_file}")
     logger.info(f"Client IP: {ip_client}")
     logger.info(f"Timestamp: {datetime.now()}")
@@ -53,19 +52,37 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
 
 
 def load_params(config_file=None):
+    defaults = {
+        "seed": None,
+        "max_parallel_flows": 128,
+        "connect_timeout": 10.0,
+        "socket_timeout": 30.0,
+        "post_send_wait": 0.25,
+        "reverse_chunk_size": 1448,
+        "preserve_fwd_count": True,
+        "preserve_bwd_total": True,
+        "use_fwd_iat": True,
+        "use_flow_iat_fallback": True,
+        "use_active_idle": True,
+        "use_tcp_buffers_from_init_win": True,
+        "use_tcp_maxseg_from_seg_size_min": True,
+        "zero_payload_fill": 0,
+        "jitter_fraction": 0.02,
+    }
     if config_file is None:
-        return {}
+        return defaults
     try:
         with open(config_file, "r", encoding="utf-8") as f:
-            params = json.load(f)
-        print(f"[+] Parametri caricati da {config_file}: {params}")
-        return params
+            user_params = json.load(f)
+        defaults.update(user_params)
+        print(f"[+] Parametri caricati da {config_file}: {defaults}")
+        return defaults
     except FileNotFoundError:
         print(f"[!] File configurazione {config_file} non trovato, uso default")
-        return {}
+        return defaults
     except Exception as exc:
         print(f"[!] Errore caricamento configurazione {config_file}: {exc}")
-        return {}
+        return defaults
 
 
 def col(row, names, default=None):
@@ -75,10 +92,26 @@ def col(row, names, default=None):
     return default
 
 
+def f_col(row, names, default=0.0):
+    value = col(row, names, default)
+    try:
+        if value is None or pd.isna(value):
+            return float(default)
+        return float(value)
+    except Exception:
+        return float(default)
+
+
+def i_col(row, names, default=0):
+    try:
+        return int(round(f_col(row, names, default)))
+    except Exception:
+        return int(default)
+
+
 def parse_timestamp(value):
     if value is None or pd.isna(value):
         return None
-    # CICFlowMeter usa spesso formati come 02/03/2018 08:47:38 o ISO-like.
     ts = pd.to_datetime(value, errors="coerce", dayfirst=False)
     if pd.isna(ts):
         ts = pd.to_datetime(value, errors="coerce", dayfirst=True)
@@ -87,133 +120,289 @@ def parse_timestamp(value):
     return ts.to_pydatetime()
 
 
-def packet_size_sequence(row, params):
-    min_len = int(max(1, float(col(row, ["Fwd Packet Length Min", "Fwd Packet Len Min"], 1))))
-    max_len = int(max(min_len, float(col(row, ["Fwd Packet Length Max", "Fwd Packet Len Max"], min_len))))
-    mean_len = float(col(row, ["Fwd Packet Length Mean", "Fwd Packet Len Mean"], min_len))
-    std_len = float(col(row, ["Fwd Packet Length Std", "Fwd Packet Len Std"], max(1.0, mean_len / 2.0)))
+def duration_seconds(row):
+    return max(0.0, f_col(row, ["Flow Duration", "Flow Duration Microseconds", "Flow Duration us"], 0.0) / 1_000_000.0)
 
-    total_fwd_bytes = col(row, [
-        "Total Length of Fwd Packet",  # Singolare (usato in molti CSV)
-        "Total Length of Fwd Packets",  # Plurale
-        "TotLen Fwd Pkts",
-        "Fwd Packets Length Total",
-        "Total Fwd Packet Length",
-    ], None)
-    total_fwd_pkts = int(max(1, float(col(row, [
-        "Total Fwd Packet",  # Singolare
-        "Total Fwd Packets",  # Plurale
-        "Tot Fwd Pkts", 
-        "Fwd Packet Count"
-    ], 0) or 0)))
 
-    if total_fwd_bytes is None or float(total_fwd_bytes) <= 0:
-        target_total = int(round(mean_len * total_fwd_pkts))
-    else:
-        target_total = int(round(float(total_fwd_bytes)))
+def total_names(direction):
+    if direction == "fwd":
+        return {
+            "count": ["Total Fwd Packet", "Total Fwd Packets", "Tot Fwd Pkts", "Fwd Packet Count", "Subflow Fwd Packets"],
+            "total": ["Total Length of Fwd Packet", "Total Length of Fwd Packets", "TotLen Fwd Pkts", "Fwd Packets Length Total", "Total Fwd Packet Length", "Subflow Fwd Bytes"],
+            "min": ["Fwd Packet Length Min", "Fwd Packet Len Min"],
+            "max": ["Fwd Packet Length Max", "Fwd Packet Len Max"],
+            "mean": ["Fwd Packet Length Mean", "Fwd Packet Len Mean", "Fwd Segment Size Avg"],
+            "std": ["Fwd Packet Length Std", "Fwd Packet Len Std"],
+            "act": ["Fwd Act Data Pkts"],
+        }
+    return {
+        "count": ["Total Bwd packets", "Total Bwd Packet", "Total Bwd Packets", "Tot Bwd Pkts", "Bwd Packet Count", "Subflow Bwd Packets"],
+        "total": ["Total Length of Bwd Packet", "Total Length of Bwd Packets", "TotLen Bwd Pkts", "Bwd Packets Length Total", "Total Bwd Packet Length", "Subflow Bwd Bytes"],
+        "min": ["Bwd Packet Length Min", "Bwd Packet Len Min"],
+        "max": ["Bwd Packet Length Max", "Bwd Packet Len Max"],
+        "mean": ["Bwd Packet Length Mean", "Bwd Packet Len Mean", "Bwd Segment Size Avg"],
+        "std": ["Bwd Packet Length Std", "Bwd Packet Len Std"],
+        "act": ["Bwd Act Data Pkts"],
+    }
 
-    target_total = max(min_len, target_total)
 
-    # Se il conteggio pacchetti e' incompatibile con il totale, lo correggiamo per rispettare min/max.
-    if total_fwd_pkts * min_len > target_total:
-        total_fwd_pkts = max(1, target_total // min_len)
-    if total_fwd_pkts * max_len < target_total:
-        total_fwd_pkts = int(np.ceil(target_total / max_len))
-
-    sizes = []
-    remaining = target_total
-    remaining_pkts = total_fwd_pkts
-    rng = np.random.default_rng()
-
-    while remaining_pkts > 0:
-        if remaining_pkts == 1:
-            size = remaining
-        else:
-            low = max(min_len, remaining - max_len * (remaining_pkts - 1))
-            high = min(max_len, remaining - min_len * (remaining_pkts - 1))
-            if high < low:
-                size = min(max(remaining // remaining_pkts, min_len), max_len)
+def _adjust_sum(values, target, low, high):
+    values = [int(max(low, min(high, v))) for v in values]
+    diff = int(target) - sum(values)
+    loops = 0
+    while diff != 0 and loops < len(values) * 4 + 10:
+        changed = False
+        order = list(range(len(values)))
+        random.shuffle(order)
+        for idx in order:
+            if diff == 0:
+                break
+            if diff > 0:
+                room = high - values[idx]
+                if room > 0:
+                    add = min(room, diff)
+                    values[idx] += add
+                    diff -= add
+                    changed = True
             else:
-                if std_len > 0 and mean_len > 0:
-                    sampled = int(round(rng.normal(mean_len, std_len)))
-                else:
-                    sampled = int(round(mean_len))
-                size = min(max(sampled, low), high)
-        sizes.append(int(size))
-        remaining -= int(size)
-        remaining_pkts -= 1
-
-    random.shuffle(sizes)
-    return sizes, target_total, min_len, max_len, mean_len
-
-
-def split_into_bursts(sizes, params):
-    p = float(params.get("burst_size_p", 0.3))
-    p = min(max(p, 0.01), 1.0)
-    bursts = []
-    i = 0
-    while i < len(sizes):
-        n = int(np.random.geometric(p=p))
-        n = max(1, min(n, len(sizes) - i))
-        bursts.append(sizes[i:i + n])
-        i += n
-    return bursts
+                room = values[idx] - low
+                if room > 0:
+                    sub = min(room, -diff)
+                    values[idx] -= sub
+                    diff += sub
+                    changed = True
+        if not changed:
+            break
+        loops += 1
+    if diff != 0 and values:
+        values[-1] += diff
+    return values
 
 
-def reverse_budget(row):
-    total_bwd_bytes = col(row, [
-        "Total Length of Bwd Packet",  # Singolare (usato in molti CSV)
-        "Total Length of Bwd Packets",  # Plurale
-        "TotLen Bwd Pkts",
-        "Bwd Packets Length Total",
-        "Total Bwd Packet Length",
-    ], 0)
+def exact_packet_size_sequence(row, direction="fwd"):
+    names = total_names(direction)
+    n_pkts = max(0, i_col(row, names["count"], 0))
+    target_total = max(0, i_col(row, names["total"], 0))
+    if n_pkts == 0:
+        return [], target_total, {"exact_stats": True}
+
+    csv_min = max(0, i_col(row, names["min"], 0))
+    csv_max = max(csv_min, i_col(row, names["max"], max(csv_min, target_total)))
+    mean_len = f_col(row, names["mean"], target_total / max(n_pkts, 1))
+    std_len = max(0.0, f_col(row, names["std"], 0.0))
+    act_data = max(0, i_col(row, names["act"], n_pkts))
+
+    low = csv_min
+    high = max(csv_max, 1 if target_total > 0 else 0)
+    if target_total < n_pkts * low:
+        low = 0
+    if target_total > n_pkts * high:
+        high = target_total
+
+    rng = np.random.default_rng()
+    nonzero_hint = min(n_pkts, act_data) if act_data > 0 else min(n_pkts, sum(1 for _ in range(n_pkts)))
+    zero_count = max(0, n_pkts - nonzero_hint) if csv_min == 0 and target_total > 0 else 0
+
+    values = []
+    for idx in range(n_pkts):
+        if idx < zero_count:
+            values.append(0)
+        else:
+            if std_len > 0 and mean_len > 0:
+                val = int(round(rng.normal(mean_len, std_len)))
+            else:
+                val = int(round(target_total / max(1, n_pkts - zero_count)))
+            values.append(max(low, min(high, val)))
+
+    # Force at least one observed min and max when feasible. This helps CICFlowMeter reproduce min/max.
+    if n_pkts >= 1 and target_total >= csv_max and csv_max > 0:
+        values[-1] = csv_max
+    if n_pkts >= 2 and csv_min == 0:
+        values[0] = 0
+    elif n_pkts >= 2 and target_total >= csv_min + values[-1]:
+        values[0] = csv_min
+
+    values = _adjust_sum(values, target_total, low, high)
+    random.shuffle(values)
+    meta = {
+        "csv_min": csv_min,
+        "csv_max": csv_max,
+        "csv_mean": mean_len,
+        "csv_std": std_len,
+        "target_total": target_total,
+        "target_count": n_pkts,
+        "actual_min": min(values) if values else 0,
+        "actual_max": max(values) if values else 0,
+        "actual_mean": float(np.mean(values)) if values else 0.0,
+        "actual_std": float(np.std(values, ddof=1)) if len(values) > 1 else 0.0,
+    }
+    return values, target_total, meta
+
+
+def build_iat_sequence(row, n_packets, params):
+    if n_packets <= 1:
+        return []
+    target_duration_us = max(0.0, f_col(row, ["Fwd IAT Total"], f_col(row, ["Flow Duration"], 0.0)))
+    if target_duration_us <= 0:
+        target_duration_us = f_col(row, ["Flow Duration"], 0.0)
+    target_total = target_duration_us / 1_000_000.0
+
+    mean_us = f_col(row, ["Fwd IAT Mean"], 0.0)
+    std_us = f_col(row, ["Fwd IAT Std"], 0.0)
+    min_us = max(0.0, f_col(row, ["Fwd IAT Min"], 0.0))
+    max_us = max(min_us, f_col(row, ["Fwd IAT Max"], max(min_us, target_duration_us)))
+
+    if mean_us <= 0 and params.get("use_flow_iat_fallback", True):
+        mean_us = f_col(row, ["Flow IAT Mean"], target_duration_us / max(1, n_packets - 1))
+        std_us = f_col(row, ["Flow IAT Std"], std_us)
+        min_us = max(0.0, f_col(row, ["Flow IAT Min"], min_us))
+        max_us = max(min_us, f_col(row, ["Flow IAT Max"], max_us))
+
+    k = n_packets - 1
+    if target_total <= 0:
+        return [0.0 for _ in range(k)]
+
+    low = min_us / 1_000_000.0
+    high = max(max_us / 1_000_000.0, low)
+    if target_total < k * low:
+        low = 0.0
+    if target_total > k * high:
+        high = target_total
+
+    rng = np.random.default_rng()
+    values = []
+    for _ in range(k):
+        if std_us > 0 and mean_us > 0:
+            val = float(rng.normal(mean_us / 1_000_000.0, std_us / 1_000_000.0))
+        elif mean_us > 0:
+            val = mean_us / 1_000_000.0
+        else:
+            val = target_total / k
+        values.append(max(low, min(high, val)))
+
+    if k >= 1 and high > 0:
+        values[0] = min(high, target_total)
+    if k >= 2:
+        values[1] = low
+
+    # Adjust exact total while respecting low/high as much as possible.
+    diff = target_total - sum(values)
+    for _ in range(k * 4 + 10):
+        if abs(diff) < 1e-9:
+            break
+        changed = False
+        order = list(range(k))
+        random.shuffle(order)
+        for idx in order:
+            if abs(diff) < 1e-9:
+                break
+            if diff > 0:
+                room = high - values[idx]
+                if room > 0:
+                    add = min(room, diff)
+                    values[idx] += add
+                    diff -= add
+                    changed = True
+            else:
+                room = values[idx] - low
+                if room > 0:
+                    sub = min(room, -diff)
+                    values[idx] -= sub
+                    diff += sub
+                    changed = True
+        if not changed:
+            break
+    if abs(diff) > 1e-9 and values:
+        values[-1] += diff
+
+    return [max(0.0, float(v)) for v in values]
+
+
+def inject_active_idle(iats, row, params):
+    if not iats or not params.get("use_active_idle", True):
+        return iats
+    idle_mean_us = f_col(row, ["Idle Mean"], 0.0)
+    idle_max_us = f_col(row, ["Idle Max"], idle_mean_us)
+    active_mean_us = f_col(row, ["Active Mean"], 0.0)
+    if idle_mean_us <= 0 or active_mean_us <= 0:
+        return iats
+    # Keep the exact total, but move larger gaps toward the reported idle scale.
+    total = sum(iats)
+    if total <= 0:
+        return iats
+    idle_s = min(max(idle_mean_us, 0.0), max(idle_max_us, idle_mean_us)) / 1_000_000.0
+    if idle_s <= 0 or idle_s >= total:
+        return iats
+    idx = int(np.argmax(iats))
+    iats[idx] = max(iats[idx], idle_s)
+    scale_total = sum(iats)
+    if scale_total > 0:
+        iats = [v * total / scale_total for v in iats]
+    return iats
+
+
+def make_reverse_requests(row, fwd_count, params):
+    bwd_sizes, bwd_total, bwd_meta = exact_packet_size_sequence(row, "bwd")
+    requests = [0 for _ in range(max(0, fwd_count))]
+    if not requests or bwd_total <= 0:
+        return requests, bwd_total, len(bwd_sizes), True, bwd_meta
+
+    chunk = max(1, int(params.get("reverse_chunk_size", 1448)))
+    exact_count = False
+
+    # If the server can emit one BWD logical reply per FWD logical packet, preserve the BWD sequence.
+    if len(bwd_sizes) <= len(requests) and all(x <= chunk for x in bwd_sizes):
+        for i, size in enumerate(bwd_sizes):
+            requests[i] = int(size)
+        exact_count = True
+    else:
+        # Preserve exact BWD byte total. The current protocol cannot force >1 arbitrary BWD packets per FWD packet.
+        active = min(len(requests), max(1, len(bwd_sizes)))
+        remaining = bwd_total
+        for i in range(active):
+            left = active - i
+            val = remaining // left
+            requests[i] = int(val)
+            remaining -= int(val)
+    return requests, bwd_total, len(bwd_sizes), exact_count, bwd_meta
+
+
+def configure_socket(sock, row, params):
     try:
-        return max(0, int(round(float(total_bwd_bytes))))
-    except Exception:
-        return 0
-
-
-def allocate_reverse_bursts(bursts, total_reverse_bytes):
-    if total_reverse_bytes <= 0 or not bursts:
-        return [0 for _ in bursts]
-    weights = np.array([sum(b) for b in bursts], dtype=float)
-    if weights.sum() <= 0:
-        weights = np.ones(len(bursts), dtype=float)
-    raw = weights / weights.sum() * total_reverse_bytes
-    alloc = np.floor(raw).astype(int)
-    remainder = total_reverse_bytes - int(alloc.sum())
-    if remainder > 0:
-        frac_order = np.argsort(-(raw - alloc))
-        for idx in frac_order[:remainder]:
-            alloc[idx] += 1
-    return alloc.tolist()
-
-
-def sample_iat(row, params):
-    rate = float(col(row, ["Flow Packets/s", "Flow Pkts/s"], 200) or 200)
-    rate = float(params.get("iat_rate", rate * 5.0))
-    if rate <= 0:
-        return 0.001
-    return min(float(np.random.exponential(1.0 / rate)), float(params.get("max_iat", 0.01)))
-
-
-def sample_idle(row, params):
-    idle_mean = float(col(row, ["Idle Mean"], 0) or 0) / 1e6
-    if idle_mean <= 0:
-        idle_mean = float(params.get("idle_default", 0.001))
-    alpha = float(params.get("idle_pareto_alpha", 1.5))
-    value = (np.random.pareto(alpha) + 1.0) * idle_mean
-    return min(value, float(params.get("max_idle", 3.0)))
-
-
-def connect_tcp(src_ip, dst_ip, sport, dport, timeout):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    try:
-        s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     except Exception:
         pass
+    try:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    except Exception:
+        pass
+    if params.get("use_tcp_buffers_from_init_win", True):
+        fwd_win = i_col(row, ["FWD Init Win Bytes", "Init_Win_bytes_forward", "Init Win bytes forward"], 0)
+        bwd_win = i_col(row, ["Bwd Init Win Bytes", "Init_Win_bytes_backward", "Init Win bytes backward"], 0)
+        # These are hints. Linux may double/clamp buffers and the real TCP window is kernel-controlled.
+        try:
+            if fwd_win > 0:
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, max(4096, fwd_win))
+        except Exception:
+            pass
+        try:
+            if bwd_win > 0:
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, max(4096, bwd_win))
+        except Exception:
+            pass
+    if params.get("use_tcp_maxseg_from_seg_size_min", True):
+        seg_min = i_col(row, ["Fwd Seg Size Min", "Fwd Segment Size Min"], 0)
+        # Do not use tiny values like 20/32 as MSS; those are usually header-size features, not MSS.
+        if seg_min >= 536:
+            try:
+                sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_MAXSEG, seg_min)
+            except Exception:
+                pass
+
+
+def connect_tcp(src_ip, dst_ip, sport, dport, timeout, row, params):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    configure_socket(s, row, params)
     s.settimeout(timeout)
     try:
         s.bind((src_ip, int(sport)))
@@ -247,7 +436,6 @@ def receiver_loop(sock, stats, stop_evt):
                 break
             magic, version, flags, reverse_bytes, payload_len, flow_id, burst_id = HEADER_STRUCT.unpack(header)
             if magic != MAGIC or version != VERSION:
-                # Compatibilita': se qualcosa non e' framed, consuma e continua.
                 stats["rx_protocol_errors"] += 1
                 break
             remaining = payload_len
@@ -266,20 +454,20 @@ def receiver_loop(sock, stats, stop_evt):
             logger.debug(f"[RX] receiver_loop terminato: {exc}")
 
 
-def send_framed(sock, payload_len, reverse_bytes, flow_id, burst_id):
-    header = HEADER_STRUCT.pack(MAGIC, VERSION, 0, int(reverse_bytes), int(payload_len), int(flow_id), int(burst_id))
-    sock.sendall(header)
-    remaining = int(payload_len)
-    zero = b"\x00" * 65536
-    while remaining > 0:
-        n = min(len(zero), remaining)
-        sock.sendall(zero[:n])
-        remaining -= n
+def send_framed(sock, payload_len, reverse_bytes, flow_id, packet_id, fill_byte=0):
+    header = HEADER_STRUCT.pack(MAGIC, VERSION, 0, int(reverse_bytes), int(payload_len), int(flow_id), int(packet_id))
+    payload_len = int(payload_len)
+    if payload_len <= 0:
+        sock.sendall(header)
+        return
+    payload = bytes([int(fill_byte) & 0xff]) * payload_len
+    sock.sendall(header + payload)
 
 
 def generate_flow(flow_id, row, ip_client, ip_server, params, base_time, first_timestamp):
-    sport = int(col(row, ["Source Port", "Src Port", "Sport"], random.randint(1024, 65535)))
-    dport = int(col(row, ["Destination Port", "Dst Port", "Dport"], 9000))
+    protocol = i_col(row, ["Protocol"], 6)
+    sport = i_col(row, ["Source Port", "Src Port", "Sport"], random.randint(1024, 65535))
+    dport = i_col(row, ["Destination Port", "Dst Port", "Dport"], 9000)
 
     ts = parse_timestamp(col(row, ["Timestamp", "Flow Start Time", "Start Time"], None))
     offset = max(0.0, (ts - first_timestamp).total_seconds()) if ts and first_timestamp else 0.0
@@ -292,67 +480,84 @@ def generate_flow(flow_id, row, ip_client, ip_server, params, base_time, first_t
         "flow_id": flow_id,
         "sport": sport,
         "dport": dport,
+        "protocol": protocol,
         "scheduled_offset_s": offset,
         "forward_bytes_target": 0,
         "forward_bytes_sent": 0,
         "forward_messages_sent": 0,
-        "bursts_sent": 0,
         "reverse_bytes_requested": 0,
         "reverse_bytes_received": 0,
         "reverse_messages_received": 0,
-        "rx_protocol_errors": 0,
-        "rx_errors": 0,
+        "target_duration_s": duration_seconds(row),
         "status": "started",
     }
 
+    if protocol not in (6, "6"):
+        stats["status"] = f"skipped: unsupported protocol {protocol}; this client emulates TCP only"
+        return stats
+
     try:
-        sizes, target_total, min_len, max_len, mean_len = packet_size_sequence(row, params)
-        bursts = split_into_bursts(sizes, params)
-        total_reverse = reverse_budget(row)
-        reverse_alloc = allocate_reverse_bursts(bursts, total_reverse)
-        stats["forward_bytes_target"] = target_total
-        stats["reverse_bytes_requested"] = sum(reverse_alloc)
+        sizes, target_total, fwd_meta = exact_packet_size_sequence(row, "fwd")
+        iats = build_iat_sequence(row, len(sizes), params) if params.get("use_fwd_iat", True) else []
+        iats = inject_active_idle(iats, row, params)
+        target_duration = duration_seconds(row)
+        reverse_requests, total_reverse, target_bwd_pkts, exact_bwd_count, bwd_meta = make_reverse_requests(row, len(sizes), params)
+
+        stats.update({
+            "forward_bytes_target": target_total,
+            "reverse_bytes_requested": sum(reverse_requests),
+            "target_fwd_packets": len(sizes),
+            "target_bwd_packets": target_bwd_pkts,
+            "exact_bwd_count_feasible_with_current_server": exact_bwd_count,
+            "fwd_actual_min": fwd_meta.get("actual_min", 0),
+            "fwd_actual_max": fwd_meta.get("actual_max", 0),
+            "fwd_actual_mean": fwd_meta.get("actual_mean", 0),
+            "fwd_actual_std": fwd_meta.get("actual_std", 0),
+            "bwd_planned_min": bwd_meta.get("actual_min", 0),
+            "bwd_planned_max": bwd_meta.get("actual_max", 0),
+        })
 
         if logger:
             logger.info(
-                f"[FLOW {flow_id}] start offset={offset:.6f}s {ip_client}:{sport}->{ip_server}:{dport} "
-                f"fwd_target={target_total} pkts={len(sizes)} bursts={len(bursts)} "
-                f"min={min_len} max={max_len} mean={mean_len:.2f} bwd_target={total_reverse} "
-                f"bwd_alloc={reverse_alloc}"
+                f"[FLOW {flow_id}] {ip_client}:{sport}->{ip_server}:{dport} "
+                f"fwd={target_total}B/{len(sizes)}pkts min/max/mean/std="
+                f"{fwd_meta.get('actual_min')}/{fwd_meta.get('actual_max')}/"
+                f"{fwd_meta.get('actual_mean'):.2f}/{fwd_meta.get('actual_std'):.2f} "
+                f"duration={target_duration:.6f}s iats={len(iats)} "
+                f"bwd={total_reverse}B/{target_bwd_pkts}pkts exact_bwd={exact_bwd_count}"
             )
 
-        sock = connect_tcp(ip_client, ip_server, sport, dport, float(params.get("connect_timeout", 10.0)))
-        sock.settimeout(float(params.get("socket_timeout", 20.0)))
+        sock = connect_tcp(ip_client, ip_server, sport, dport, float(params.get("connect_timeout", 10.0)), row, params)
+        sock.settimeout(float(params.get("socket_timeout", 30.0)))
         stop_evt = threading.Event()
         rx_thread = threading.Thread(target=receiver_loop, args=(sock, stats, stop_evt), daemon=True)
         rx_thread.start()
 
-        for burst_id, pkt_sizes in enumerate(bursts):
-            reverse_bytes = reverse_alloc[burst_id]
-            if logger and reverse_bytes > 0:
-                logger.info(
-                    f"[BURST {flow_id}:{burst_id}] Inviando burst con {len(pkt_sizes)} pkts, "
-                    f"richiedendo {reverse_bytes} bytes reverse"
-                )
-            for j, pkt_len in enumerate(pkt_sizes):
-                instruction = reverse_bytes if j == 0 else 0
-                if logger and instruction > 0:
-                    logger.debug(
-                        f"[REVERSE_REQ] flow={flow_id} burst={burst_id} pkt={j} "
-                        f"requesting {instruction} reverse bytes"
-                    )
-                send_framed(sock, pkt_len, instruction, flow_id, burst_id)
-                stats["forward_bytes_sent"] += pkt_len
-                stats["forward_messages_sent"] += 1
-                time.sleep(sample_iat(row, params))
-            stats["bursts_sent"] += 1
-            time.sleep(sample_idle(row, params))
+        flow_start = time.monotonic()
+        due_pkt = flow_start
+        fill_byte = int(params.get("zero_payload_fill", 0))
+        for pkt_idx, pkt_len in enumerate(sizes):
+            if pkt_idx > 0:
+                due_pkt += iats[pkt_idx - 1] if pkt_idx - 1 < len(iats) else 0.0
+            wait = due_pkt - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            instruction = reverse_requests[pkt_idx] if pkt_idx < len(reverse_requests) else 0
+            send_framed(sock, pkt_len, instruction, flow_id, pkt_idx, fill_byte)
+            stats["forward_bytes_sent"] += int(pkt_len)
+            stats["forward_messages_sent"] += 1
+
+        # Keep the connection open until both target Flow Duration and Fwd IAT Total have elapsed.
+        planned_end = flow_start + max(target_duration, sum(iats) if iats else 0.0)
+        remaining_duration = planned_end - time.monotonic()
+        if remaining_duration > 0:
+            time.sleep(remaining_duration)
 
         try:
             sock.shutdown(socket.SHUT_WR)
         except Exception:
             pass
-        time.sleep(float(params.get("post_send_wait", 0.2)))
+        time.sleep(float(params.get("post_send_wait", 0.25)))
         stop_evt.set()
         try:
             sock.close()
@@ -367,8 +572,12 @@ def generate_flow(flow_id, row, ip_client, ip_server, params, base_time, first_t
 
 
 def start_client(csv_file, ip_client, ip_server, output, config_file=None, debug=True):
-    setup_logger(csv_file, ip_client, debug)
     params = load_params(config_file)
+    seed = params.get("seed")
+    if seed is not None:
+        random.seed(int(seed))
+        np.random.seed(int(seed))
+    setup_logger(csv_file, ip_client, debug)
     df = pd.read_csv(csv_file)
 
     if "Source IP" in df.columns and "Destination IP" in df.columns:
@@ -386,16 +595,13 @@ def start_client(csv_file, ip_client, ip_server, output, config_file=None, debug
         return
 
     first_ts = None
-    if "Timestamp" in df.columns:
-        parsed = [parse_timestamp(v) for v in df["Timestamp"]]
-        parsed = [x for x in parsed if x is not None]
-        first_ts = min(parsed) if parsed else None
-    if first_ts is None:
-        # Fallback: primo timestamp valido nei soli flussi selezionati, o nessuna schedulazione.
-        ts_values = [parse_timestamp(col(r, ["Timestamp", "Flow Start Time", "Start Time"], None)) for _, r in flows.iterrows()]
-        ts_values = [x for x in ts_values if x is not None]
-        first_ts = min(ts_values) if ts_values else None
-
+    for candidate_df in (df, flows):
+        if "Timestamp" in candidate_df.columns:
+            parsed = [parse_timestamp(v) for v in candidate_df["Timestamp"]]
+            parsed = [x for x in parsed if x is not None]
+            if parsed:
+                first_ts = min(parsed)
+                break
     if first_ts:
         print(f"[+] Timestamp primo flusso CSV: {first_ts}")
     else:
@@ -428,7 +634,7 @@ def start_client(csv_file, ip_client, ip_server, output, config_file=None, debug
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Client TCP bidirezionale per emulazione flussi CSV")
+    parser = argparse.ArgumentParser(description="Client TCP bidirezionale feature-aware per emulazione flussi CSV")
     parser.add_argument("csv_file")
     parser.add_argument("ip_client")
     parser.add_argument("ip_server")
