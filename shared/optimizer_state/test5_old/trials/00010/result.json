@@ -1,0 +1,143 @@
+{
+  "algorithm": "random-host",
+  "duration_s": 149.90446829795837,
+  "error": null,
+  "improved": true,
+  "params": {
+    "global.chunk_size": 2816,
+    "global.close_delay_ms": 0.0,
+    "global.initial_delay_s": 0.3443522155229768,
+    "global.post_send_wait": 0.847606793009053,
+    "global.recv_buffer": 208227,
+    "global.reverse_chunk_size": 4096,
+    "global.send_buffer": null,
+    "global.tcp_nodelay": true,
+    "models.burst_factor": 2.376643011148822,
+    "models.burst_probability": 0.6703793106496141,
+    "models.bwd_payload_mean_scale": 2.2714632220299813,
+    "models.bwd_payload_std_scale": 1.00452030689185,
+    "models.bwd_request_strategy": "one_request_per_bwd_packet",
+    "models.duration_scale": 1.2487275579193837,
+    "models.fwd_iat_scale": 0.46046958978233754,
+    "models.fwd_payload_mean_scale": 2.5,
+    "models.fwd_payload_std_scale": 0.5587039177541925,
+    "models.iat_scale": 3.0,
+    "models.iat_std_scale": 0.8330546670315778,
+    "models.idle_threshold_ms": 171.1051642949916,
+    "models.jitter_fraction": 0.09153127418869583,
+    "models.payload_mean_scale": 0.5119261567488425,
+    "models.payload_std_scale": 2.050749703937374,
+    "models.server_delay_scale": 1.2806059025155878
+  },
+  "score": 4315.916801729412,
+  "status": "ok",
+  "timestamp": 1783687056.1962194,
+  "top_features": [
+    {
+      "component": 568105.8532477103,
+      "feature": "Fwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 568105.8532477103,
+      "weight": 2.0
+    },
+    {
+      "component": 175.05102040816328,
+      "feature": "Total Bwd packets",
+      "group": "conteggi pacchetti",
+      "metric": 175.05102040816328,
+      "weight": 15.0
+    },
+    {
+      "component": 756.6852496774351,
+      "feature": "Bwd IAT Min",
+      "group": "durata/timing",
+      "metric": 756.6852496774351,
+      "weight": 2.5
+    },
+    {
+      "component": 115.59407096171802,
+      "feature": "Total Fwd Packet",
+      "group": "conteggi pacchetti",
+      "metric": 115.59407096171802,
+      "weight": 15.0
+    },
+    {
+      "component": 200.85539098196173,
+      "feature": "Bwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 200.85539098196173,
+      "weight": 6.0
+    },
+    {
+      "component": 152.22856051204468,
+      "feature": "Flow Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 152.22856051204468,
+      "weight": 6.0
+    },
+    {
+      "component": 126.77278974698795,
+      "feature": "Fwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 126.77278974698795,
+      "weight": 6.0
+    },
+    {
+      "component": 90.57870402897119,
+      "feature": "Bwd IAT Total",
+      "group": "durata/timing",
+      "metric": 90.57870402897119,
+      "weight": 7.5
+    },
+    {
+      "component": 308.9684335372788,
+      "feature": "Bwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 308.9684335372788,
+      "weight": 2.0
+    },
+    {
+      "component": 62.00749728435945,
+      "feature": "Bwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 62.00749728435945,
+      "weight": 7.5
+    },
+    {
+      "component": 178.8470333420435,
+      "feature": "Flow IAT Min",
+      "group": "durata/timing",
+      "metric": 178.8470333420435,
+      "weight": 2.5
+    },
+    {
+      "component": 58.88228085564706,
+      "feature": "Fwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 58.88228085564706,
+      "weight": 7.5
+    },
+    {
+      "component": 206.19302945537066,
+      "feature": "Fwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 206.19302945537066,
+      "weight": 2.0
+    },
+    {
+      "component": 182.42857142857142,
+      "feature": "Fwd Bytes/Bulk Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 182.42857142857142,
+      "weight": 2.0
+    },
+    {
+      "component": 493.61297541336677,
+      "feature": "Bwd Init Win Bytes",
+      "group": "altro",
+      "metric": 493.61297541336677,
+      "weight": 0.7
+    }
+  ],
+  "trial_no": 10
+}

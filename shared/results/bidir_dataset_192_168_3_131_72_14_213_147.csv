@@ -1,2 +1,2 @@
-flow_id,sport,dport,scheduled_offset_s,forward_bytes_target,forward_bytes_sent,forward_messages_sent,bursts_sent,reverse_bytes_requested,reverse_bytes_received,reverse_messages_received,rx_protocol_errors,rx_errors,status
-0,52152,443,0.0,1737,1737,34,12,32464,32464,31,0,0,ok
+flow_id,sport,dport,protocol,scheduled_offset_s,forward_bytes_target,forward_bytes_sent,forward_messages_sent,reverse_bytes_requested,reverse_bytes_received,reverse_messages_received,target_duration_s,status,target_fwd_packets,target_bwd_packets,exact_bwd_count_feasible_with_current_server,fwd_actual_min,fwd_actual_max,fwd_actual_mean,fwd_actual_std,bwd_planned_min,bwd_planned_max
+0,52152,443,6,0.0,1737,275,11,32464,2862,3,113.493805,error: [Errno 32] Broken pipe,34,75,False,0,275,51.088235294117645,100.27941800578682,0,1430

@@ -1,0 +1,10 @@
+Per fermare in modo sicuro:
+
+touch optimizer_state/<nome_test>/STOP
+
+Esempio:
+
+touch optimizer_state/test5/STOP
+
+Il trial corrente viene completato e lo stato rimane riprendibile.
+Per ripartire, rimuovi il file STOP e rilancia con --resume.

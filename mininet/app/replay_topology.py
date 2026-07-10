@@ -14,6 +14,49 @@ from mininet.node import OVSSwitch
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
 from mininet.link import TCLink
+from mininet.clean import cleanup
+import subprocess
+import re
+
+
+def cleanup_mininet_state():
+    """Pulisce stato residuo Mininet/OVS prima e dopo il replay.
+
+    Utile quando una run precedente termina con eccezione e lascia veth come
+    sw1-mon/sw1-m, bridge OVS o processi Mininet ancora vivi.
+    """
+    info("*** Cleanup stato Mininet/OVS precedente\n")
+
+    # Cleanup ufficiale Mininet: bridge, controller, namespace e processi comuni.
+    try:
+        cleanup()
+    except Exception as exc:
+        info(f"*** Warning: cleanup() Mininet fallito: {exc}\n")
+
+    # Cleanup aggiuntivo per interfacce con nomi custom generate da short_switch_intf().
+    # Esempi: sw1-mon, sw1-m, sw2-gw, sw3-pr, sw4-h12.
+    try:
+        result = subprocess.run(
+            ["ip", "-o", "link", "show"],
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+        for line in result.stdout.splitlines():
+            match = re.match(r"\d+:\s+([^:@]+)", line)
+            if not match:
+                continue
+            intf = match.group(1)
+            if re.match(r"^sw\d+-(mon|m|gw|pr|h\d+)$", intf):
+                subprocess.run(
+                    ["ip", "link", "delete", intf],
+                    check=False,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+    except Exception as exc:
+        info(f"*** Warning: cleanup interfacce custom fallito: {exc}\n")
+
 
 
 def adapt_csv_columns(csv_file, output_file='/tmp/flows_adapted.csv'):
@@ -945,6 +988,10 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
         max_subnets: numero massimo di sottoreti da creare
         implementation: tipo di implementazione client/server da usare (scapy_burst, tcp_simple, flow_emulator)
     """
+    cleanup_mininet_state()
+    net = None
+    tcpdump_proc = None
+
     # Estrae il nome base dal CSV per generare file PCAP con nome dinamico
     flow_name = os.path.splitext(os.path.basename(csv_file))[0]
     
@@ -963,97 +1010,119 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
          f"{stats.get('client_subnets', 0)} subnet client, "
          f"{stats.get('total_flows', 0)} flussi\n")
     
-    # Crea rete
-    net, host_map, probe, network_info = create_network_from_topology(topology, max_subnets)
+    try:
+        # Crea rete
+        net, host_map, probe, network_info = create_network_from_topology(topology, max_subnets)
     
-    # Avvia rete
-    info("*** Avvio rete\n")
-    net.start()
+        # Avvia rete
+        info("*** Avvio rete\n")
+        net.start()
 
-    # Mininet può interpretare male alcuni prefissi /32: applicali esplicitamente.
-    configure_interface_addresses(network_info)
+        # Mininet può interpretare male alcuni prefissi /32: applicali esplicitamente.
+        configure_interface_addresses(network_info)
     
-    # Disabilita IPv6 per forzare IPv4
-    disable_ipv6(net, host_map, probe, router=network_info.get('router'))
+        # Disabilita IPv6 per forzare IPv4
+        disable_ipv6(net, host_map, probe, router=network_info.get('router'))
     
-    # Attendi che IPv6 sia completamente disabilitato
-    info("*** Attesa disabilitazione completa IPv6...\n")
-    time.sleep(2)
-    
-    # Configura switch, routing e probe monitoring secondo la topologia JSON
-    configure_switches_standalone(net)
-    configure_l3_routing(network_info)
-       
-    # Avvia server
-    start_servers(net, host_map, implementation)
-    
-    # Con molti host, serve più tempo perché server + switch siano pronti
-    info("*** Attesa inizializzazione server e popolamento MAC table...\n")
-    time.sleep(5)  # Tempo aggiuntivo per server
-    
-    # Usa pingall per popolare completamente ARP/MAC tables
-    # Con molti host questo può richiedere tempo, limita il numero
-    info("*** Popolamento tabelle ARP/MAC con ping di connettività\n")
-    # Pingall completo solo per topologie piccole (<50 host)
-    if len(host_map) < 15:
-        net.pingAll()
-    else:
-        # Per topologie grandi, ping solo tra host che devono comunicare
-        # Almeno testa connettività base
-        info("  - Topologia grande: ping campionamento limitato\n")
-        hosts_list = list(host_map.values())
-        for i in range(min(10, len(hosts_list)-1)):
-            hosts_list[i].cmd(f'ping -c 1 -W 1 {hosts_list[i+1].IP()} > /dev/null 2>&1')
+        # Attendi che IPv6 sia completamente disabilitato
+        info("*** Attesa disabilitazione completa IPv6...\n")
         time.sleep(2)
     
-    # Estrae il nome base dal CSV originale prima di adattarlo
-    # (serve per trovare i file di configurazione)
-    # Nota: flow_name già estratto all'inizio della funzione
+        # Configura switch, routing e probe monitoring secondo la topologia JSON
+        configure_switches_standalone(net)
+        configure_l3_routing(network_info)
+       
+        # Avvia server
+        start_servers(net, host_map, implementation)
     
-    # Adatta il CSV per compatibilità con client_scapy_burst_optimized.py
-    adapted_csv = adapt_csv_columns(csv_file)
+        # Con molti host, serve più tempo perché server + switch siano pronti
+        info("*** Attesa inizializzazione server e popolamento MAC table...\n")
+        time.sleep(5)  # Tempo aggiuntivo per server
+    
+        # Usa pingall per popolare completamente ARP/MAC tables
+        # Con molti host questo può richiedere tempo, limita il numero
+        info("*** Popolamento tabelle ARP/MAC con ping di connettività\n")
+        # Pingall completo solo per topologie piccole (<50 host)
+        if len(host_map) < 15:
+            net.pingAll()
+        else:
+            # Per topologie grandi, ping solo tra host che devono comunicare
+            # Almeno testa connettività base
+            info("  - Topologia grande: ping campionamento limitato\n")
+            hosts_list = list(host_map.values())
+            for i in range(min(10, len(hosts_list)-1)):
+                hosts_list[i].cmd(f'ping -c 1 -W 1 {hosts_list[i+1].IP()} > /dev/null 2>&1')
+            time.sleep(2)
+    
+        # Estrae il nome base dal CSV originale prima di adattarlo
+        # (serve per trovare i file di configurazione)
+        # Nota: flow_name già estratto all'inizio della funzione
+    
+        # Adatta il CSV per compatibilità con client_scapy_burst_optimized.py
+        adapted_csv = adapt_csv_columns(csv_file)
 
-    #Sleep per far terminare tutti i ping
-    info("*** Attesa per completamento ping...\n")
-    time.sleep(10)
+        #Sleep per far terminare tutti i ping
+        info("*** Attesa per completamento ping...\n")
+        time.sleep(10)
 
-    info("*** Attivo il probe...\n")
-    # Configura probe monitoring: OVS mirroring + tcpdump
-    # La funzione restituisce il processo tcpdump per cleanup successivo
-    tcpdump_proc = configure_probe_monitoring(topology, probe, network_info)
+        info("*** Attivo il probe...\n")
+        # Configura probe monitoring: OVS mirroring + tcpdump
+        # La funzione restituisce il processo tcpdump per cleanup successivo
+        tcpdump_proc = configure_probe_monitoring(topology, probe, network_info)
     
-    # Genera flows dinamicamente dagli IP effettivamente creati e dal CSV ADATTATO
-    # Ignora i flows hardcoded nella topologia JSON (contengono IP obsoleti)
-    info("*** Generazione flows da CSV e host creati\n")
-    flows = generate_flows_from_csv(adapted_csv, host_map, topology)
+        # Genera flows dinamicamente dagli IP effettivamente creati e dal CSV ADATTATO
+        # Ignora i flows hardcoded nella topologia JSON (contengono IP obsoleti)
+        info("*** Generazione flows da CSV e host creati\n")
+        flows = generate_flows_from_csv(adapted_csv, host_map, topology)
     
-    # Avvia traffico (passa flow_name dal CSV originale)
-    if flows:
-        start_traffic_flows(net, host_map, flows, adapted_csv, duration, base_name=flow_name, implementation=implementation)
-    else:
-        info("*** ATTENZIONE: Nessun flusso valido trovato!\n")
-        info("    Verifica che il CSV contenga IP presenti nella topologia\n")
+        # Avvia traffico (passa flow_name dal CSV originale)
+        if flows:
+            start_traffic_flows(net, host_map, flows, adapted_csv, duration, base_name=flow_name, implementation=implementation)
+        else:
+            info("*** ATTENZIONE: Nessun flusso valido trovato!\n")
+            info("    Verifica che il CSV contenga IP presenti nella topologia\n")
     
-    # Attendi o apri CLI
-    if duration > 0:
-        info(f"*** Esecuzione per {duration} secondi\n")
-        time.sleep(duration)
+        # Attendi o apri CLI
+        if duration > 0:
+            info(f"*** Esecuzione per {duration} secondi\n")
+            time.sleep(duration)
         
-        info("*** Cattura traffico completata\n")
-    else:
-        info("*** Modalità interattiva - usa 'exit' per terminare\n")
-        CLI(net)
+            info("*** Cattura traffico completata\n")
+        else:
+            info("*** Modalità interattiva - usa 'exit' per terminare\n")
+            CLI(net)
     
-    # Ferma packet capture
-    if tcpdump_proc:
-        info("*** Arresto packet capture\n")
-        tcpdump_proc.terminate()
-        tcpdump_proc.wait()
-        time.sleep(0.5)
+        # Ferma packet capture
+        if tcpdump_proc:
+            info("*** Arresto packet capture\n")
+            tcpdump_proc.terminate()
+            tcpdump_proc.wait()
+            time.sleep(0.5)
     
-    # Cleanup
-    info("*** Arresto rete\n")
-    net.stop()
+        # Cleanup
+        info("*** Arresto rete\n")
+        net.stop()
+
+    finally:
+        if tcpdump_proc:
+            try:
+                info("*** Arresto packet capture\n")
+                tcpdump_proc.terminate()
+                tcpdump_proc.wait(timeout=5)
+            except Exception:
+                try:
+                    tcpdump_proc.kill()
+                except Exception:
+                    pass
+
+        if net is not None:
+            try:
+                info("*** Arresto rete\n")
+                net.stop()
+            except Exception as exc:
+                info(f"*** Warning: net.stop() fallito: {exc}\n")
+
+        cleanup_mininet_state()
 
 
 def main():

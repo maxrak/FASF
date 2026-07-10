@@ -12,6 +12,7 @@ services:
       - ./shared/flows_params:/app/flows_params
       - ./shared/topologies:/app/topologies
       - ./shared/results:/results
+      - ./shared/optimizer_state:/optimizer_state
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -31,8 +32,11 @@ services:
       - ./shared/flows_params:/app/flows_params
       - ./shared/topologies:/app/topologies
       - ./shared/results:/app/results
-
+      - ./shared/optimizer_state:/app/optimizer_state
   optimizer:
     build: ./optimizer
     volumes:
+      - ./optimizer/app:/app
+      - ./shared:/shared
+      - ./shared/optimizer_state:/app/optimizer_state
       - ./shared/results:/results

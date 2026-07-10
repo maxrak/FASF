@@ -4,7 +4,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends graphviz \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir pandas numpy pyvis
+RUN pip install --no-cache-dir pandas numpy pyvis matplotlib
 
 WORKDIR /app
 

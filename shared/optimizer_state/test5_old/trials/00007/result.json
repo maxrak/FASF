@@ -1,0 +1,143 @@
+{
+  "algorithm": "random-host",
+  "duration_s": 150.14909410476685,
+  "error": null,
+  "improved": false,
+  "params": {
+    "global.chunk_size": 2816,
+    "global.close_delay_ms": 327.9914235273385,
+    "global.initial_delay_s": 0.6162606739131259,
+    "global.post_send_wait": 0.4375693710452876,
+    "global.recv_buffer": 63248,
+    "global.reverse_chunk_size": 3136,
+    "global.send_buffer": null,
+    "global.tcp_nodelay": true,
+    "models.burst_factor": 9.138840255964745,
+    "models.burst_probability": 0.6665770811531697,
+    "models.bwd_payload_mean_scale": 1.8478187173719387,
+    "models.bwd_payload_std_scale": 1.3471226296422012,
+    "models.bwd_request_strategy": "auto",
+    "models.duration_scale": 0.6496664019465372,
+    "models.fwd_iat_scale": 1.0500507860458261,
+    "models.fwd_payload_mean_scale": 2.5,
+    "models.fwd_payload_std_scale": 2.272829515324516,
+    "models.iat_scale": 2.754996462330832,
+    "models.iat_std_scale": 1.434263519848143,
+    "models.idle_threshold_ms": 4.364737242002073,
+    "models.jitter_fraction": 0.16268341215674229,
+    "models.payload_mean_scale": 1.51224866356672,
+    "models.payload_std_scale": 0.7706442828891377,
+    "models.server_delay_scale": 0.8736353815090607
+  },
+  "score": 11763.121863484206,
+  "status": "ok",
+  "timestamp": 1783686604.039263,
+  "top_features": [
+    {
+      "component": 1554134.052714409,
+      "feature": "Fwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 1554134.052714409,
+      "weight": 2.0
+    },
+    {
+      "component": 10531.917501812914,
+      "feature": "Bwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 10531.917501812914,
+      "weight": 2.0
+    },
+    {
+      "component": 175.25963718820861,
+      "feature": "Total Bwd packets",
+      "group": "conteggi pacchetti",
+      "metric": 175.25963718820861,
+      "weight": 15.0
+    },
+    {
+      "component": 899.4313586653188,
+      "feature": "Bwd IAT Min",
+      "group": "durata/timing",
+      "metric": 899.4313586653188,
+      "weight": 2.5
+    },
+    {
+      "component": 117.29691876750701,
+      "feature": "Total Fwd Packet",
+      "group": "conteggi pacchetti",
+      "metric": 117.29691876750701,
+      "weight": 15.0
+    },
+    {
+      "component": 568.8542871048442,
+      "feature": "Active Std",
+      "group": "durata/timing",
+      "metric": 568.8542871048442,
+      "weight": 2.5
+    },
+    {
+      "component": 675.2142857142857,
+      "feature": "Fwd Bytes/Bulk Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 675.2142857142857,
+      "weight": 2.0
+    },
+    {
+      "component": 208.1380595147223,
+      "feature": "Bwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 208.1380595147223,
+      "weight": 6.0
+    },
+    {
+      "component": 486.5174403487211,
+      "feature": "Active Max",
+      "group": "durata/timing",
+      "metric": 486.5174403487211,
+      "weight": 2.5
+    },
+    {
+      "component": 166.65975814664878,
+      "feature": "Flow Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 166.65975814664878,
+      "weight": 6.0
+    },
+    {
+      "component": 159.70288064720202,
+      "feature": "Fwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 159.70288064720202,
+      "weight": 6.0
+    },
+    {
+      "component": 326.99403667437065,
+      "feature": "Active Mean",
+      "group": "durata/timing",
+      "metric": 326.99403667437065,
+      "weight": 2.5
+    },
+    {
+      "component": 87.32942456069954,
+      "feature": "Bwd IAT Total",
+      "group": "durata/timing",
+      "metric": 87.32942456069954,
+      "weight": 7.5
+    },
+    {
+      "component": 314.2756636892294,
+      "feature": "Bwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 314.2756636892294,
+      "weight": 2.0
+    },
+    {
+      "component": 225.16953702743416,
+      "feature": "Fwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 225.16953702743416,
+      "weight": 2.0
+    }
+  ],
+  "trial_no": 7
+}

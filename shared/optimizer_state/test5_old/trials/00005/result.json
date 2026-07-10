@@ -1,0 +1,143 @@
+{
+  "algorithm": "random-host",
+  "duration_s": 149.76162600517273,
+  "error": null,
+  "improved": false,
+  "params": {
+    "global.chunk_size": 832,
+    "global.close_delay_ms": 461.6456388747187,
+    "global.initial_delay_s": 0.837634625848306,
+    "global.post_send_wait": 0.31291843978599676,
+    "global.recv_buffer": 60161,
+    "global.reverse_chunk_size": 384,
+    "global.send_buffer": 211465,
+    "global.tcp_nodelay": false,
+    "models.burst_factor": 4.77457871604276,
+    "models.burst_probability": 0.6203095835956165,
+    "models.bwd_payload_mean_scale": 1.2787651068742247,
+    "models.bwd_payload_std_scale": null,
+    "models.bwd_request_strategy": "auto",
+    "models.duration_scale": 1.8039179451150897,
+    "models.fwd_iat_scale": 0.31218964324952886,
+    "models.fwd_payload_mean_scale": 0.284872050097729,
+    "models.fwd_payload_std_scale": 0.6896784500005854,
+    "models.iat_scale": 2.1083174104836484,
+    "models.iat_std_scale": 1.1219619777808818,
+    "models.idle_threshold_ms": 404.07069017719965,
+    "models.jitter_fraction": 0.01552406491130337,
+    "models.payload_mean_scale": 1.205628608014101,
+    "models.payload_std_scale": 0.3335308322242899,
+    "models.server_delay_scale": 1.8356213612106362
+  },
+  "score": 10021.604594258464,
+  "status": "ok",
+  "timestamp": 1783686302.3252661,
+  "top_features": [
+    {
+      "component": 1331541.7256011313,
+      "feature": "Fwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 1331541.7256011313,
+      "weight": 2.0
+    },
+    {
+      "component": 1127.973690856044,
+      "feature": "Bwd IAT Min",
+      "group": "durata/timing",
+      "metric": 1127.973690856044,
+      "weight": 2.5
+    },
+    {
+      "component": 180.71428571428572,
+      "feature": "Total Bwd packets",
+      "group": "conteggi pacchetti",
+      "metric": 180.71428571428572,
+      "weight": 15.0
+    },
+    {
+      "component": 118.05438842203547,
+      "feature": "Total Fwd Packet",
+      "group": "conteggi pacchetti",
+      "metric": 118.05438842203547,
+      "weight": 15.0
+    },
+    {
+      "component": 227.53897061050992,
+      "feature": "Bwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 227.53897061050992,
+      "weight": 6.0
+    },
+    {
+      "component": 672.4285714285714,
+      "feature": "Fwd Bytes/Bulk Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 672.4285714285714,
+      "weight": 2.0
+    },
+    {
+      "component": 171.29291414567822,
+      "feature": "Flow Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 171.29291414567822,
+      "weight": 6.0
+    },
+    {
+      "component": 142.27563296870449,
+      "feature": "Fwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 142.27563296870449,
+      "weight": 6.0
+    },
+    {
+      "component": 94.96518702465649,
+      "feature": "Bwd IAT Total",
+      "group": "durata/timing",
+      "metric": 94.96518702465649,
+      "weight": 7.5
+    },
+    {
+      "component": 318.27876377187084,
+      "feature": "Bwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 318.27876377187084,
+      "weight": 2.0
+    },
+    {
+      "component": 62.09337551994698,
+      "feature": "Bwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 62.09337551994698,
+      "weight": 7.5
+    },
+    {
+      "component": 209.92756797546477,
+      "feature": "Fwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 209.92756797546477,
+      "weight": 2.0
+    },
+    {
+      "component": 164.8343902536623,
+      "feature": "Flow IAT Min",
+      "group": "durata/timing",
+      "metric": 164.8343902536623,
+      "weight": 2.5
+    },
+    {
+      "component": 127.33333333333333,
+      "feature": "Subflow Bwd Packets",
+      "group": "conteggi pacchetti",
+      "metric": 127.33333333333333,
+      "weight": 3.0
+    },
+    {
+      "component": 48.642187424434226,
+      "feature": "Fwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 48.642187424434226,
+      "weight": 7.5
+    }
+  ],
+  "trial_no": 5
+}

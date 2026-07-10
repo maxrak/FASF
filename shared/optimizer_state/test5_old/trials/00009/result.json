@@ -1,0 +1,143 @@
+{
+  "algorithm": "random-host",
+  "duration_s": 150.09628987312317,
+  "error": null,
+  "improved": false,
+  "params": {
+    "global.chunk_size": 3008,
+    "global.close_delay_ms": 77.41970894411212,
+    "global.initial_delay_s": 0.5899676385325443,
+    "global.post_send_wait": 0.4343985434654023,
+    "global.recv_buffer": 21685,
+    "global.reverse_chunk_size": 2240,
+    "global.send_buffer": null,
+    "global.tcp_nodelay": true,
+    "models.burst_factor": 10.0,
+    "models.burst_probability": 0.8,
+    "models.bwd_payload_mean_scale": 1.2723836076583885,
+    "models.bwd_payload_std_scale": 1.3689192658198057,
+    "models.bwd_request_strategy": "auto",
+    "models.duration_scale": 1.4038085690945157,
+    "models.fwd_iat_scale": 1.2624026226190788,
+    "models.fwd_payload_mean_scale": 2.5,
+    "models.fwd_payload_std_scale": 0.12906692322297475,
+    "models.iat_scale": 1.8735866630907785,
+    "models.iat_std_scale": 0.0,
+    "models.idle_threshold_ms": 5.815099930435113,
+    "models.jitter_fraction": 0.24299755788998428,
+    "models.payload_mean_scale": 0.9813397383317767,
+    "models.payload_std_scale": 0.0,
+    "models.server_delay_scale": 4.281154114511731
+  },
+  "score": 11455.409104474707,
+  "status": "ok",
+  "timestamp": 1783686905.4519258,
+  "top_features": [
+    {
+      "component": 1515117.336107125,
+      "feature": "Fwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 1515117.336107125,
+      "weight": 2.0
+    },
+    {
+      "component": 10473.598978352926,
+      "feature": "Bwd Bulk Rate Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 10473.598978352926,
+      "weight": 2.0
+    },
+    {
+      "component": 159.73809523809524,
+      "feature": "Total Bwd packets",
+      "group": "conteggi pacchetti",
+      "metric": 159.73809523809524,
+      "weight": 15.0
+    },
+    {
+      "component": 670.727072011837,
+      "feature": "Bwd IAT Min",
+      "group": "durata/timing",
+      "metric": 670.727072011837,
+      "weight": 2.5
+    },
+    {
+      "component": 104.0908029878618,
+      "feature": "Total Fwd Packet",
+      "group": "conteggi pacchetti",
+      "metric": 104.0908029878618,
+      "weight": 15.0
+    },
+    {
+      "component": 184.1488232230383,
+      "feature": "Bwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 184.1488232230383,
+      "weight": 6.0
+    },
+    {
+      "component": 526.6428571428571,
+      "feature": "Fwd Bytes/Bulk Avg",
+      "group": "dimensioni/lunghezze",
+      "metric": 526.6428571428571,
+      "weight": 2.0
+    },
+    {
+      "component": 147.16291278260465,
+      "feature": "Flow Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 147.16291278260465,
+      "weight": 6.0
+    },
+    {
+      "component": 140.8966911249915,
+      "feature": "Fwd Packets/s",
+      "group": "conteggi pacchetti",
+      "metric": 140.8966911249915,
+      "weight": 6.0
+    },
+    {
+      "component": 88.79612900856317,
+      "feature": "Bwd IAT Total",
+      "group": "durata/timing",
+      "metric": 88.79612900856317,
+      "weight": 7.5
+    },
+    {
+      "component": 286.76538832575795,
+      "feature": "Bwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 286.76538832575795,
+      "weight": 2.0
+    },
+    {
+      "component": 203.47988329211017,
+      "feature": "Fwd Header Length",
+      "group": "dimensioni/lunghezze",
+      "metric": 203.47988329211017,
+      "weight": 2.0
+    },
+    {
+      "component": 52.44842526705052,
+      "feature": "Bwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 52.44842526705052,
+      "weight": 7.5
+    },
+    {
+      "component": 51.22639979822368,
+      "feature": "Fwd Packet Length Mean",
+      "group": "conteggi pacchetti",
+      "metric": 51.22639979822368,
+      "weight": 7.5
+    },
+    {
+      "component": 125.26666666666668,
+      "feature": "Subflow Bwd Packets",
+      "group": "conteggi pacchetti",
+      "metric": 125.26666666666668,
+      "weight": 3.0
+    }
+  ],
+  "trial_no": 9
+}

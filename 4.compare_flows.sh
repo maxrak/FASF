@@ -84,4 +84,6 @@ echo "📂 File INPUT FLow: shared/${ORIG_FILE}"
 echo "📝 File Output FLow: shared/${REGEN_FILE}.csv"
 echo "📂 Folder Output Comparison result: shared/${REPORT_DIR}"
 
-docker compose run --rm evaluator python flow_compare_tool.py ${ORIG_FILE} ${REGEN_FILE} -o ${REPORT_DIR}
+#docker compose run --rm evaluator python flow_compare_tool.py ${ORIG_FILE} ${REGEN_FILE} -o ${REPORT_DIR}
+docker compose run --rm evaluator python flow_compare_data.py ${ORIG_FILE} ${REGEN_FILE} -o ${REPORT_DIR}
+docker compose run --rm evaluator python flow_compare_html.py ${REPORT_DIR}/report_data.json -o ${REPORT_DIR}/report.html

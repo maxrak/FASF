@@ -37,7 +37,7 @@ echo "Flusso: $FLOW_NAME"
 echo "Implementazione: $IMPLEMENTATION"
 echo "======================="
 
-docker compose run --rm mininet python generate_initial_params.py input_flows/$CSV_FILE.csv flows_params/
+docker compose run --rm mininet python generate_initial_params.py input_flows/$FLOW_NAME.csv flows_params/
 docker compose run --rm mininet python3 /app/replay_topology.py \
     topologies/$FLOW_NAME.json \
     60 \
