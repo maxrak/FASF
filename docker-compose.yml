@@ -37,6 +37,5 @@ services:
     build: ./optimizer
     volumes:
       - ./optimizer/app:/app
-      - ./shared:/shared
       - ./shared/optimizer_state:/app/optimizer_state
-      - ./shared/results:/results
+      - ./shared/results:/app/results

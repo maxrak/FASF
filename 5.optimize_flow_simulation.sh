@@ -107,8 +107,8 @@ fi
 #mkdir -p optimizer_state shared/results shared/flows_params
 STATE_DIR="optimizer_state/"
 STOP_FILE="$STATE_DIR/STOP"
-REPORT_PATH_HOST="shared/results/$TEST_NAME/report_data.json"
-REPORT_PATH_CONTAINER="shared/results/$TEST_NAME/report_data.json"
+REPORT_PATH_HOST="results/$TEST_NAME/report_data.json"
+REPORT_PATH_CONTAINER="results/$TEST_NAME/report_data.json"
 
 compose_optimizer() {
   docker compose run --rm -T \
