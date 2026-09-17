@@ -1,0 +1,11 @@
+{
+  "num_trials": 30,
+  "baseline_score": 17.337235540925032,
+  "last_score": 17.163557671915353,
+  "best_score": 16.78376507135021,
+  "best_trial_id": 5,
+  "best_trial_index": 5,
+  "improvement_abs_vs_baseline": 0.5534704695748225,
+  "improvement_pct_vs_baseline": 3.192380170808315,
+  "lower_score_is_better": true
+}

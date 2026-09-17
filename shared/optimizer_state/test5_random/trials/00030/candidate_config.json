@@ -1,0 +1,55 @@
+{
+  "flows": {
+    "0": {
+      "iat_scale": 1.0,
+      "payload_std_scale": 1.0,
+      "tcp_nodelay": true
+    },
+    "192.168.1.10:52152->192.168.1.20:443": {
+      "bwd_payload_std_scale": 1.2,
+      "reverse_chunk_size": 512
+    }
+  },
+  "global": {
+    "chunk_size": 2752,
+    "close_delay_ms": 234.29422575158907,
+    "connect_timeout": 10.0,
+    "initial_delay_s": 0.0,
+    "max_parallel_flows": 128,
+    "mss_hint": null,
+    "post_send_wait": 0.2929956590032847,
+    "recv_buffer": 36474,
+    "reverse_chunk_size": 3392,
+    "seed": 42,
+    "send_buffer": 26046,
+    "socket_timeout": 30.0,
+    "tcp_nodelay": true,
+    "use_tcp_buffers_from_init_win": true,
+    "use_tcp_maxseg_from_seg_size_min": true
+  },
+  "models": {
+    "burst_factor": 2.519840029359057,
+    "burst_probability": 0.41086764932732883,
+    "bwd_payload_mean_scale": 1.3072687247047843,
+    "bwd_payload_std_scale": 1.7672415571155606,
+    "bwd_request_strategy": "auto",
+    "duration_scale": 0.6402356548249601,
+    "fwd_iat_scale": 3.0,
+    "fwd_payload_mean_scale": 0.41063969789980576,
+    "fwd_payload_std_scale": 0.8885227481238074,
+    "iat_scale": 1.152296067547714,
+    "iat_std_scale": 1.389617067507575,
+    "idle_threshold_ms": 2.8983227346002467,
+    "jitter_fraction": 0.02695171300121331,
+    "packet_size_model": "csv_stats",
+    "payload_max_scale": 1.0,
+    "payload_mean_scale": 0.25,
+    "payload_min_scale": 1.0,
+    "payload_std_scale": 1.0935628428300457,
+    "server_delay_scale": 0.1,
+    "shuffle_payload_sizes": true,
+    "use_active_idle": true,
+    "use_flow_iat_fallback": true,
+    "use_fwd_iat": true
+  }
+}

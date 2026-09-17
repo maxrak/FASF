@@ -22,7 +22,7 @@ def run_optuna_tpe(
 
     storage_path = runner.state_dir / 'optuna.db'
     storage = f'sqlite:///{storage_path}'
-    sampler = optuna.samplers.TPESampler(seed=seed, multivariate=True, group=True)
+    sampler = optuna.samplers.TPESampler(seed=seed, multivariate=True, group=True, n_startup_trials=5)
     study = optuna.create_study(
         study_name=f'traffic-optimizer-{runner.test_name}',
         direction='minimize',

@@ -121,6 +121,15 @@ def plot_progress(path: Path, ids: List[int], scores: List[float], best_so_far: 
     plt.figure(figsize=(11, 6))
     plt.plot(ids, scores, marker="o", linewidth=1, label="Score trial")
     plt.plot(ids, best_so_far, marker="", linewidth=2.5, label="Best so far")
+    
+    # Imposta limiti assi seguendo best practice:
+    # - origine a 0 per entrambi gli assi
+    # - curve occupano circa 3/4 del grafico
+    max_score = max(max(scores), max(best_so_far))
+    max_id = max(ids)
+    plt.xlim(0, max_id * 1.33)  # curve a ~3/4 sull'asse x
+    plt.ylim(0, max_score * 1.33)  # curve a ~3/4 sull'asse y
+    
     plt.xlabel("Trial")
     plt.ylabel("Score, più basso è meglio")
     plt.title(title)

@@ -1,0 +1,174 @@
+#!/usr/bin/env python3
+"""
+Generate a horizontal bar chart with the mean relative error of the 24 key
+features used by the objective function.
+
+Usage:
+    python3 plot_key_feature_errors.py shared/results/test5/report_data.json
+
+Optional:
+    python3 plot_key_feature_errors.py report_data.json --out key_feature_errors.png --threshold 20
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import matplotlib.pyplot as plt
+
+KEY_FEATURES = [
+    "Flow Duration",
+    "Total Length of Fwd Packet",
+    "Fwd Packet Length Max",
+    "Fwd Packet Length Min",
+    "Bwd Packet Length Max",
+    "Bwd Packet Length Min",
+    "Flow Bytes/s",
+    #"Flow IAT Min",
+    #"Fwd IAT Min",
+    #"Bwd IAT Min",
+    "Fwd URG Flags",
+    "Bwd URG Flags",
+    "Fwd RST Flags",
+    "Bwd RST Flags",
+    "Packet Length Std",
+    "FIN Flag Count",
+    "SYN Flag Count",
+    "CWR Flag Count",
+    "ECE Flag Count",
+    "Down/Up Ratio",
+    #"Bwd Init Win Bytes",
+    "Bwd Seg Size Min",
+    "Fwd TCP Retrans. Count",
+    "Bwd TCP Retrans. Count",
+]
+
+ABBREVIATIONS = {
+    "Flow Duration": "Flow duration",
+    "Total Length of Fwd Packet": "Fwd bytes",
+    "Fwd Packet Length Max": "Fwd pkt max",
+    "Fwd Packet Length Min": "Fwd pkt min",
+    "Bwd Packet Length Max": "Bwd pkt max",
+    "Bwd Packet Length Min": "Bwd pkt min",
+    "Flow Bytes/s": "Flow bytes/s",
+    "Flow IAT Min": "Flow IAT min",
+    "Fwd IAT Min": "Fwd IAT min",
+    "Bwd IAT Min": "Bwd IAT min",
+    "Fwd URG Flags": "Fwd URG",
+    "Bwd URG Flags": "Bwd URG",
+    "Fwd RST Flags": "Fwd RST",
+    "Bwd RST Flags": "Bwd RST",
+    "Packet Length Std": "Pkt length std",
+    "FIN Flag Count": "FIN count",
+    "SYN Flag Count": "SYN count",
+    "CWR Flag Count": "CWR count",
+    "ECE Flag Count": "ECE count",
+    "Down/Up Ratio": "Down/up ratio",
+    "Bwd Init Win Bytes": "Bwd init win",
+    "Bwd Seg Size Min": "Bwd seg min",
+    "Fwd TCP Retrans. Count": "Fwd retrans",
+    "Bwd TCP Retrans. Count": "Bwd retrans",
+}
+
+
+def load_errors(report_path: Path) -> List[Dict[str, Any]]:
+    with report_path.open("r", encoding="utf-8") as f:
+        report = json.load(f)
+
+    summary = report.get("summary", [])
+    by_feature: Dict[str, Optional[float]] = {}
+
+    for item in summary:
+        feature = item.get("feature")
+        if feature in KEY_FEATURES:
+            value = item.get("mean_relative_error_pct")
+            by_feature[feature] = None if value is None else float(value)
+
+    rows = []
+    for feature in KEY_FEATURES:
+        value = by_feature.get(feature)
+        rows.append({
+            "feature": feature,
+            "label": ABBREVIATIONS.get(feature, feature),
+            "error": 0.0 if value is None else value,
+            "missing_or_null": value is None or feature not in by_feature,
+        })
+
+    rows.sort(key=lambda r: (r["error"], r["label"]))
+    return rows
+
+
+def bar_color(value: float, missing_or_null: bool) -> str:
+    if missing_or_null:
+        return "#9e9e9e"
+    if value <= 10:
+        return "#2e7d32"
+    if value <= 20:
+        return "#f9a825"
+    if value <= 40:
+        return "#ef6c00"
+    return "#c62828"
+
+
+def plot_errors(rows: List[Dict[str, Any]], output_path: Path, threshold: float) -> None:
+    labels = [r["label"] for r in rows]
+    values = [r["error"] for r in rows]
+    colors = [bar_color(r["error"], r["missing_or_null"]) for r in rows]
+
+    height = max(6.5, 0.32 * len(rows))
+    fig, ax = plt.subplots(figsize=(8.0, height))
+
+    y_positions = range(len(rows))
+    ax.barh(y_positions, values, color=colors)
+    ax.set_yticks(list(y_positions))
+    ax.set_yticklabels(labels, fontsize=8)
+    ax.invert_yaxis()
+
+    ax.axvline(threshold, linestyle="--", linewidth=1.0, color="black")
+    ax.text(threshold, -0.8, f"{threshold:g}%", ha="center", va="bottom", fontsize=8)
+
+    ax.set_xlabel("Mean relative error (%)")
+    ax.set_title("Mean relative error of the objective-function features")
+    ax.grid(axis="x", linestyle=":", linewidth=0.6, alpha=0.7)
+
+    max_value = max(values) if values else 0
+    ax.set_xlim(0, max(max_value * 1.15, threshold * 1.25, 5))
+
+    for y, value in zip(y_positions, values):
+        ax.text(value + max(ax.get_xlim()[1] * 0.01, 0.3), y, f"{value:.1f}", va="center", fontsize=7)
+
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+
+def write_csv(rows: List[Dict[str, Any]], csv_path: Path) -> None:
+    with csv_path.open("w", encoding="utf-8") as f:
+        f.write("feature,label,mean_relative_error_pct,missing_or_null\n")
+        for r in rows:
+            f.write(f'"{r["feature"]}","{r["label"]}",{r["error"]:.6f},{str(r["missing_or_null"]).lower()}\n')
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Plot mean relative errors of the key objective features.")
+    parser.add_argument("report", type=Path, help="Path to report_data.json generated by the comparison module.")
+    parser.add_argument("--out", type=Path, default=Path("key_feature_errors.png"), help="Output PNG path.")
+    parser.add_argument("--csv", type=Path, default=None, help="Optional CSV export path.")
+    parser.add_argument("--threshold", type=float, default=20.0, help="Reference threshold line in percent.")
+    args = parser.parse_args()
+
+    rows = load_errors(args.report)
+    plot_errors(rows, args.out, args.threshold)
+
+    csv_path = args.csv or args.out.with_suffix(".csv")
+    write_csv(rows, csv_path)
+
+    print(f"Saved figure: {args.out}")
+    print(f"Saved data:   {csv_path}")
+
+
+if __name__ == "__main__":
+    main()

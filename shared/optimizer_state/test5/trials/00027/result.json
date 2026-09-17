@@ -1,0 +1,128 @@
+{
+  "algorithm": "optuna-tpe-host",
+  "duration_s": 149.77368998527527,
+  "error": null,
+  "improved": false,
+  "params": {
+    "global.chunk_size": 3072,
+    "global.close_delay_ms": 14.86297067492033,
+    "global.initial_delay_s": 0.051063640244146294,
+    "global.post_send_wait": 0.6944849098104113,
+    "global.recv_buffer": null,
+    "global.reverse_chunk_size": 640,
+    "global.send_buffer": 7164,
+    "global.tcp_nodelay": true,
+    "models.burst_factor": 6.297381131412379,
+    "models.burst_probability": 0.5096463806115972,
+    "models.bwd_payload_mean_scale": null,
+    "models.bwd_payload_std_scale": 0.7201838453201561,
+    "models.bwd_request_strategy": "one_request_per_bwd_packet",
+    "models.duration_scale": 0.7131378369358907,
+    "models.fwd_iat_scale": 2.458774038560443,
+    "models.fwd_payload_mean_scale": null,
+    "models.fwd_payload_std_scale": 0.022611239461353655,
+    "models.iat_scale": 2.4873119451423684,
+    "models.iat_std_scale": 1.6583576517387306,
+    "models.idle_threshold_ms": 5.873950075001628,
+    "models.jitter_fraction": 0.1811919697427693,
+    "models.payload_mean_scale": 2.499733404752752,
+    "models.payload_std_scale": 2.190644088238967,
+    "models.server_delay_scale": 1.1183076471241682
+  },
+  "score": 10.067550909204602,
+  "status": "ok",
+  "timestamp": 1783874024.9246655,
+  "top_features": [
+    {
+      "component": 20.902553475417683,
+      "count": 7,
+      "feature": "Flow Duration",
+      "weight": 5.0
+    },
+    {
+      "component": 31.85715867374618,
+      "count": 7,
+      "feature": "Down/Up Ratio",
+      "weight": 2.5
+    },
+    {
+      "component": 25.70038433152028,
+      "count": 7,
+      "feature": "Packet Length Std",
+      "weight": 3.0
+    },
+    {
+      "component": 18.250359032087978,
+      "count": 7,
+      "feature": "Flow Bytes/s",
+      "weight": 4.0
+    },
+    {
+      "component": 14.551959514729717,
+      "count": 7,
+      "feature": "Total Length of Fwd Packet",
+      "weight": 5.0
+    },
+    {
+      "component": 14.285714285714286,
+      "count": 7,
+      "feature": "Fwd TCP Retrans. Count",
+      "weight": 2.0
+    },
+    {
+      "component": 8.747211692417173,
+      "count": 7,
+      "feature": "Bwd Packet Length Max",
+      "weight": 3.0
+    },
+    {
+      "component": 42.857142857142854,
+      "count": 7,
+      "feature": "FIN Flag Count",
+      "weight": 0.5
+    },
+    {
+      "component": 3.350102905252958,
+      "count": 7,
+      "feature": "Fwd Packet Length Max",
+      "weight": 3.0
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Fwd Packet Length Min",
+      "weight": 3.0
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Bwd Packet Length Min",
+      "weight": 3.0
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Fwd URG Flags",
+      "weight": 1.5
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Bwd URG Flags",
+      "weight": 1.5
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Fwd RST Flags",
+      "weight": 1.5
+    },
+    {
+      "component": 0.0,
+      "count": 7,
+      "feature": "Bwd RST Flags",
+      "weight": 1.5
+    }
+  ],
+  "trial_no": 27
+}

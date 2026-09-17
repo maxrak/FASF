@@ -54,3 +54,4 @@ echo "📂 Test Optimized: ${TEST_NAME}"
 echo "📂 Optimization Evaluation Report in dir: ${OUTPUT_DIR}"
 
 docker compose run --rm evaluator python plot_optimization.py /app/${OPTIMIZATION_STATE} --out-dir /app/${OUTPUT_DIR}
+docker compose run --rm evaluator python plot_key_feature_errors.py /app/results/test5/report_data.json --out /app/${OUTPUT_DIR}/${TEST_NAME}_keyfeatures
