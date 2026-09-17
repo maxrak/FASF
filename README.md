@@ -1,4 +1,4 @@
-# 🚀FASF - Flow Analyzer Simulation Framework
+# 🚀 FASF - Flow Analyzer Simulation Framework
 
 [![Docker](https://img.shields.io/badge/docker-ready-blue)]()
 [![Mininet](https://img.shields.io/badge/network-mininet-orange)]()
@@ -26,7 +26,7 @@
 
 # 🧠 Overview
 
-Framework per generazione traffico sintetico basato su CICFlowMeter con Mininet.
+Framework for synthetic traffic generation based on CICFlowMeter and Mininet.
 
 ---
 
@@ -48,7 +48,7 @@ project/
 ├── pcap/
 ├── features/
 ├── results/
-├── shared/
+└── shared/
 
 ---
 
@@ -62,42 +62,46 @@ project/
 
 # 🚀 Quick Start
 
+```bash
 docker-compose up --build
+```
 
 ---
 
 # 🔄 How It Works
 
-1. Optimizer genera parametri  
-2. Mininet genera traffico  
-3. Probe cattura PCAP  
-4. CICFlowMeter estrae feature  
-5. Evaluator calcola loss  
+1. The optimizer generates parameters
+2. Mininet generates traffic
+3. A probe captures PCAP files
+4. CICFlowMeter extracts features
+5. The evaluator computes the loss
 
 ---
 
 # 🧪 Advanced Usage
 
+```bash
 docker-compose run --rm mininet
+```
 
 ---
 
 # 📊 Outputs
 
-- pcap/capture.pcap
-- features/*.csv
-- results/loss.txt
+- `pcap/capture.pcap`
+- `features/*.csv`
+- `results/loss.txt`
 
 ---
 
 # 🎯 Use Cases
 
-- IDS testing  
-- ML dataset generation  
-- Network simulation  
+- IDS testing
+- ML dataset generation
+- Network simulation
 
 ---
 
 # 📌 Conclusion
 
-Framework completo per traffic synthesis e network emulation.
+A complete framework for traffic synthesis and network emulation.
