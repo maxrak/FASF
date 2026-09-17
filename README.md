@@ -1,4 +1,4 @@
-# 🚀 CICFlowMeter Traffic Synthesis Lab (Mininet Edition)
+# 🚀FASF - Flow Analyzer Simulation Framework
 
 [![Docker](https://img.shields.io/badge/docker-ready-blue)]()
 [![Mininet](https://img.shields.io/badge/network-mininet-orange)]()
