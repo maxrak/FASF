@@ -24,7 +24,7 @@ def setup_logger(server_ip=None, debug_enabled=True):
     ip_safe = server_ip.replace('.', '_').replace(':', '_')
     
     # Nome file log: server_{ip}.log
-    log_file = f"/results/server_{ip_safe}.log"
+    log_file = f"/results/tmp/server_{ip_safe}.log"
     
     # Configura logger
     logger = logging.getLogger(f'server_{ip_safe}')

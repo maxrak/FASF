@@ -26,10 +26,10 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     if not debug_enabled:
         logger = None
         return
-    os.makedirs("/results", exist_ok=True)
+    os.makedirs("/results/tmp", exist_ok=True)
     csv_basename = os.path.splitext(os.path.basename(csv_file))[0]
     ip_safe = ip_client.replace(".", "_").replace(":", "_")
-    log_file = f"/results/{csv_basename}_{ip_safe}_feature_aware.log"
+    log_file = f"/results/tmp/{csv_basename}_{ip_safe}_feature_aware.log"
     logger = logging.getLogger(f"client_feature_aware_{ip_safe}")
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
@@ -643,5 +643,5 @@ if __name__ == "__main__":
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
 
-    out = args.output or f"/results/bidir_dataset_{args.ip_client.replace('.', '_')}_{args.ip_server.replace('.', '_')}.csv"
+    out = args.output or f"/results/tmp/bidir_dataset_{args.ip_client.replace('.', '_')}_{args.ip_server.replace('.', '_')}.csv"
     start_client(args.csv_file, args.ip_client, args.ip_server, out, args.config_file, not args.no_debug)

@@ -59,7 +59,7 @@ def cleanup_mininet_state():
 
 
 
-def adapt_csv_columns(csv_file, output_file='/tmp/flows_adapted.csv'):
+def adapt_csv_columns(csv_file, output_file='/results/tmp/flows_adapted.csv'):
     """
     Adatta il CSV per client_scapy_burst_optimized.py
     Rinomina 'Src IP' -> 'Source IP' e 'Dst IP' -> 'Destination IP'
@@ -84,6 +84,11 @@ def adapt_csv_columns(csv_file, output_file='/tmp/flows_adapted.csv'):
         }
         
         df = df.rename(columns=column_mapping)
+        
+        # Crea la directory tmp se non esiste
+        import os
+        os.makedirs('/results/tmp', exist_ok=True)
+        
         df.to_csv(output_file, index=False)
         
         info(f"*** CSV adattato salvato in {output_file}\n")
@@ -1015,6 +1020,9 @@ def run_topology_replay(json_file, csv_file='/features/target.csv', duration=60,
     cleanup_mininet_state()
     net = None
     tcpdump_proc = None
+    
+    # Crea la directory results/tmp per i file intermedi
+    os.makedirs('/results/tmp', exist_ok=True)
 
     # Estrae il nome base dal CSV per generare file PCAP con nome dinamico
     flow_name = os.path.splitext(os.path.basename(csv_file))[0]

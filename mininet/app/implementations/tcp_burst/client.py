@@ -223,7 +223,7 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     os.makedirs('/results', exist_ok=True)
     csv_basename = os.path.splitext(os.path.basename(csv_file))[0]
     ip_safe = ip_client.replace('.', '_').replace(':', '_')
-    log_file = f"/results/{csv_basename}_{ip_safe}.log"
+    log_file = f"/results/tmp/{csv_basename}_{ip_safe}.log"
     logger = logging.getLogger(f'client_socket_{ip_client}')
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
@@ -244,7 +244,7 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     print(f"[+] Log debug salvato in: {log_file}")
 
 
-def start_client(csv_file, ip_client, ip_server, output="/results/burst_dataset.csv", config_file=None, debug=True):
+def start_client(csv_file, ip_client, ip_server, output="/results/tmp/burst_dataset.csv", config_file=None, debug=True):
     setup_logger(csv_file, ip_client, debug)
     if logger:
         logger.info(f"Avvio client socket: CSV={csv_file}, Client={ip_client}, Server={ip_server}")
@@ -295,5 +295,5 @@ if __name__ == "__main__":
             debug = False
         else:
             config_file = arg
-    output_file = f"/results/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
+    output_file = f"/results/tmp/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
     start_client(sys.argv[1], ip_client, ip_server, output_file, config_file, debug)

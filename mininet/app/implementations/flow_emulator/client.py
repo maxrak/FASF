@@ -159,7 +159,7 @@ def generate_flow(row, ip_client, ip_server, params):
 # ---------------------------
 # MAIN
 # ---------------------------
-def start_client(csv_file, ip_client, ip_server, params, output="/results/burst_dataset.csv"):
+def start_client(csv_file, ip_client, ip_server, params, output="/results/tmp/burst_dataset.csv"):
 
     df = pd.read_csv(csv_file)
 
@@ -209,7 +209,7 @@ def start_client(csv_file, ip_client, ip_server, params, output="/results/burst_
     ip_server = sys.argv[3]
     
     # Nome file univoco per ogni coppia di IP
-    output_file = f"/results/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
+    output_file = f"/results/tmp/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
     
     start_client(sys.argv[1], ip_client, ip_server, output_file, params)
 # ---------------------------

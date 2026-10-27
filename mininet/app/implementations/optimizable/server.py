@@ -19,14 +19,14 @@ stop_event = threading.Event()
 def setup_logger(server_ip=None, debug_enabled=True):
     if not debug_enabled:
         return None
-    os.makedirs("/results", exist_ok=True)
+    os.makedirs("/results/tmp", exist_ok=True)
     if not server_ip:
         try:
             server_ip = socket.gethostbyname(socket.gethostname())
         except Exception:
             server_ip = "unknown"
     ip_safe = server_ip.replace(".", "_").replace(":", "_")
-    log_file = f"/results/server_{ip_safe}_bidirectional.log"
+    log_file = f"/results/tmp/server_{ip_safe}_bidirectional.log"
     logger = logging.getLogger(f"server_bidir_{ip_safe}")
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()

@@ -21,7 +21,7 @@ def setup_logger(server_ip=None, debug_enabled=True):
             server_ip = "unknown"
     os.makedirs('/results', exist_ok=True)
     ip_safe = server_ip.replace('.', '_').replace(':', '_')
-    log_file = f"/results/server_{ip_safe}.log"
+    log_file = f"/results/tmp/server_{ip_safe}.log"
     logger = logging.getLogger(f'server_socket_{ip_safe}')
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()

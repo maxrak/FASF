@@ -20,9 +20,9 @@ stop_event = threading.Event()
 
 def setup_logger(server_ip=None, debug_enabled=True):
     if not debug_enabled: return None
-    os.makedirs("/results", exist_ok=True)
+    os.makedirs("/results/tmp", exist_ok=True)
     ip_safe = (server_ip or "0_0_0_0").replace(".", "_")
-    log_file = f"/results/server_{ip_safe}_decoupled.log"
+    log_file = f"/results/tmp/server_{ip_safe}_decoupled.log"
     logger = logging.getLogger("server_decoupled")
     logger.setLevel(logging.DEBUG)
     logger.handlers.clear()
