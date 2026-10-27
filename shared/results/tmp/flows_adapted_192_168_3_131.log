@@ -1,0 +1,17 @@
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-10-27 15:45:12 - INFO - IP Client: 192.168.3.131
+2026-10-27 15:45:12 - INFO - Timestamp: 2026-10-27 15:45:12.942015
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - Avvio client: CSV=/results/tmp/flows_adapted.csv, Client=192.168.3.131, Server=72.14.213.101
+2026-10-27 15:45:12 - INFO - Output: /results/tmp/burst_dataset_192_168_3_131_72_14_213_101.csv, Config: /app/flows_params/test6_192_168_3_131_55968_72_14_213_101_80.config
+2026-10-27 15:45:13 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.5, 'idle_scale': 2.0, 'iat_rate': 1.0}
+2026-10-27 15:45:13 - INFO - CSV: /results/tmp/flows_adapted.csv
+2026-10-27 15:45:13 - INFO - Ricerca flussi diretti: 192.168.3.131 -> 72.14.213.101
+2026-10-27 15:45:13 - INFO - Colonne: Source IP, Destination IP
+2026-10-27 15:45:13 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-10-27 15:45:13 - INFO - ============================================================
+2026-10-27 15:45:13 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-10-27 15:45:13 - INFO - ============================================================
+2026-10-27 15:45:13 - INFO - [FLOW] Avvio flusso 192.168.3.131:55968 -> 72.14.213.101:80
+2026-10-27 15:45:13 - INFO - [HANDSHAKE] Invio SYN: 192.168.3.131:55968 -> 72.14.213.101:80 (seq=80675)

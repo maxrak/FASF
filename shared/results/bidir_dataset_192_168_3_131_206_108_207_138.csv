@@ -1,2 +1,0 @@
-flow_id,sport,dport,protocol,scheduled_offset_s,forward_bytes_target,forward_bytes_sent,forward_messages_sent,reverse_bytes_requested,reverse_bytes_received,reverse_messages_received,target_duration_s,status,target_fwd_packets,target_bwd_packets,exact_bwd_count_feasible_with_current_server,fwd_actual_min,fwd_actual_max,fwd_actual_mean,fwd_actual_std,bwd_planned_min,bwd_planned_max
-0,56058,80,6,28.812305,2972,1728,32,164841,89649,62,104.069838,error: [Errno 32] Broken pipe,57,119,False,0,757,52.14035087719298,177.06490321312884,0,1460

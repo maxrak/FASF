@@ -1,0 +1,17 @@
+2026-10-27 15:45:09 - INFO - ============================================================
+2026-10-27 15:45:09 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-10-27 15:45:09 - INFO - IP Client: 10.0.2.15
+2026-10-27 15:45:09 - INFO - Timestamp: 2026-10-27 15:45:09.702544
+2026-10-27 15:45:09 - INFO - ============================================================
+2026-10-27 15:45:09 - INFO - Avvio client: CSV=/results/tmp/flows_adapted.csv, Client=10.0.2.15, Server=64.4.9.254
+2026-10-27 15:45:09 - INFO - Output: /results/tmp/burst_dataset_10_0_2_15_64_4_9_254.csv, Config: /app/flows_params/test6_10_0_2_15_2527_64_4_9_254_61863.config
+2026-10-27 15:45:09 - INFO - Parametri caricati: {'pkt_size_scale': 0.9, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 29.4408}
+2026-10-27 15:45:09 - INFO - CSV: /results/tmp/flows_adapted.csv
+2026-10-27 15:45:09 - INFO - Ricerca flussi diretti: 10.0.2.15 -> 64.4.9.254
+2026-10-27 15:45:09 - INFO - Colonne: Source IP, Destination IP
+2026-10-27 15:45:09 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-10-27 15:45:09 - INFO - ============================================================
+2026-10-27 15:45:09 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-10-27 15:45:09 - INFO - ============================================================
+2026-10-27 15:45:09 - INFO - [FLOW] Avvio flusso 10.0.2.15:2527 -> 64.4.9.254:61863
+2026-10-27 15:45:09 - INFO - [HANDSHAKE] Invio SYN: 10.0.2.15:2527 -> 64.4.9.254:61863 (seq=35884)

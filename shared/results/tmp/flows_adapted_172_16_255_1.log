@@ -1,0 +1,17 @@
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-10-27 15:45:12 - INFO - IP Client: 172.16.255.1
+2026-10-27 15:45:12 - INFO - Timestamp: 2026-10-27 15:45:12.647658
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - Avvio client: CSV=/results/tmp/flows_adapted.csv, Client=172.16.255.1, Server=89.34.75.134
+2026-10-27 15:45:12 - INFO - Output: /results/tmp/burst_dataset_172_16_255_1_89_34_75_134.csv, Config: /app/flows_params/test6_172_16_255_1_50983_89_34_75_134_23924.config
+2026-10-27 15:45:12 - INFO - Parametri caricati: {'pkt_size_scale': 1.0, 'pkt_size_sigma': 1.2, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 1.0}
+2026-10-27 15:45:12 - INFO - CSV: /results/tmp/flows_adapted.csv
+2026-10-27 15:45:12 - INFO - Ricerca flussi diretti: 172.16.255.1 -> 89.34.75.134
+2026-10-27 15:45:12 - INFO - Colonne: Source IP, Destination IP
+2026-10-27 15:45:12 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-10-27 15:45:12 - INFO - ============================================================
+2026-10-27 15:45:12 - INFO - [FLOW] Avvio flusso 172.16.255.1:50983 -> 89.34.75.134:23924
+2026-10-27 15:45:12 - INFO - [HANDSHAKE] Invio SYN: 172.16.255.1:50983 -> 89.34.75.134:23924 (seq=41146)

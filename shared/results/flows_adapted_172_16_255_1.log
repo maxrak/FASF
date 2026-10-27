@@ -1,9 +1,0 @@
-2026-10-27 15:18:44 - INFO - ============================================================
-2026-10-27 15:18:44 - INFO - CLIENT DEBUG LOG - flows_adapted
-2026-10-27 15:18:44 - INFO - IP Client: 172.16.255.1
-2026-10-27 15:18:44 - INFO - Timestamp: 2026-10-27 15:18:44.570218
-2026-10-27 15:18:44 - INFO - ============================================================
-2026-10-27 15:18:44 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=172.16.255.1, Server=188.163.1.229
-2026-10-27 15:18:44 - INFO - Output: /results/burst_dataset_172_16_255_1_188_163_1_229.csv, Config: /app/flows_params/test6_172_16_255_1_50983_188_163_1_229_50709.config
-2026-10-27 15:18:44 - INFO - Parametri caricati: {'pkt_size_scale': 0.9, 'pkt_size_sigma': 0.55, 'burst_size_p': 0.35, 'idle_scale': 0.1, 'iat_rate': 4.5127}
-2026-10-27 15:18:44 - INFO - CSV: /tmp/flows_adapted.csv

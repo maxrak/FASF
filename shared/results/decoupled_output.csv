@@ -1,2 +1,0 @@
-flow_id,sport,dport,protocol,forward_bytes_sent,forward_messages_sent,reverse_bytes_received,reverse_messages_received,status
-0,55967,80,6,0,0,0,0,error: [Errno 111] Connection refused
