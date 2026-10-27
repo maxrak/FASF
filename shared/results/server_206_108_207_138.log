@@ -1,0 +1,18 @@
+2026-10-27 14:18:13 - INFO - ============================================================
+2026-10-27 14:18:13 - INFO - SERVER DEBUG LOG
+2026-10-27 14:18:13 - INFO - Server IP: 206.108.207.138
+2026-10-27 14:18:13 - INFO - Timestamp: 2026-10-27 14:18:13.772056
+2026-10-27 14:18:13 - INFO - ============================================================
+2026-10-27 14:18:13 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-10-27 14:18:13 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-10-27 14:18:13 - INFO - Server in ascolto su interfaccia h15-eth0, tutte le porte TCP...
+2026-10-27 14:18:13 - INFO - Pronto a ricevere connessioni.
+2026-10-27 14:18:13 - INFO - Sniffing su interfaccia: h15-eth0
+2026-10-27 14:18:13 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 147.31.122.1:443 -> 172.16.255.1:10622 flags=SA
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59356)
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59357)
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59358)

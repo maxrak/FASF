@@ -1,0 +1,21 @@
+feature,label,mean_relative_error_pct,missing_or_null
+"Bwd RST Flags","Bwd RST",0.000000,true
+"Bwd URG Flags","Bwd URG",0.000000,true
+"Bwd Packet Length Min","Bwd pkt min",0.000000,true
+"Bwd TCP Retrans. Count","Bwd retrans",0.000000,true
+"Bwd Seg Size Min","Bwd seg min",0.000000,true
+"CWR Flag Count","CWR count",0.000000,true
+"ECE Flag Count","ECE count",0.000000,true
+"Fwd RST Flags","Fwd RST",0.000000,true
+"Fwd URG Flags","Fwd URG",0.000000,true
+"Fwd Packet Length Min","Fwd pkt min",0.000000,true
+"Fwd TCP Retrans. Count","Fwd retrans",0.000000,true
+"SYN Flag Count","SYN count",0.000000,false
+"Fwd Packet Length Max","Fwd pkt max",3.822066,false
+"Bwd Packet Length Max","Bwd pkt max",8.747212,false
+"Total Length of Fwd Packet","Fwd bytes",16.093455,false
+"Packet Length Std","Pkt length std",21.845953,false
+"Flow Duration","Flow duration",23.504144,false
+"Down/Up Ratio","Down/up ratio",34.786695,false
+"Flow Bytes/s","Flow bytes/s",36.785860,false
+"FIN Flag Count","FIN count",100.000000,false

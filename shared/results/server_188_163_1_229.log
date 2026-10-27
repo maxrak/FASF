@@ -1,0 +1,24 @@
+2026-10-27 14:18:14 - INFO - ============================================================
+2026-10-27 14:18:14 - INFO - SERVER DEBUG LOG
+2026-10-27 14:18:14 - INFO - Server IP: 188.163.1.229
+2026-10-27 14:18:14 - INFO - Timestamp: 2026-10-27 14:18:14.728944
+2026-10-27 14:18:14 - INFO - ============================================================
+2026-10-27 14:18:14 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-10-27 14:18:14 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-10-27 14:18:14 - INFO - Server in ascolto su interfaccia h11-eth0, tutte le porte TCP...
+2026-10-27 14:18:14 - INFO - Pronto a ricevere connessioni.
+2026-10-27 14:18:14 - INFO - Sniffing su interfaccia: h11-eth0
+2026-10-27 14:18:14 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 188.163.1.229:50709 flags=S
+2026-10-27 14:18:36 - INFO - [SYN] Ricevuto da 172.16.255.1:50983 -> 188.163.1.229:50709 (seq=16467)
+2026-10-27 14:18:36 - INFO - [SYN-ACK] Invio a 172.16.255.1:50983 <- 188.163.1.229:50709 (seq=1000, ack=16468)
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 188.163.1.229:50709 -> 172.16.255.1:50983 flags=RA
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 188.163.1.229:50709 -> 172.16.255.1:50983 flags=SA
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 172.16.255.1:50983 -> 188.163.1.229:50709 flags=R
+2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 147.31.122.1:443 -> 172.16.255.1:10622 flags=SA
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59356)
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59357)
+2026-10-27 14:18:37 - DEBUG - [PKT] Ricevuto: 65.54.95.68:80 -> 192.168.3.131:56331 flags=A
+2026-10-27 14:18:37 - DEBUG - [ACK] Ricevuto da 65.54.95.68:80 -> 192.168.3.131:56331 (seq=1, ack=59358)

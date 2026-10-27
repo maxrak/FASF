@@ -1,0 +1,8 @@
+2026-10-27 13:45:09 - INFO - ======================================================================
+2026-10-27 13:45:09 - INFO - CLIENT CONFIGURABLE BIDIRECTIONAL FLOW EMULATOR
+2026-10-27 13:45:09 - INFO - CSV: /tmp/flows_adapted.csv
+2026-10-27 13:45:09 - INFO - Client IP: 72.14.213.103
+2026-10-27 13:45:09 - INFO - Timestamp: 2026-10-27 13:45:09.989269
+2026-10-27 13:45:09 - INFO - ======================================================================
+2026-10-27 13:46:59 - INFO - [FLOW 0] 72.14.213.103:80->192.168.3.131:57890 fwd=0B/2pkts min/max/mean/std=0/0/0.00/0.00 duration=9.549366s iats=1 bwd=0B/2pkts exact_bwd=True
+2026-10-27 13:46:59 - ERROR - [FLOW 0] errore: [Errno 98] Address already in use

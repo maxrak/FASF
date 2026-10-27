@@ -1,9 +1,13 @@
-2026-07-12 18:55:27 - INFO - ======================================================================
-2026-07-12 18:55:27 - INFO - CLIENT CONFIGURABLE BIDIRECTIONAL FLOW EMULATOR
-2026-07-12 18:55:27 - INFO - CSV: /tmp/flows_adapted.csv
-2026-07-12 18:55:27 - INFO - Client IP: 192.168.3.131
-2026-07-12 18:55:27 - INFO - Timestamp: 2026-07-12 18:55:27.792830
-2026-07-12 18:55:27 - INFO - ======================================================================
-2026-07-12 18:55:29 - INFO - [FLOW 0] 192.168.3.131:55967->63.215.202.49:80 fwd=640B/4pkts min/max/mean/std=0/640/160.00/320.00 duration=0.140612s iats=3 bwd=4202B/4pkts exact_bwd=False
-True
-
+2026-10-27 13:45:10 - INFO - ======================================================================
+2026-10-27 13:45:10 - INFO - CLIENT CONFIGURABLE BIDIRECTIONAL FLOW EMULATOR
+2026-10-27 13:45:10 - INFO - CSV: /tmp/flows_adapted.csv
+2026-10-27 13:45:10 - INFO - Client IP: 192.168.3.131
+2026-10-27 13:45:10 - INFO - Timestamp: 2026-10-27 13:45:10.435013
+2026-10-27 13:45:10 - INFO - ======================================================================
+2026-10-27 13:45:56 - INFO - [FLOW 0] 192.168.3.131:58362->208.82.238.129:80 fwd=0B/2pkts min/max/mean/std=0/0/0.00/0.00 duration=0.031725s iats=1 bwd=0B/1pkts exact_bwd=True
+=True
+bwd=T20262026-10-27 13:47:05 - ERROR - [FLOW 0] errore: [Errno 32] Broken pipe
+ipe
+fwd=3033B/12pkts min/max/mean/std=0/637/252.75/297.92 duration=13.815799s iats=11 bwd=5732B/8pkts exact_bwd=True
+wd=False
+2026-10-27 13:46:26 - ERROR - [FLOW 0] errore: [Errno 32] Broken pipe

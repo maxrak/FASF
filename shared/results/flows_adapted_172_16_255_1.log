@@ -1,0 +1,25 @@
+2026-10-27 14:18:39 - INFO - ============================================================
+2026-10-27 14:18:39 - INFO - CLIENT DEBUG LOG - flows_adapted
+2026-10-27 14:18:39 - INFO - IP Client: 172.16.255.1
+2026-10-27 14:18:39 - INFO - Timestamp: 2026-10-27 14:18:39.782642
+2026-10-27 14:18:39 - INFO - ============================================================
+2026-10-27 14:18:39 - INFO - Avvio client: CSV=/tmp/flows_adapted.csv, Client=172.16.255.1, Server=134.2.48.153
+2026-10-27 14:18:39 - INFO - Output: /results/burst_dataset_172_16_255_1_134_2_48_153.csv, Config: /app/flows_params/test6_172_16_255_1_134_2_48_153.config
+2026-10-27 14:18:39 - INFO - Parametri caricati: None
+2026-10-27 14:18:39 - INFO - CSV: /tmp/flows_adapted.csv
+2026-10-27 14:18:39 - INFO - Ricerca flussi diretti: 172.16.255.1 -> 134.2.48.153
+2026-10-27 14:18:39 - INFO - Colonne: Source IP, Destination IP
+2026-10-27 14:18:39 - INFO - Righe totali: 49, Flussi selezionati: 1
+2026-10-27 14:18:39 - INFO - ============================================================
+2026-10-27 14:18:39 - INFO - ELABORAZIONE FLUSSO 1/1
+2026-10-27 14:18:39 - INFO - ============================================================
+2026-10-27 14:18:39 - INFO - [FLOW] Avvio flusso 172.16.255.1:50983 -> 134.2.48.153:8984
+2026-10-27 14:18:39 - INFO - [HANDSHAKE] Invio SYN: 172.16.255.1:50983 -> 134.2.48.153:8984 (seq=60312)
+2026-10-27 14:18:40 - WARNING - [HANDSHAKE] Nessuna risposta SYN-ACK da 134.2.48.153:8984
+2026-10-27 14:18:40 - ERROR - [FLOW] Handshake fallito per 172.16.255.1:50983 -> 134.2.48.153:8984
+2026-10-27 14:18:40 - INFO - Dataset salvato in /results/burst_dataset_172_16_255_1_134_2_48_153.csv
+2026-10-27 14:18:40 - INFO - Totale flussi processati: 0/1
+2026-10-27 14:18:40 - INFO - ============================================================
+2026-10-27 14:18:40 - INFO - ESECUZIONE COMPLETATA
+2026-10-27 14:18:40 - INFO - ============================================================
+=================

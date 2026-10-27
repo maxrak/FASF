@@ -1,0 +1,159 @@
+2026-10-27 13:44:47 - INFO - ======================================================================
+2026-10-27 13:44:47 - INFO - SERVER BIDIRECTIONAL FLOW EMULATOR
+2026-10-27 13:44:47 - INFO - Server IP: 206.108.207.138
+2026-10-27 13:44:47 - INFO - Timestamp: 2026-10-27 13:44:47.193353
+2026-10-27 13:44:47 - INFO - ======================================================================
+2026-10-27 13:44:47 - INFO - Bind IP: 206.108.207.138
+2026-10-27 13:44:47 - INFO - Interfaccia (ignorata): h15-eth0
+2026-10-27 13:44:47 - INFO - Porte: [53, 80, 139, 161, 443, 445, 1900, 5351, 5355, 5480, 7001, 8080, 8443, 9000, 50000]
+2026-10-27 13:44:47 - INFO - Numero totale porte: 15
+2026-10-27 13:44:47 - INFO - Reverse chunk size: 1448
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:53
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:80
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:139
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:161
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:443
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:445
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:1900
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:5351
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:5355
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:5480
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:7001
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:8080
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:8443
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:9000
+2026-10-27 13:44:47 - INFO - Tutte le 15 porte avviate con successo
+2026-10-27 13:44:47 - INFO - [LISTEN] 206.108.207.138:50000
+2026-10-27 13:44:47 - INFO - Server pronto ad accettare connessioni
+2026-10-27 13:45:39 - INFO - [ACCEPT] 192.168.3.131:56058 -> local_port=80
+2026-10-27 13:45:39 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=0 payload=0 received=0 reverse_request=2891
+2026-10-27 13:45:39 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=0 sending 2891 bytes...
+2026-10-27 13:45:39 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=0 bytes=2891 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=1 payload=757 received=757 reverse_request=2891
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=1 sending 2891 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=1 bytes=2891 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=2 payload=0 received=0 reverse_request=2891
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=2 sending 2891 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=2 bytes=2891 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=3 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=3 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=3 bytes=2892 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=4 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=4 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=4 bytes=2892 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=5 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=5 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=5 bytes=2892 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=6 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=6 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=6 bytes=2892 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=7 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=7 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=7 bytes=2892 messages=2
+2026-10-27 13:45:46 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=8 payload=0 received=0 reverse_request=2892
+2026-10-27 13:45:46 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=8 sending 2892 bytes...
+2026-10-27 13:45:46 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=8 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=9 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=9 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=9 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=10 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=10 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=10 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=11 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=11 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=11 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=12 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=12 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=12 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=13 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=13 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=13 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=14 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=14 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=14 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=15 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=15 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=15 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=16 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=16 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=16 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=17 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=17 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=17 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=18 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=18 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=18 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=19 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=19 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=19 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=20 payload=757 received=757 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=20 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=20 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=21 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=21 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=21 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=22 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=22 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=22 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=23 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=23 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=23 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=24 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=24 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=24 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=25 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=25 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=25 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=26 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=26 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=26 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=27 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=27 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=27 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=28 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=28 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=28 bytes=2892 messages=2
+2026-10-27 13:46:07 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=29 payload=592 received=592 reverse_request=2892
+2026-10-27 13:46:07 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=29 sending 2892 bytes...
+2026-10-27 13:46:07 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=29 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=30 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=30 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=30 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=31 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=31 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=31 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=32 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=32 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=32 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=33 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=33 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=33 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=34 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=34 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=34 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=35 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=35 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=35 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=36 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=36 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=36 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=37 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=37 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=37 bytes=2892 messages=2
+2026-10-27 13:46:19 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=38 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:19 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=38 sending 2892 bytes...
+2026-10-27 13:46:19 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=38 bytes=2892 messages=2
+2026-10-27 13:46:29 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=39 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:29 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=39 sending 2892 bytes...
+2026-10-27 13:46:29 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=39 bytes=2892 messages=2
+2026-10-27 13:46:29 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=40 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:29 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=40 sending 2892 bytes...
+2026-10-27 13:46:29 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=40 bytes=2892 messages=2
+2026-10-27 13:46:29 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=41 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:29 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=41 sending 2892 bytes...
+2026-10-27 13:46:29 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=41 bytes=2892 messages=2
+2026-10-27 13:46:40 - DEBUG - [DATA] 192.168.3.131:56058 -> :80 flow=0 burst=42 payload=0 received=0 reverse_request=2892
+2026-10-27 13:46:40 - INFO - [REVERSE_START] :80 -> 192.168.3.131:56058 flow=0 burst=42 sending 2892 bytes...
+2026-10-27 13:46:40 - INFO - [REVERSE_DONE] :80 -> 192.168.3.131:56058 flow=0 burst=42 bytes=2892 messages=2
+2026-10-27 13:47:10 - WARNING - [TIMEOUT] 192.168.3.131:56058 -> :80 dopo 2106 byte
+2026-10-27 13:47:10 - INFO - [CLOSE] 192.168.3.131:56058 -> :80, rx_payload=2106, rx_messages=43, reverse_bytes=124353, reverse_messages=86

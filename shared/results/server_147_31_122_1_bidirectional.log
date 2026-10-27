@@ -1,0 +1,55 @@
+2026-10-27 13:44:47 - INFO - ======================================================================
+2026-10-27 13:44:47 - INFO - SERVER BIDIRECTIONAL FLOW EMULATOR
+2026-10-27 13:44:47 - INFO - Server IP: 147.31.122.1
+2026-10-27 13:44:47 - INFO - Timestamp: 2026-10-27 13:44:47.144253
+2026-10-27 13:44:47 - INFO - ======================================================================
+2026-10-27 13:44:47 - INFO - Bind IP: 147.31.122.1
+2026-10-27 13:44:47 - INFO - Interfaccia (ignorata): h10-eth0
+2026-10-27 13:44:47 - INFO - Porte: [53, 80, 139, 161, 443, 445, 1900, 5351, 5355, 5480, 7001, 8080, 8443, 9000, 50000]
+2026-10-27 13:44:47 - INFO - Numero totale porte: 15
+2026-10-27 13:44:47 - INFO - Reverse chunk size: 1448
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:53
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:80
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:443
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:161
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:445
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:139
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:1900
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:5351
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:7001
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:5480
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:8080
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:5355
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:8443
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:9000
+2026-10-27 13:44:47 - INFO - [LISTEN] 147.31.122.1:50000
+2026-10-27 13:44:47 - INFO - Tutte le 15 porte avviate con successo
+2026-10-27 13:44:47 - INFO - Server pronto ad accettare connessioni
+2026-10-27 13:46:50 - INFO - [ACCEPT] 172.16.255.1:10622 -> local_port=443
+2026-10-27 13:46:50 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=0 payload=10 received=10 reverse_request=262
+2026-10-27 13:46:50 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=0 sending 262 bytes...
+2026-10-27 13:46:50 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=0 bytes=262 messages=1
+2026-10-27 13:47:06 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=1 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:06 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=1 sending 262 bytes...
+2026-10-27 13:47:06 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=1 bytes=262 messages=1
+2026-10-27 13:47:06 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=2 payload=95 received=95 reverse_request=262
+2026-10-27 13:47:06 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=2 sending 262 bytes...
+2026-10-27 13:47:06 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=2 bytes=262 messages=1
+2026-10-27 13:47:06 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=3 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:06 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=3 sending 262 bytes...
+2026-10-27 13:47:06 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=3 bytes=262 messages=1
+2026-10-27 13:47:06 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=4 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:06 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=4 sending 262 bytes...
+2026-10-27 13:47:06 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=4 bytes=262 messages=1
+2026-10-27 13:47:07 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=5 payload=73 received=73 reverse_request=262
+2026-10-27 13:47:07 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=5 sending 262 bytes...
+2026-10-27 13:47:07 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=5 bytes=262 messages=1
+2026-10-27 13:47:07 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=6 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:07 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=6 sending 262 bytes...
+2026-10-27 13:47:07 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=6 bytes=262 messages=1
+2026-10-27 13:47:08 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=7 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:08 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=7 sending 262 bytes...
+2026-10-27 13:47:08 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=7 bytes=262 messages=1
+2026-10-27 13:47:08 - DEBUG - [DATA] 172.16.255.1:10622 -> :443 flow=0 burst=8 payload=0 received=0 reverse_request=262
+2026-10-27 13:47:08 - INFO - [REVERSE_START] :443 -> 172.16.255.1:10622 flow=0 burst=8 sending 262 bytes...
+2026-10-27 13:47:08 - INFO - [REVERSE_DONE] :443 -> 172.16.255.1:10622 flow=0 burst=8 bytes=262 messages=1
