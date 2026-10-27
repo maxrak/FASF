@@ -1,14 +1,14 @@
-2026-10-27 14:18:14 - INFO - ============================================================
-2026-10-27 14:18:14 - INFO - SERVER DEBUG LOG
-2026-10-27 14:18:14 - INFO - Server IP: 192.168.3.131
-2026-10-27 14:18:14 - INFO - Timestamp: 2026-10-27 14:18:14.749059
-2026-10-27 14:18:14 - INFO - ============================================================
-2026-10-27 14:18:14 - INFO - Avvio server scapy su tutte le porte TCP...
-2026-10-27 14:18:14 - INFO - Regola iptables configurata: DROP RST automatici del kernel
-2026-10-27 14:18:14 - INFO - Server in ascolto su interfaccia h4-eth0, tutte le porte TCP...
-2026-10-27 14:18:14 - INFO - Pronto a ricevere connessioni.
-2026-10-27 14:18:14 - INFO - Sniffing su interfaccia: h4-eth0
-2026-10-27 14:18:14 - INFO - Modalità: promiscua, filtro BPF: tcp
-2026-10-27 14:18:35 - DEBUG - [PKT] Ricevuto: 192.168.3.131:58362 -> 208.82.238.129:80 flags=S
-2026-10-27 14:18:35 - INFO - [SYN] Ricevuto da 192.168.3.131:58362 -> 208.82.238.129:80 (seq=76838)
-2026-10-27 14:18:35 - INFO - [SYN-ACK] Invio a 192.168.3.131:58362 <- 208.82.238.129:80 (seq=1000, ack=76839)
+2026-10-27 15:18:17 - INFO - ============================================================
+2026-10-27 15:18:17 - INFO - SERVER DEBUG LOG
+2026-10-27 15:18:17 - INFO - Server IP: 192.168.3.131
+2026-10-27 15:18:17 - INFO - Timestamp: 2026-10-27 15:18:17.513405
+2026-10-27 15:18:17 - INFO - ============================================================
+2026-10-27 15:18:17 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-10-27 15:18:17 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-10-27 15:18:17 - INFO - Server in ascolto su interfaccia h4-eth0, tutte le porte TCP...
+2026-10-27 15:18:17 - INFO - Pronto a ricevere connessioni.
+2026-10-27 15:18:17 - INFO - Sniffing su interfaccia: h4-eth0
+2026-10-27 15:18:17 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-10-27 15:18:38 - DEBUG - [PKT] Ricevuto: 192.168.3.131:55960 -> 206.108.207.139:80 flags=S
+2026-10-27 15:18:38 - INFO - [SYN] Ricevuto da 192.168.3.131:55960 -> 206.108.207.139:80 (seq=4044)
+2026-10-27 15:18:38 - INFO - [SYN-ACK] Invio a 192.168.3.131:55960 <- 206.108.207.139:80 (seq=1000, ack=4045)

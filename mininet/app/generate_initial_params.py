@@ -182,6 +182,24 @@ def get_dest_ip(row: pd.Series) -> str:
     return "unknown"
 
 
+def get_source_port(row: pd.Series) -> str:
+    """Estrae la porta sorgente dalla riga del CSV."""
+    candidates = ["Src Port", "Source Port", "Src_Port", "source_port"]
+    for col in candidates:
+        if col in row.index and pd.notna(row[col]):
+            return str(int(row[col])).strip()
+    return "0"
+
+
+def get_dest_port(row: pd.Series) -> str:
+    """Estrae la porta destinazione dalla riga del CSV."""
+    candidates = ["Dst Port", "Destination Port", "Dst_Port", "dest_port"]
+    for col in candidates:
+        if col in row.index and pd.notna(row[col]):
+            return str(int(row[col])).strip()
+    return "0"
+
+
 def sanitize_filename(name: str) -> str:
     """Rimuove caratteri non validi per i nomi di file."""
     return name.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "_").replace(".", "_")
@@ -222,11 +240,15 @@ def main() -> None:
         # Estrai IP sorgente e destinazione
         source_ip = get_source_ip(row)
         dest_ip = get_dest_ip(row)
+        source_port = get_source_port(row)
+        dest_port = get_dest_port(row)
+        
         source_ip_safe = sanitize_filename(source_ip)
         dest_ip_safe = sanitize_filename(dest_ip)
 
-        # Genera nome file: basename_sourceip_destip.config
-        config_filename = f"{base_name}_{source_ip_safe}_{dest_ip_safe}.config"
+        # Genera nome file: basename_sourceip_sourceport_destip_destport.config
+        # Questo permette di distinguere flussi con stessa coppia IP ma porte diverse
+        config_filename = f"{base_name}_{source_ip_safe}_{source_port}_{dest_ip_safe}_{dest_port}.config"
         output_path = output_dir / config_filename
 
         # Genera parametri dalla riga

@@ -1,12 +1,28 @@
-2026-10-27 14:18:13 - INFO - ============================================================
-2026-10-27 14:18:13 - INFO - SERVER DEBUG LOG
-2026-10-27 14:18:13 - INFO - Server IP: 192.168.3.90
-2026-10-27 14:18:13 - INFO - Timestamp: 2026-10-27 14:18:13.849947
-2026-10-27 14:18:13 - INFO - ============================================================
-2026-10-27 14:18:13 - INFO - Avvio server scapy su tutte le porte TCP...
-2026-10-27 14:18:13 - INFO - Regola iptables configurata: DROP RST automatici del kernel
-2026-10-27 14:18:13 - INFO - Server in ascolto su interfaccia h5-eth0, tutte le porte TCP...
-2026-10-27 14:18:13 - INFO - Pronto a ricevere connessioni.
-2026-10-27 14:18:13 - INFO - Sniffing su interfaccia: h5-eth0
-2026-10-27 14:18:13 - INFO - Modalità: promiscua, filtro BPF: tcp
-2026-10-27 14:18:36 - DEBUG - [PKT] Ricevuto: 147.31.122.1:443 -> 172.16.255.1:10622 flags=SA
+2026-10-27 15:18:17 - INFO - ============================================================
+2026-10-27 15:18:17 - INFO - SERVER DEBUG LOG
+2026-10-27 15:18:17 - INFO - Server IP: 192.168.3.90
+2026-10-27 15:18:17 - INFO - Timestamp: 2026-10-27 15:18:17.593776
+2026-10-27 15:18:17 - INFO - ============================================================
+2026-10-27 15:18:17 - INFO - Avvio server scapy su tutte le porte TCP...
+2026-10-27 15:18:17 - INFO - Regola iptables configurata: DROP RST automatici del kernel
+2026-10-27 15:18:17 - INFO - Server in ascolto su interfaccia h5-eth0, tutte le porte TCP...
+2026-10-27 15:18:17 - INFO - Pronto a ricevere connessioni.
+2026-10-27 15:18:17 - INFO - Sniffing su interfaccia: h5-eth0
+2026-10-27 15:18:17 - INFO - Modalità: promiscua, filtro BPF: tcp
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 10.0.2.15:1095 -> 192.168.3.90:139 flags=S
+2026-10-27 15:18:40 - INFO - [SYN] Ricevuto da 10.0.2.15:1095 -> 192.168.3.90:139 (seq=69074)
+2026-10-27 15:18:40 - INFO - [SYN-ACK] Invio a 10.0.2.15:1095 <- 192.168.3.90:139 (seq=1000, ack=69075)
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=RA
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 10.0.2.15:1095 -> 192.168.3.90:139 flags=A
+2026-10-27 15:18:40 - DEBUG - [ACK] Ricevuto da 10.0.2.15:1095 -> 192.168.3.90:139 (seq=69075, ack=1)
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=R
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 10.0.2.15:1095 -> 192.168.3.90:139 flags=PA
+2026-10-27 15:18:40 - DEBUG - [PSH-ACK] Ricevuto da 10.0.2.15:1095 -> 192.168.3.90:139 (seq=69075, ack=1, payload=25B)
+2026-10-27 15:18:40 - DEBUG - [ACK] Invio a 10.0.2.15:1095 <- 192.168.3.90:139 (seq=1, ack=69100)
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=R
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=SA
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 10.0.2.15:1095 -> 192.168.3.90:139 flags=R
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=A
+2026-10-27 15:18:40 - DEBUG - [ACK] Ricevuto da 192.168.3.90:139 -> 10.0.2.15:1095 (seq=1, ack=69100)
+2026-10-27 15:18:40 - DEBUG - [PKT] Ricevuto: 192.168.3.90:139 -> 10.0.2.15:1095 flags=A
+2026-10-27 15:18:40 - DEBUG - [ACK] Ricevuto da 192.168.3.90:139 -> 10.0.2.15:1095 (seq=1, ack=69100)

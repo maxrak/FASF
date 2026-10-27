@@ -63,6 +63,7 @@ def adapt_csv_columns(csv_file, output_file='/tmp/flows_adapted.csv'):
     """
     Adatta il CSV per client_scapy_burst_optimized.py
     Rinomina 'Src IP' -> 'Source IP' e 'Dst IP' -> 'Destination IP'
+    Rinomina anche 'Src Port' -> 'Source Port' e 'Dst Port' -> 'Destination Port'
     
     Args:
         csv_file: path al CSV originale
@@ -77,7 +78,9 @@ def adapt_csv_columns(csv_file, output_file='/tmp/flows_adapted.csv'):
         # Rinomina le colonne se necessario
         column_mapping = {
             'Src IP': 'Source IP',
-            'Dst IP': 'Destination IP'
+            'Dst IP': 'Destination IP',
+            'Src Port': 'Source Port',
+            'Dst Port': 'Destination Port'
         }
         
         df = df.rename(columns=column_mapping)
@@ -851,6 +854,8 @@ def start_servers(net, host_map, implementation='scapy_burst'):
 def generate_flows_from_csv(csv_file, host_map, topology):
     """
     Genera lista di flussi dagli IP effettivamente creati e dal CSV
+    Considera la QUADRUPLA COMPLETA: Src IP, Src Port, Dst IP, Dst Port
+    Flussi con stessa quadrupla ma timestamp diversi sono flussi DIVERSI
     Mantiene la direzione dei flussi: A->B e B->A sono flussi distinti.
     
     Args:
@@ -859,7 +864,7 @@ def generate_flows_from_csv(csv_file, host_map, topology):
         topology: dizionario topology per estrarre netmask corretti
     
     Returns:
-        lista di dict con {src_ip, dst_ip} per flussi validi
+        lista di dict con {src_ip, dst_ip, src_port, dst_port} per flussi validi
     """
     try:
         df = pd.read_csv(csv_file)
@@ -867,11 +872,16 @@ def generate_flows_from_csv(csv_file, host_map, topology):
         # Identifica colonne IP
         if "Source IP" in df.columns:
             src_col, dst_col = "Source IP", "Destination IP"
+            src_port_col, dst_port_col = "Source Port", "Destination Port"
         elif "Src IP" in df.columns:
             src_col, dst_col = "Src IP", "Dst IP"
+            src_port_col, dst_port_col = "Src Port", "Dst Port"
         else:
             info("  ! Colonne IP non trovate nel CSV\n")
             return []
+        
+        # Verifica disponibilità colonne di porta
+        has_ports = src_port_col in df.columns and dst_port_col in df.columns
         
         # Crea mappa IP -> subnet network per verificare che gli IP siano nella topologia
         ip_to_subnet = {}
@@ -882,7 +892,7 @@ def generate_flows_from_csv(csv_file, host_map, topology):
         
         # Trova tutti i flussi che hanno ENTRAMBI gli IP nella topologia creata
         valid_flows = []
-        seen_pairs = set()  # Evita duplicati solo se direzione identica
+        seen_flows = set()  # Evita duplicati sulla QUADRUPLA COMPLETA
         
         for _, row in df.iterrows():
             src_ip = str(row[src_col])
@@ -901,16 +911,28 @@ def generate_flows_from_csv(csv_file, host_map, topology):
                 if dst_ip.endswith('.255'):
                     continue
                 
-                # Evita duplicati identici, ma conserva A->B e B->A come distinti
-                pair = (src_ip, dst_ip)
-                if pair not in seen_pairs:
-                    valid_flows.append({
+                # Crea chiave di deduplicazione sulla QUADRUPLA COMPLETA
+                if has_ports:
+                    src_port = int(row[src_port_col]) if pd.notna(row[src_port_col]) else 0
+                    dst_port = int(row[dst_port_col]) if pd.notna(row[dst_port_col]) else 0
+                    flow_key = (src_ip, src_port, dst_ip, dst_port)
+                else:
+                    # Se non ci sono porte, usa solo gli IP
+                    flow_key = (src_ip, 0, dst_ip, 0)
+                
+                if flow_key not in seen_flows:
+                    flow_dict = {
                         'src_ip': src_ip,
                         'dst_ip': dst_ip
-                    })
-                    seen_pairs.add(pair)
+                    }
+                    if has_ports:
+                        flow_dict['src_port'] = src_port
+                        flow_dict['dst_port'] = dst_port
+                    
+                    valid_flows.append(flow_dict)
+                    seen_flows.add(flow_key)
         
-        info(f"  - Flussi direzionali generati dal CSV: {len(valid_flows)} (no broadcast)\n")
+        info(f"  - Flussi generati dal CSV (quadrupla Src IP:Port → Dst IP:Port): {len(valid_flows)} (no broadcast)\n")
         return valid_flows
         
     except Exception as e:
@@ -950,6 +972,8 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
     for flow in flows:
         src_ip = flow['src_ip']
         dst_ip = flow['dst_ip']
+        src_port = flow.get('src_port', 0)
+        dst_port = flow.get('dst_port', 0)
         
         src_host = host_map.get(src_ip)
         dst_host = host_map.get(dst_ip)
@@ -958,19 +982,19 @@ def start_traffic_flows(net, host_map, flows, csv_file='/features/target.csv', d
             info(f"  ! Host non trovato per flusso {src_ip} -> {dst_ip}\n")
             continue
         
-        # Costruisce il path del file di configurazione per questa coppia src->dst
-        # Formato: {base_name}_{src_ip}_{dst_ip}.config
+        # Costruisce il path del file di configurazione per questa quadrupla src:port->dst:port
+        # Formato: {base_name}_{src_ip}_{src_port}_{dst_ip}_{dst_port}.config
         src_ip_safe = src_ip.replace('.', '_').replace(':', '_')
         dst_ip_safe = dst_ip.replace('.', '_').replace(':', '_')
-        config_file = f"{config_dir}/{base_name}_{src_ip_safe}_{dst_ip_safe}.config"
+        config_file = f"{config_dir}/{base_name}_{src_ip_safe}_{src_port}_{dst_ip_safe}_{dst_port}.config"
         
-        info(f"  - Traffico da {src_ip} a {dst_ip}\n")
+        info(f"  - Traffico da {src_ip}:{src_port} a {dst_ip}:{dst_port}\n")
         info(f"    Config: {config_file}\n")
         
         # Avvia il client corretto in base all'implementazione
         # Parametri: flows.csv IPclient IPserver [config_file]
         # Il burst_dataset.csv viene salvato in /results/ (mappato in shared/results/)
-        cmd = f"python3 {client_script} {csv_file} {src_ip} {dst_ip} {config_file} > /tmp/client_{implementation}_{src_ip.replace('.', '_')}_{dst_ip.replace('.', '_')}.log 2>&1 &"
+        cmd = f"python3 {client_script} {csv_file} {src_ip} {dst_ip} {config_file} > /tmp/client_{implementation}_{src_ip.replace('.', '_')}_{src_port}_{dst_ip.replace('.', '_')}_{dst_port}.log 2>&1 &"
         src_host.cmd(cmd)
         started += 1
     
