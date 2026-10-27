@@ -140,7 +140,19 @@ def main():
                 ov, sv = pd.to_numeric(o_row[f], errors="coerce"), pd.to_numeric(s_row[f], errors="coerce")
                 abs_e = np.nan if pd.isna(ov) or pd.isna(sv) else abs(float(ov) - float(sv))
                 sgn_e = np.nan if pd.isna(ov) or pd.isna(sv) else float(sv) - float(ov)
-                rel_e = abs_e / abs(float(ov)) if pd.notna(abs_e) and abs(float(ov)) > EPS else np.nan
+                
+                # Calcola errore relativo: gestisce il caso di original=0
+                if pd.notna(abs_e):
+                    if abs(float(ov)) > EPS:
+                        # Caso normale: original != 0
+                        rel_e = abs_e / abs(float(ov))
+                    else:
+                        # Caso speciale: original == 0
+                        # Se simulated == 0: errore 0% (perfetto)
+                        # Se simulated != 0: errore 100% (massimo errore possibile)
+                        rel_e = 0.0 if abs(float(sv)) < EPS else 1.0
+                else:
+                    rel_e = np.nan
                 
                 d = {"pair_id": pair_id, "feature": f, "group": infer_group(f), "original_value": ov, 
                      "simulated_value": sv, "absolute_error": abs_e, "relative_error_pct": rel_e * 100 if pd.notna(rel_e) else np.nan, "signed_error": sgn_e}
