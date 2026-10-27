@@ -247,7 +247,7 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
     ip_safe = ip_client.replace('.', '_').replace(':', '_')
     
     # Nome file log: {csv_name}_{ip}.log
-    log_file = f"/results/tmp/tmp/{csv_basename}_{ip_safe}.log"
+    log_file = f"/results/tmp/{csv_basename}_{ip_safe}.log"
     
     # Configura logger
     logger = logging.getLogger(f'client_{ip_client}')
@@ -284,7 +284,7 @@ def setup_logger(csv_file, ip_client, debug_enabled=True):
 # ---------------------------
 # MAIN
 # ---------------------------
-def start_client(csv_file, ip_client, ip_server, output="/results/tmp/tmp/burst_dataset.csv", config_file=None, debug=True):
+def start_client(csv_file, ip_client, ip_server, output="/results/tmp/burst_dataset.csv", config_file=None, debug=True):
     
     # Configura logger
     setup_logger(csv_file, ip_client, debug)
@@ -396,6 +396,6 @@ if __name__ == "__main__":
             config_file = arg
     
     # Nome file univoco per ogni coppia di IP
-    output_file = f"/results/tmp/tmp/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
+    output_file = f"/results/tmp/burst_dataset_{ip_client.replace('.', '_')}_{ip_server.replace('.', '_')}.csv"
     
     start_client(sys.argv[1], ip_client, ip_server, output_file, config_file, debug)
