@@ -140,9 +140,23 @@ def handle(pkt):
                 logger.debug(f"[ACK] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq}, ack={tcp.ack})")
         
         elif "F" in tcp.flags:
-            # FIN: chiusura connessione
+            # FIN: chiusura connessione (four-way handshake)
             if logger:
                 logger.info(f"[FIN] Ricevuto da {ip.src}:{tcp.sport} -> {ip.dst}:{tcp.dport} (seq={tcp.seq})")
+            
+            # Rispondi con FIN-ACK per completare la chiusura TCP
+            fin_response = IP(dst=ip.src, src=ip.dst) / TCP(
+                sport=tcp.dport,
+                dport=tcp.sport,
+                flags="FA",
+                seq=tcp.ack,
+                ack=tcp.seq + 1
+            )
+            
+            if logger:
+                logger.info(f"[FIN-ACK] Invio a {ip.src}:{tcp.sport} <- {ip.dst}:{tcp.dport} (seq={tcp.ack}, ack={tcp.seq + 1})")
+            
+            send(fin_response, verbose=0)
     else:
         # Pacchetto non TCP ricevuto (non dovrebbe succedere con filtro BPF)
         if logger:
