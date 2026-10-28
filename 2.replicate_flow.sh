@@ -40,7 +40,7 @@ echo "======================="
 docker compose run --rm mininet python generate_initial_params.py input_flows/$FLOW_NAME.csv flows_params/
 docker compose run --rm mininet python3 /app/replay_topology.py \
     topologies/$FLOW_NAME.json \
-    120 \
+    60 \
     flows/$FLOW_NAME.csv \
     20 \
     $IMPLEMENTATION

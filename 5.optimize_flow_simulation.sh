@@ -42,8 +42,8 @@ fi
 TEST_NAME="$1"
 shift
 
-ALGORITHM="random"
-MAX_TRIALS="3"
+ALGORITHM="optuna"
+MAX_TRIALS="30"
 MAX_HOURS=""
 SEED="42"
 BASE_CONFIG="/app/config/base_optimizer_config.json"

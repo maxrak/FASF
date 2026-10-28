@@ -1,10 +1,10 @@
-2026-10-27 15:48:44 - INFO - ============================================================
-2026-10-27 15:48:44 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
-2026-10-27 15:48:44 - INFO - IP Client: 72.14.213.18
-2026-10-27 15:48:44 - INFO - Timestamp: 2026-10-27 15:48:44.610588
-2026-10-27 15:48:44 - INFO - ============================================================
-2026-10-27 15:48:44 - INFO - Avvio client socket: CSV=/results/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
-2026-10-27 15:48:44 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
-2026-10-27 15:48:44 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use
-2026-10-27 15:48:44 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
-2026-10-27 15:48:44 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use
+2026-10-28 08:11:35 - INFO - ============================================================
+2026-10-28 08:11:35 - INFO - CLIENT SOCKET DEBUG LOG - flows_adapted
+2026-10-28 08:11:35 - INFO - IP Client: 72.14.213.18
+2026-10-28 08:11:35 - INFO - Timestamp: 2026-10-28 08:11:35.361566
+2026-10-28 08:11:35 - INFO - ============================================================
+2026-10-28 08:11:35 - INFO - Avvio client socket: CSV=/results/tmp/flows_adapted.csv, Client=72.14.213.18, Server=192.168.3.131
+2026-10-28 08:11:35 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
+2026-10-28 08:11:35 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use
+2026-10-28 08:11:35 - INFO - [FLOW] Avvio flusso TCP reale 72.14.213.18:443 -> 192.168.3.131:49673
+2026-10-28 08:11:35 - ERROR - [HANDSHAKE] Fallito 72.14.213.18:443 -> 192.168.3.131:49673: [Errno 98] Address already in use

@@ -1,0 +1,2 @@
+flow_id,sport,dport,protocol,scheduled_offset_s,forward_bytes_target,forward_bytes_sent,forward_messages_sent,reverse_bytes_requested,reverse_bytes_received,reverse_messages_received,target_duration_s,status,target_fwd_packets,target_bwd_packets,exact_bwd_count_feasible_with_current_server,fwd_actual_min,fwd_actual_max,fwd_actual_mean,fwd_actual_std,bwd_planned_min,bwd_planned_max
+0,56042,80,6,27.502917,638,638,5,573,573,1,0.055026,ok,5,3,True,0,638,127.6,285.3222739289732,0,573
