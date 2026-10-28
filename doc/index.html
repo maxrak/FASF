@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASF Documentation Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .doc-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            border-top: 4px solid #667eea;
+        }
+        
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border-top-color: #764ba2;
+        }
+        
+        .doc-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .doc-card.main {
+            border-top-color: #764ba2;
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+        
+        .doc-card.main h2 {
+            color: #764ba2;
+            font-size: 2em;
+        }
+        
+        .doc-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .doc-card .icon {
+            font-size: 2em;
+            margin-right: 10px;
+        }
+        
+        .doc-card .read-time {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 10px;
+        }
+        
+        .section-title {
+            color: white;
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        
+        .quick-link:hover {
+            background: #764ba2;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🔐 FASF Documentation</h1>
+        <p>Flow Stealth Attack Simulation Framework</p>
+    </div>
+    
+    <div class="container">
+        <div class="section-title">📚 Documentazione Principale</div>
+        
+        <div class="docs-grid">
+            <a href="../README.md" class="doc-card main" onclick="return false;">
+                <h2><span class="icon">🏠</span>README.md</h2>
+                <p><strong>Punto di partenza su GitHub</strong> - Overview del framework, quick start, come iniziare. Questa è la pagina che vedi su GitHub.</p>
+                <div class="read-time">⏱️ 5-10 minuti</div>
+            </a>
+            
+            <a href="index.html" class="doc-card">
+                <h2><span class="icon">📑</span>Documentation Index</h2>
+                <p>Indice centrale di navigazione. Come scegliere quale documentazione leggere in base a quello che devi fare.</p>
+                <div class="read-time">⏱️ 3-5 minuti</div>
+            </a>
+            
+            <a href="readme.html" class="doc-card">
+                <h2><span class="icon">📖</span>Complete Guide</h2>
+                <p>Guida completa e dettagliata. Ogni script descritto nel dettaglio con parametri, output, esempi, troubleshooting.</p>
+                <div class="read-time">⏱️ 20-30 minuti</div>
+            </a>
+            
+            <a href="quick-reference.html" class="doc-card">
+                <h2><span class="icon">⚡</span>Quick Reference</h2>
+                <p>Comandi pronti all'uso. Copia-incolla i comandi, file locations, success criteria, debug commands.</p>
+                <div class="read-time">⏱️ 5 minuti (lookup)</div>
+            </a>
+            
+            <a href="architecture.html" class="doc-card">
+                <h2><span class="icon">🏗️</span>Architecture Deep Dive</h2>
+                <p>Diagrammi e visuali. Come funziona il framework, data transformations, feature calculations, optimization loop.</p>
+                <div class="read-time">⏱️ 15-20 minuti</div>
+            </a>
+        </div>
+        
+        <div class="section-title">🎯 Scegli Dove Iniziare</div>
+        
+        <div class="info-box">
+            <h3>❓ Dipende da quello che stai facendo...</h3>
+            
+            <p><strong>Sono nuovo e non so da dove iniziare</strong></p>
+            <div class="quick-links">
+                <a href="index.html" class="quick-link">1. Leggi l'indice</a>
+                <a href="../README.md" class="quick-link">2. Leggi il README</a>
+                <a href="quick-reference.html" class="quick-link">3. Esegui Quick Start</a>
+            </div>
+            
+            <p><strong>Conosco il framework e voglio eseguire veloce</strong></p>
+            <div class="quick-links">
+                <a href="quick-reference.html" class="quick-link">Vai diretto ai comandi</a>
+            </div>
+            
+            <p><strong>Mi da errore e devo debuggare</strong></p>
+            <div class="quick-links">
+                <a href="readme.html#troubleshooting" class="quick-link">Troubleshooting</a>
+                <a href="quick-reference.html#debug-commands" class="quick-link">Debug commands</a>
+            </div>
+            
+            <p><strong>Voglio capire come funziona</strong></p>
+            <div class="quick-links">
+                <a href="readme.html#how-it-works" class="quick-link">How It Works</a>
+                <a href="architecture.html" class="quick-link">Architecture</a>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 Elenco File Documentazione</h3>
+            <ul style="margin-left: 20px; margin-top: 15px;">
+                <li><strong>README.md</strong> - Punto di partenza (GitHub)</li>
+                <li><strong>index.html</strong> - Indice per navigare la documentazione</li>
+                <li><strong>readme.html</strong> - Guida completa e dettagliata</li>
+                <li><strong>quick-reference.html</strong> - Comandi veloci e lookup</li>
+                <li><strong>architecture.html</strong> - Diagrammi e deep dive tecnico</li>
+                <li><strong>README_DETAILED.md</strong> - Versione precedente (come riferimento)</li>
+                <li><strong>WORKFLOW_QUICK_REFERENCE.md</strong> - Sorgente markdown</li>
+                <li><strong>ARCHITECTURE_DIAGRAM.md</strong> - Sorgente markdown</li>
+                <li><strong>DOCUMENTATION_INDEX.md</strong> - Sorgente markdown</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>🚀 6-Step Workflow Overview</h3>
+            <p style="margin-bottom: 15px;">Il framework segue sempre questo workflow:</p>
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.9em; line-height: 1.8;">
+Step 1: generate_topology.sh    (Genera topologia da CSV)<br>
+     ↓<br>
+Step 2: replicate_flow.sh       (Esegue flussi in Mininet)<br>
+     ↓<br>
+Step 3: regenerate_flows.sh     (Estrae feature con CICFlowMeter)<br>
+     ↓<br>
+Step 4: compare_flows.sh        (Confronta e calcola errori)<br>
+     ↓<br>
+Step 5: optimize_flow_simulation.sh  (OPZIONALE - Ottimizzazione Bayesiana)<br>
+     ↓<br>
+Step 6: evaluate_optimization.sh    (OPZIONALE - Report finale)
+            </div>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Tempo minimo workflow (4 step):</strong> 40-45 minuti | <strong>Workflow completo (6 step):</strong> 90+ minuti</p>
+        </div>
+        
+        <footer>
+            <p>🔐 FASF - Flow Stealth Attack Simulation Framework</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Last Updated: October 28, 2024</p>
+        </footer>
+    </div>
+</body>
+</html>

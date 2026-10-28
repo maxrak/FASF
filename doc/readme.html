@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASF - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #667eea;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #764ba2;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 2em;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #764ba2;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #d73a49;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background: #f0f0f0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #667eea;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            margin-left: 20px;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .back-to-top {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-to-top:hover {
+            background: #764ba2;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="fasf---flow-stealth-attack-simulation-framework">🚀 FASF - Flow
+Stealth Attack Simulation Framework</h1>
+<p><a href=""><img src="https://img.shields.io/badge/docker-ready-blue"
+alt="Docker" /></a> <a href=""><img
+src="https://img.shields.io/badge/network-mininet-orange"
+alt="Mininet" /></a> <a href=""><img
+src="https://img.shields.io/badge/python-3.10+-green"
+alt="Python" /></a> <a href=""><img
+src="https://img.shields.io/badge/license-research-lightgrey"
+alt="License" /></a></p>
+<hr />
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<ol type="1">
+<li><a href="#-overview">Overview</a></li>
+<li><a href="#-architecture">Architecture</a></li>
+<li><a href="#-project-structure">Project Structure</a></li>
+<li><a href="#-requirements">Requirements</a></li>
+<li><a href="#-quick-start-guide">Quick Start Guide</a></li>
+<li><a href="#-workflow-scripts">Workflow Scripts</a></li>
+<li><a href="#-how-it-works">How It Works</a></li>
+<li><a href="#-outputs">Outputs</a></li>
+<li><a href="#-advanced-usage">Advanced Usage</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+</ol>
+<hr />
+<h2 id="overview">🧠 Overview</h2>
+<p><strong>FASF</strong> (Flow Stealth Attack Simulation Framework) è un
+framework completo per la simulazione e l’analisi di traffico di
+rete.</p>
+<p><strong>Funzionalità Principali</strong>: - 📊 <strong>Generazione di
+topologie di rete</strong> da file CSV di flussi - 🔄
+<strong>Replicazione del traffico</strong> usando Mininet e Docker - 📈
+<strong>Estrazione di feature di flusso</strong> con CICFlowMeter - 🤖
+<strong>Ottimizzazione di parametri di simulazione</strong> tramite
+Bayesian Optimization - 📉 <strong>Valutazione e confronto</strong> di
+metriche di accuratezza</p>
+<p><strong>Scopo</strong>: Simulare attacchi di rete stealth generando
+traffico che riproduce flussi originali catturati in PCAP.</p>
+<hr />
+<h2 id="architecture">🏗️ Architecture</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                     FASF Workflow                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Input CSV (original flows)                                 │
+│         ↓                                                    │
+│  [1] Generate Topology → topology JSON                      │
+│         ↓                                                    │
+│  [2] Replicate Flows → Mininet simulation → PCAP           │
+│         ↓                                                    │
+│  [3] Regenerate Flows → CICFlowMeter → CSV features        │
+│         ↓                                                    │
+│  [4] Compare Flows → Flow comparison report                │
+│         ↓                                                    │
+│  [5] Optimize Simulation → Bayesian Optimization           │
+│         ↓                                                    │
+│  [6] Evaluate Results → Error metrics &amp; charts             │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+<hr />
+<h2 id="project-structure">📁 Project Structure</h2>
+<pre><code>FASF/
+├── 1.generate_topology.sh          ← Genera topologia di rete
+├── 2.replicate_flow.sh              ← Esegue simulazione Mininet
+├── 3.regenerate_flows.sh            ← Estrae feature con CICFlowMeter
+├── 4.compare_flows.sh               ← Confronta flussi original vs regenerated
+├── 5.optimize_flow_simulation.sh    ← Ottimizza parametri
+├── 6.evaluate_optimization.sh       ← Valuta risultati
+│
+├── aggregate_bursts.sh              ← Aggrega file burst (utility)
+├── compare_fin_flags.sh             ← Confronta flag FIN (debug tool)
+│
+├── docker-compose.yml               ← Configurazione Docker
+│
+├── mininet/                         ← Simulatore di rete
+│   └── app/
+│       ├── replay_topology.py       ← Orchestratore principale
+│       ├── generate_initial_params.py
+│       └── implementations/         ← Moduli di traffic generation
+│           ├── scapy_burst/
+│           ├── tcp_burst/
+│           ├── flow_emulator/
+│           └── ...
+│
+├── optimizer/                       ← Ottimizzatore Bayesian
+│   └── app/
+│       ├── traffic_optimizer.py
+│       └── ...
+│
+├── evaluator/                       ← Valutazione e report
+│   └── app/
+│       ├── flow_compare_data.py     ← Calcola metriche di errore
+│       ├── plot_key_feature_errors.py
+│       ├── plot_optimization.py
+│       └── ...
+│
+├── cicflowmeter/                    ← Estrazione di feature di flusso
+│   └── CICFlowMeter binary
+│
+└── shared/
+    ├── input_flows/                 ← File CSV originali
+    │   ├── test1.csv
+    │   ├── test2.csv
+    │   └── ...
+    ├── output_flows/                ← File CSV rigenerati
+    │   ├── regenerated_test1_clean.csv
+    │   └── ...
+    ├── results/                     ← Output e report
+    │   ├── test1/
+    │   │   ├── report_data.json
+    │   │   ├── report.html
+    │   │   ├── test1_keyfeatures.png
+    │   │   ├── test1_keyfeatures.csv
+    │   │   └── ...
+    │   └── ...
+    ├── tmp/                         ← File intermedi
+    │   ├── bidir_dataset_*.csv
+    │   ├── burst_dataset_*.csv
+    │   ├── flows_adapted_*.csv
+    │   └── server_*.log
+    │
+    ├── pcap/                        ← File PCAP catturati
+    │   ├── test1.pcap
+    │   └── ...
+    │
+    └── topologies/                  ← Topologie generate
+        ├── test1.csv.json
+        └── ...</code></pre>
+<hr />
+<h2 id="requirements">⚙️ Requirements</h2>
+<ul>
+<li><strong>Docker + Docker Compose</strong> (versione 20.10+)</li>
+<li><strong>Linux</strong> (macOS supportato parzialmente)</li>
+<li><strong>RAM</strong> ≥ 8GB (4GB minimo)</li>
+<li><strong>Spazio disco</strong> ≥ 20GB</li>
+<li><strong>Python</strong> 3.10+ (per script di supporto)</li>
+</ul>
+<p><strong>Installazione Dipendenze</strong>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ubuntu/Debian</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install docker.io docker-compose python3 python3-pip</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install docker python@3.11</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Installa dipendenze Python locali</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy pandas scipy matplotlib</span></code></pre></div>
+<hr />
+<h2 id="quick-start-guide">🚀 Quick Start Guide</h2>
+<h3 id="opzione-1-workflow-completo-automatico">Opzione 1: Workflow
+Completo (Automatico)</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Preparare un file CSV di test</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> shared/input_flows/test6.csv shared/input_flows/mytest.csv</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Eseguire l&#39;intero workflow</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 1.generate_topology.sh mytest</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh mytest</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 3.regenerate_flows.sh mytest</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 4.compare_flows.sh mytest</span></code></pre></div>
+<h3 id="opzione-2-workflow-con-ottimizzazione">Opzione 2: Workflow con
+Ottimizzazione</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esegui i primi 4 step, poi ottimizza</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 1.generate_topology.sh mytest</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh mytest</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 3.regenerate_flows.sh mytest</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 4.compare_flows.sh mytest</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 5.optimize_flow_simulation.sh mytest   <span class="co"># (Opzionale, lungo ~1h)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 6.evaluate_optimization.sh mytest</span></code></pre></div>
+<h3 id="opzione-3-solo-confronto-e-valutazione">Opzione 3: Solo
+Confronto e Valutazione</h3>
+<p>Se hai già il PCAP catturato:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 3.regenerate_flows.sh mytest</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 4.compare_flows.sh mytest</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 6.evaluate_optimization.sh mytest</span></code></pre></div>
+<hr />
+<h2 id="workflow-scripts">📜 Workflow Scripts</h2>
+<h3 id="generate_topology.sh">🔹 1.generate_topology.sh</h3>
+<p><strong>Scopo</strong>: Generare la topologia di rete da un file CSV
+di flussi</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./1.generate_topology.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del file CSV (senza estensione) - Es: <code>test6</code> → legge
+<code>shared/input_flows/test6.csv</code></p>
+<p><strong>Output</strong>: -
+<code>shared/topologies/test6.csv.json</code> - Topologia di rete in
+formato JSON</p>
+<p><strong>Dettagli</strong>: - Analizza il file CSV per identificare
+host, switch e connessioni - Genera una topologia Mininet compatibile -
+Estrae parametri di timing (timeout, dimensioni pacchetti, etc.)</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./1.generate_topology.sh</span> test6</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: 📂 Analisi del file: input_flows/test6.csv</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         📝 Output: topologies/test6.csv.json</span></span></code></pre></div>
+<hr />
+<h3 id="replicate_flow.sh">🔹 2.replicate_flow.sh</h3>
+<p><strong>Scopo</strong>: Eseguire la simulazione del traffico con
+Mininet e catturare il PCAP</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./2.replicate_flow.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span> <span class="pp">[</span><span class="ss">implementation</span><span class="pp">]</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del test (es: <code>test6</code>) - <code>[implementation]</code>
+(opzionale, default: <code>scapy_burst</code>): -
+<code>scapy_burst</code> - Usa Scapy per generare pacchetti -
+<code>tcp_burst</code> - Usa socket TCP raw - <code>tcp_simple</code> -
+Implementazione TCP semplificata - <code>bidirectional</code> - Simula
+flussi bidirezionali - <code>flow_emulator</code> - Emulatore generico
+di flussi - <code>optimizable</code> / <code>optimizable2</code> -
+Versioni ottimizzabili</p>
+<p><strong>Output</strong>: - <code>shared/pcap/test6.pcap</code> - File
+PCAP catturato - <code>shared/results/tmp/server_*.log</code> - Log del
+server di simulazione</p>
+<p><strong>Dettagli</strong>: - Legge la topologia generata dal passo 1
+- Avvia container Docker con Mininet - Genera traffico seguendo i
+parametri del CSV - Cattura il traffico in formato PCAP - Dura
+tipicamente 10-30 secondi per test</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./2.replicate_flow.sh</span> test6 scapy_burst</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: Mininet running...</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         PCAP capture: shared/pcap/test6.pcap</span></span></code></pre></div>
+<p><strong>Note</strong>: - Richiede Docker e spazio su disco
+disponibile - Il tempo di esecuzione dipende dalla durata dei flussi nel
+CSV</p>
+<hr />
+<h3 id="regenerate_flows.sh">🔹 3.regenerate_flows.sh</h3>
+<p><strong>Scopo</strong>: Estrarre le feature di flusso dal PCAP usando
+CICFlowMeter</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./3.regenerate_flows.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del test</p>
+<p><strong>Output</strong>: -
+<code>shared/output_flows/regenerated_test6_clean.csv</code> - Feature
+estratte dal PCAP</p>
+<p><strong>Dettagli</strong>: - Legge il file PCAP generato dal passo 2
+- Esegue CICFlowMeter per estrarre 87 feature di flusso - Pulisce i dati
+rimuovendo intestazioni e flussi non validi - Produce un CSV con stesso
+formato dell’input</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./3.regenerate_flows.sh</span> test6</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: Processing PCAP...</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         Generated: shared/output_flows/regenerated_test6_clean.csv</span></span></code></pre></div>
+<hr />
+<h3 id="compare_flows.sh">🔹 4.compare_flows.sh</h3>
+<p><strong>Scopo</strong>: Confrontare i flussi originali con i flussi
+rigenerati e calcolare metriche di errore</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./4.compare_flows.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del test</p>
+<p><strong>Output</strong>: -
+<code>shared/results/test6/report_data.json</code> - Report strutturato
+con metriche - <code>shared/results/test6/report.html</code> - Report
+HTML interattivo</p>
+<p><strong>Dettagli</strong>: - Esegue il matching tra flussi originali
+e rigenerati - Calcola per ogni flusso e ogni feature: - Errore assoluto
+(MAE) - Errore relativo (%) - Errore con segno - Genera statistiche
+aggregate per feature - Identifica flussi mancanti e extra</p>
+<p><strong>Metriche Calcolate</strong>: - <strong>Mean Absolute Error
+(MAE)</strong>: Differenza media in valore assoluto - <strong>Mean
+Relative Error (%)</strong>: Differenza percentuale - <strong>Feature
+Groups</strong>: TCP flags, timing, packet sizes, throughput, etc.</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./4.compare_flows.sh</span> test6</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: ✅ Dati elaborati. Generato: results/test6/report_data.json</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         ✅ Report HTML statico generato con successo</span></span></code></pre></div>
+<hr />
+<h3 id="optimize_flow_simulation.sh">🔹
+5.optimize_flow_simulation.sh</h3>
+<p><strong>Scopo</strong>: Ottimizzare i parametri di simulazione usando
+Bayesian Optimization</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./5.optimize_flow_simulation.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span> <span class="pp">[</span><span class="ss">max_trials</span><span class="pp">]</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del test - <code>[max_trials]</code> (opzionale, default: 3): Numero
+massimo di trial</p>
+<p><strong>Output</strong>: -
+<code>optimizer_state/&lt;test_name&gt;/trials.jsonl</code> - Cronologia
+dei trial - <code>shared/results/test6/optimization_progress.png</code>
+- Grafico del progresso -
+<code>shared/results/test6/optimization_summary.json</code> - Sommario
+risultati</p>
+<p><strong>Dettagli</strong>: - Esegue ottimizzazione Bayesian tramite
+biblioteca Python <code>optuna</code> - Varia parametri come timeout,
+velocità trasmissione, dimensioni pacchetti - Per ogni trial esegue
+steps 2-4 (replicate, regenerate, compare) - Calcola score di fitness
+basato su errore medio - Trova i parametri che minimizzano l’errore</p>
+<p><strong>Parametri Ottimizzati</strong>: - Timeout simulazione - Flow
+inter-packet timing - Packet size distribution - TCP window size -
+Retransmission timing</p>
+<p><strong>Tempo di Esecuzione</strong>: - ~5-10 minuti per trial - 3
+trial = ~20-30 minuti - Consigliato: 10-20 trial per risultati
+migliori</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./5.optimize_flow_simulation.sh</span> test6 5</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: Trial 1/5 → Score: 15.32</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         Trial 2/5 → Score: 14.87</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#         Trial 3/5 → Score: 14.92</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#         Trial 4/5 → Score: 14.56 ← BEST</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         Trial 5/5 → Score: 14.98</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#         Optimization complete!</span></span></code></pre></div>
+<hr />
+<h3 id="evaluate_optimization.sh">🔹 6.evaluate_optimization.sh</h3>
+<p><strong>Scopo</strong>: Generare report di valutazione e grafici
+delle metriche</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./6.evaluate_optimization.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code></pre></div>
+<p><strong>Parametri</strong>: - <code>&lt;test_name&gt;</code>: Nome
+del test</p>
+<p><strong>Output</strong>: -
+<code>shared/results/test6/test6_keyfeatures.png</code> - Grafico a
+barre delle feature principali -
+<code>shared/results/test6/test6_keyfeatures.csv</code> - CSV con errori
+per feature - <code>shared/results/test6/optimization_*.png</code> -
+Grafici di ottimizzazione</p>
+<p><strong>Dettagli</strong>: - Legge il report_data.json generato dal
+passo 4 - Seleziona le 24 feature chiave dell’objective function -
+Calcola l’errore relativo medio per feature - Genera visualizzazioni
+grafiche - Esporta dati in CSV per analisi esterna</p>
+<p><strong>Feature Principali Monitorate</strong>: - Flow Duration, Flow
+Bytes/s - Fwd/Bwd Packet Length (Max, Min, Std) - TCP Flags Count (FIN,
+SYN, RST, ACK) - Active/Idle Time - Retransmission Count - Down/Up
+Ratio</p>
+<p><strong>Soglia di Errore Accettabile</strong>: &lt; 20%</p>
+<p><strong>Esempio</strong>:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./6.evaluate_optimization.sh</span> test6</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: Saved figure: results/test6/test6_keyfeatures.png</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         Saved data:   results/test6/test6_keyfeatures.csv</span></span></code></pre></div>
+<hr />
+<h2 id="utility-scripts">🛠️ Utility Scripts</h2>
+<h3 id="aggregate_bursts.sh">aggregate_bursts.sh</h3>
+<p><strong>Scopo</strong>: Aggregare tutti i file burst_dataset_*.csv in
+un unico file</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./aggregate_bursts.sh</span> <span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code></pre></div>
+<p><strong>Output</strong>: -
+<code>shared/results/burst_dataset_&lt;test_name&gt;_complete.csv</code></p>
+<hr />
+<h3 id="compare_fin_flags.sh">compare_fin_flags.sh</h3>
+<p><strong>Scopo</strong>: Debug tool per confrontare i flag FIN tra
+file originale e rigenerato</p>
+<p><strong>Uso</strong>:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./compare_fin_flags.sh</span></span></code></pre></div>
+<p><strong>Output</strong>: Tabella con confronto dei FIN flag count</p>
+<hr />
+<h2 id="how-it-works">🔄 How It Works</h2>
+<h3 id="passo-1-generazione-topologia">Passo 1: Generazione
+Topologia</h3>
+<pre><code>Input: test6.csv (87 feature, N flussi)
+  ↓
+Analizza IP sorgente/destinazione
+  ↓
+Crea grafo di connettività
+  ↓
+Output: test6.csv.json (topologia Mininet)</code></pre>
+<h3 id="passo-2-replica-traffico">Passo 2: Replica Traffico</h3>
+<pre><code>Input: test6.csv.json (topologia)
+  ↓
+Avvia Mininet container
+  ↓
+Per ogni flusso del CSV:
+  - Crea host sorgente/destinazione
+  - Configura routing
+  - Genera traffico (TCP/UDP)
+  - Replica timing e dimensioni pacchetti
+  ↓
+Probe cattura PCAP
+  ↓
+Output: test6.pcap</code></pre>
+<h3 id="passo-3-estrazione-feature">Passo 3: Estrazione Feature</h3>
+<pre><code>Input: test6.pcap
+  ↓
+CICFlowMeter analizza pacchetti
+  ↓
+Per ogni flusso:
+  - Calcola 87 feature (duration, size, rate, flags, etc.)
+  - Aggrega statistiche
+  ↓
+Output: regenerated_test6_clean.csv</code></pre>
+<h3 id="passo-4-confronto-flussi">Passo 4: Confronto Flussi</h3>
+<pre><code>Input: test6.csv + regenerated_test6_clean.csv
+  ↓
+Matching flussi (4-tuple: src_ip, src_port, dst_ip, dst_port)
+  ↓
+Per ogni feature:
+  - Calcola MAE (errore assoluto)
+  - Calcola errore relativo (%)
+  ↓
+Output: report_data.json</code></pre>
+<h3 id="passo-5-ottimizzazione">Passo 5: Ottimizzazione</h3>
+<pre><code>Input: report_data.json (score iniziale)
+  ↓
+Bayesian Optimization loop (N trial):
+  1. Suggerisci nuovi parametri
+  2. Esegui replica con nuovi parametri (passi 2-4)
+  3. Calcola nuovo score
+  4. Aggiorna modello bayesian
+  ↓
+Output: trial_*.json + miglior parametri</code></pre>
+<h3 id="passo-6-valutazione">Passo 6: Valutazione</h3>
+<pre><code>Input: report_data.json
+  ↓
+Seleziona 24 feature chiave
+  ↓
+Calcola errore relativo per feature
+  ↓
+Genera grafici + CSV
+  ↓
+Output: test6_keyfeatures.png, test6_keyfeatures.csv</code></pre>
+<hr />
+<h2 id="outputs">📊 Outputs</h2>
+<h3 id="report-data-report_data.json">Report Data
+(<code>report_data.json</code>)</h3>
+<p>Contiene: - <code>metadata</code>: Conteggi di flussi
+matched/missing/extra - <code>summary</code>: Aggregazione errori per
+feature - <code>flow_details</code>: Dettagli errore per ogni
+flusso/feature - <code>missing_flows</code>: Flussi presenti solo nel
+CSV originale - <code>extra_flows</code>: Flussi presenti solo nel PCAP
+rigenerato</p>
+<h3 id="key-features-csv-test6_keyfeatures.csv">Key Features CSV
+(<code>test6_keyfeatures.csv</code>)</h3>
+<p>Formato:</p>
+<pre><code>feature,label,mean_relative_error_pct,missing_or_null
+&quot;FIN Flag Count&quot;,&quot;FIN count&quot;,43.18,false
+&quot;SYN Flag Count&quot;,&quot;SYN count&quot;,37.50,false
+...</code></pre>
+<h3 id="report-html-report.html">Report HTML
+(<code>report.html</code>)</h3>
+<p>Interfaccia interattiva per: - Visualizzare flussi matched/missing -
+Esplorare dettagli errore per feature - Scaricare dati di debug</p>
+<hr />
+<h2 id="advanced-usage">🔬 Advanced Usage</h2>
+<h3 id="eseguire-una-simulazione-custom">Eseguire una Simulazione
+Custom</h3>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creare file CSV custom</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> shared/input_flows/myflow.csv <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">Src IP,Src Port,Dst IP,Dst Port,Protocol,Duration,... (87 feature totali)</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">192.168.1.100,1234,8.8.8.8,80,TCP,5.2,...</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Eseguire workflow</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 1.generate_topology.sh myflow</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh myflow tcp_simple</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 3.regenerate_flows.sh myflow</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 4.compare_flows.sh myflow</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 6.evaluate_optimization.sh myflow</span></code></pre></div>
+<h3 id="usare-implementazione-custom">Usare Implementazione Custom</h3>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creare nuovo modulo in mininet/app/implementations/my_impl/</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Implementare client.py e server.py</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eseguire con:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh test6 my_impl</span></code></pre></div>
+<h3 id="analizzare-report-json">Analizzare Report JSON</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leggere report</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;shared/results/test6/report_data.json&#39;) as f:</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="st">    report = json.load(f)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="st"># Statistiche metadata</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="st">print(f&quot;Flussi matched: {report[&#39;metadata&#39;][&#39;matched_count&#39;]}&quot;)</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="st">print(f&quot;Flussi missing: {report[&#39;metadata&#39;][&#39;missing_count&#39;]}&quot;)</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="st"># Errori per feature</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="st">for item in report[&#39;summary&#39;]:</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="st">    feature = item[&#39;feature&#39;]</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="st">    error = item[&#39;mean_relative_error_pct&#39;]</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f&quot;{feature}: {error:.2f}%&quot;)</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div>
+<hr />
+<h2 id="troubleshooting">🐛 Troubleshooting</h2>
+<h3 id="errore-docker-non-trovato">Errore: Docker non trovato</h3>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installare Docker</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install docker.io docker-compose</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Avviare il servizio</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start docker</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggiungere user al gruppo docker</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> docker <span class="va">$USER</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">newgrp</span> docker</span></code></pre></div>
+<h3 id="errore-memoria-insufficiente">Errore: “Memoria
+insufficiente”</h3>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aumentare RAM disponibile a Docker</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In Docker Desktop settings: Resources → Memory → 8GB+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Oppure ridurre numero di flussi nel CSV</span></span></code></pre></div>
+<h3 id="errore-pcap-file-not-found">Errore: “PCAP file not found”</h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificare che passo 2 (replicate) sia completato</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> shared/pcap/test6.pcap</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Se manca, re-eseguire:</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh test6</span></code></pre></div>
+<h3 id="errore-cicflowmeter-timeout">Errore: “CICFlowMeter timeout”</h3>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aumentare timeout in 3.regenerate_flows.sh</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Oppure ridurre dimensione del PCAP</span></span></code></pre></div>
+<h3 id="come-debuggare-un-flusso-specifico">Come debuggare un Flusso
+Specifico</h3>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizzare il flusso nel report JSON</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;shared/results/test6/report_data.json&#39;) as f:</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">    report = json.load(f)</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st"># Cercare flusso specifico</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="st">target = &quot;192.168.1.100:1234→8.8.8.8:80&quot;</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">for detail in report[&#39;flow_details&#39;]:</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">    flow_key = f&quot;{detail[&#39;Src IP&#39;]}:{detail[&#39;Src Port&#39;]}→{detail[&#39;Dst IP&#39;]}:{detail[&#39;Dst Port&#39;]}&quot;</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="st">    if flow_key == target:</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="st">        feature = detail[&#39;feature&#39;]</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="st">        orig = detail[&#39;original_value&#39;]</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">        sim = detail[&#39;simulated_value&#39;]</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="st">        error = detail[&#39;relative_error_pct&#39;]</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="st">        print(f&quot;{feature}: {orig} → {sim} (error: {error:.2f}%)&quot;)</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div>
+<hr />
+<h2 id="file-format-specifications">📝 File Format Specifications</h2>
+<h3 id="input-csv-sharedinput_flowstest6.csv">Input CSV
+(shared/input_flows/test6.csv)</h3>
+<ul>
+<li><strong>Formato</strong>: CSV con header</li>
+<li><strong>Colonne</strong>: 87 feature di CICFlowMeter</li>
+<li><strong>Identificazione Flusso</strong>: Src IP, Src Port, Dst IP,
+Dst Port</li>
+<li><strong>Tipo Dati</strong>: Numerico, stringhe IP</li>
+<li><strong>Righe</strong>: Una per flusso</li>
+</ul>
+<p><strong>Colonne Critiche</strong>: - <code>Src IP</code>,
+<code>Src Port</code>, <code>Dst IP</code>, <code>Dst Port</code> -
+Identificazione flusso - <code>Protocol</code> - TCP/UDP -
+<code>Duration</code> - Tempo di simulazione (secondi) -
+<code>Total Fwd Packet</code> - Numero pacchetti in avanti -
+<code>Total Length of Fwd Packet</code> - Byte totali inviati -
+<code>FIN Flag Count</code> - Numero di flag FIN - … (altre 80
+feature)</p>
+<h3 id="topology-json-sharedtopologiestest6.csv.json">Topology JSON
+(shared/topologies/test6.csv.json)</h3>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;hosts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;h1&quot;</span><span class="fu">,</span> <span class="dt">&quot;ip&quot;</span><span class="fu">:</span> <span class="st">&quot;192.168.1.100&quot;</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">...</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;links&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dt">&quot;h1&quot;</span><span class="fu">:</span> <span class="st">&quot;s1&quot;</span><span class="fu">,</span> <span class="dt">&quot;h2&quot;</span><span class="fu">:</span> <span class="st">&quot;s1&quot;</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="er">...</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;flows&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="er">...</span><span class="ot">]</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="report-json-sharedresultstest6report_data.json">Report JSON
+(shared/results/test6/report_data.json)</h3>
+<p>Struttura gerarchica con: - Metadata (conteggi) - Summary aggregato
+per feature - Detail per flow/feature - Missing/Extra flows</p>
+<hr />
+<h2 id="workflow-recommendations">🎯 Workflow Recommendations</h2>
+<h3 id="per-nuovi-utenti">Per Nuovi Utenti</h3>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start semplice con dataset piccolo</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 1.generate_topology.sh test1</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 2.replicate_flow.sh test1</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 3.regenerate_flows.sh test1</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 4.compare_flows.sh test1</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> 6.evaluate_optimization.sh test1</span></code></pre></div>
+<h3 id="per-produzione">Per Produzione</h3>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Workflow completo con ottimizzazione</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> test <span class="kw">in</span> test1 test2 test3<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 1.generate_topology.sh <span class="va">$test</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 2.replicate_flow.sh <span class="va">$test</span> scapy_burst</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 3.regenerate_flows.sh <span class="va">$test</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 4.compare_flows.sh <span class="va">$test</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 5.optimize_flow_simulation.sh <span class="va">$test</span> 10  <span class="co"># 10 trial</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 6.evaluate_optimization.sh <span class="va">$test</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<h3 id="per-testing-di-implementazioni">Per Testing di
+Implementazioni</h3>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testare diversi moduli di traffic generation</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> impl <span class="kw">in</span> scapy_burst tcp_simple flow_emulator<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 2.replicate_flow.sh test6 <span class="va">$impl</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 3.regenerate_flows.sh test6</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> 4.compare_flows.sh test6</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Implementation </span><span class="va">$impl</span><span class="st">: </span><span class="va">$(</span><span class="fu">grep</span> <span class="st">&#39;mean_relative_error&#39;</span> shared/results/test6/test6_keyfeatures.csv <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<hr />
+<h2 id="recent-fixes-improvements">📌 Recent Fixes &amp;
+Improvements</h2>
+<h3 id="fix-fin-flag-count-error-calculation">Fix: FIN Flag Count Error
+Calculation</h3>
+<ul>
+<li><strong>Issue</strong>: Errore relativo = 100% per FIN Flag
+Count</li>
+<li><strong>Cause</strong>: Formula div-by-zero quando original=0</li>
+<li><strong>Fix</strong>: Gestire caso di original=0 separatamente</li>
+<li><strong>Result</strong>: Errore corretto a 43.18% (valutazione
+realistica)</li>
+<li><strong>Commit</strong>: 39ef8fa, 273d3d7</li>
+</ul>
+<h3 id="fix-duplicate-4-tuple-handling">Fix: Duplicate 4-Tuple
+Handling</h3>
+<ul>
+<li><strong>Issue</strong>: Flussi duplicati con stesso IP pair ma
+port/timing diversi</li>
+<li><strong>Fix</strong>: Usare 4-tuple completa (src_ip, src_port,
+dst_ip, dst_port)</li>
+<li><strong>Result</strong>: Corretta replicazione di 45 flow in test6
+(vs 39 prima)</li>
+<li><strong>Commit</strong>: 7d36259</li>
+</ul>
+<hr />
+<h2 id="support-documentation">📌 Support &amp; Documentation</h2>
+<ul>
+<li><strong>Bug Reports</strong>: Apri issue in questo repo</li>
+<li><strong>Feature Requests</strong>: Discussioni nella sezione
+Projects</li>
+<li><strong>Documentation</strong>: Vedi <code>doc/</code> per
+approfondimenti tecnici</li>
+<li><strong>Examples</strong>: <code>shared/input_flows/test*.csv</code>
+per esempi di formato</li>
+</ul>
+<hr />
+<h2 id="license">📄 License</h2>
+<p>Research project - Università</p>
+<hr />
+<h2 id="authors">✍️ Authors</h2>
+<ul>
+<li>Massimiliano Rak</li>
+<li>Copilot AI (Documentation &amp; Code Review)</li>
+</ul>
+<hr />
+<p><strong>Last Updated</strong>: 2026-10-28 <strong>Version</strong>:
+2.0 (Architecture Redesign)</p>
+        <footer>
+            <p>📚 FASF Documentation - Flow Stealth Attack Simulation Framework</p>
+            <p><a href="index.html">← Torna all'indice</a></p>
+        </footer>
+    </div>
+</body>
+</html>

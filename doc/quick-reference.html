@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASF - Quick Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #667eea;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #764ba2;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 2em;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #764ba2;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #d73a49;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        tr:hover {
+            background: #f0f0f0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #667eea;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            margin-left: 20px;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .back-to-top {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-to-top:hover {
+            background: #764ba2;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="fasf-workflow-quick-reference">📋 FASF Workflow Quick
+Reference</h1>
+<h2 id="the-6-step-workflow">The 6-Step Workflow</h2>
+<pre><code>[1] Generate   [2] Replicate   [3] Regenerate   [4] Compare   [5] Optimize   [6] Evaluate
+Topology       Flows           Flows            Flows        Parameters    Results
+   ↓              ↓                ↓               ↓             ↓            ↓
+Input CSV    Mininet Sim      CICFlowMeter   Report JSON   Bayesian Opt  Graphs/CSV</code></pre>
+<hr />
+<h2 id="standard-workflow">🎯 Standard Workflow</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup: Prepare CSV file</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> shared/input_flows/test6.csv shared/input_flows/mytest.csv</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Generate Topology</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./1.generate_topology.sh</span> mytest</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: shared/topologies/mytest.csv.json</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Replicate Flows (Mininet simulation)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">./2.replicate_flow.sh</span> mytest</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: shared/pcap/mytest.pcap (~10-30s)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Extract Features (CICFlowMeter)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">./3.regenerate_flows.sh</span> mytest</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: shared/output_flows/regenerated_mytest_clean.csv</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Compare Flows</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">./4.compare_flows.sh</span> mytest</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: shared/results/mytest/report_data.json</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: OPTIONAL - Optimize Parameters</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">./5.optimize_flow_simulation.sh</span> mytest 10</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: optimizer_state/mytest/trials.jsonl (~30-50 min for 10 trials)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Generate Report &amp; Charts</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ex">./6.evaluate_optimization.sh</span> mytest</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: shared/results/mytest/mytest_keyfeatures.png/.csv</span></span></code></pre></div>
+<hr />
+<h2 id="quick-commands">⚡ Quick Commands</h2>
+<h3 id="test-single-implementation">Test Single Implementation</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test scapy_burst implementation</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./1.generate_topology.sh</span> test6</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./2.replicate_flow.sh</span> test6 scapy_burst</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./3.regenerate_flows.sh</span> test6</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./4.compare_flows.sh</span> test6</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./6.evaluate_optimization.sh</span> test6</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> shared/results/test6/test6_keyfeatures.csv <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span></code></pre></div>
+<h3 id="test-multiple-implementations">Test Multiple
+Implementations</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> impl <span class="kw">in</span> scapy_burst tcp_burst flow_emulator<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./2.replicate_flow.sh</span> test6 <span class="va">$impl</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./3.regenerate_flows.sh</span> test6</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./4.compare_flows.sh</span> test6</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;=== </span><span class="va">$impl</span><span class="st"> ===&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span> <span class="at">-2</span> shared/results/test6/test6_keyfeatures.csv <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<h3 id="batch-test-multiple-datasets">Batch Test Multiple Datasets</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> test <span class="kw">in</span> test1 test2 test3 test6<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Processing </span><span class="va">$test</span><span class="st">...&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./1.generate_topology.sh</span> <span class="va">$test</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./2.replicate_flow.sh</span> <span class="va">$test</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./3.regenerate_flows.sh</span> <span class="va">$test</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./4.compare_flows.sh</span> <span class="va">$test</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">./6.evaluate_optimization.sh</span> <span class="va">$test</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<h3 id="optimize-with-multiple-trials">Optimize with Multiple
+Trials</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run optimization with 20 trials (long, ~2-3 hours)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./5.optimize_flow_simulation.sh</span> test6 20</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View optimization progress</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> shared/results/test6/optimization_summary.json <span class="kw">|</span> <span class="ex">python3</span> <span class="at">-m</span> json.tool</span></code></pre></div>
+<hr />
+<h2 id="quick-analysis">📊 Quick Analysis</h2>
+<h3 id="check-overall-error">Check Overall Error</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;=== Error Summary ===&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> shared/results/test6/test6_keyfeatures.csv <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;,&#39;</span> <span class="st">&#39;NR&gt;1 {sum+=$3; count++} END {print &quot;Mean Error: &quot; sum/count &quot;% (&quot; count &quot; features)&quot;}&#39;</span></span></code></pre></div>
+<h3 id="check-specific-features">Check Specific Features</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;=== TCP Flags ===&quot;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="st">&quot;FIN|SYN|RST|ACK&quot;</span> shared/results/test6/test6_keyfeatures.csv</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;=== Timing Features ===&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="st">&quot;Duration|IAT|Active|Idle&quot;</span> shared/results/test6/test6_keyfeatures.csv</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;=== Size Features ===&quot;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="st">&quot;Length|Bytes&quot;</span> shared/results/test6/test6_keyfeatures.csv</span></code></pre></div>
+<h3 id="visualize-results">Visualize Results</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open PNG charts</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> shared/results/test6/test6_keyfeatures.png</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> shared/results/test6/optimization_progress.png</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Or view HTML report</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> shared/results/test6/report.html</span></code></pre></div>
+<hr />
+<h2 id="debug-commands">🐛 Debug Commands</h2>
+<h3 id="view-matched-flows-count">View Matched Flows Count</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;shared/results/test6/report_data.json&#39;) as f:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">    r = json.load(f)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">print(f&quot;Matched: {r[&#39;metadata&#39;][&#39;matched_count&#39;]}&quot;)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">print(f&quot;Missing: {r[&#39;metadata&#39;][&#39;missing_count&#39;]}&quot;)  </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">print(f&quot;Extra: {r[&#39;metadata&#39;][&#39;extra_count&#39;]}&quot;)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div>
+<h3 id="compare-specific-flow">Compare Specific Flow</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">target_src = &quot;192.168.1.100&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">target_dst = &quot;8.8.8.8&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;shared/results/test6/report_data.json&#39;) as f:</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">    r = json.load(f)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="st">for detail in r[&#39;flow_details&#39;]:</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">    if detail[&#39;Src IP&#39;] == target_src and detail[&#39;Dst IP&#39;] == target_dst:</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="st">        print(f&quot;{detail[&#39;feature&#39;]}: {detail[&#39;original_value&#39;]} -&gt; {detail[&#39;simulated_value&#39;]} &quot;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="st">              f&quot;(error: {detail[&#39;relative_error_pct&#39;]:.2f}%)&quot;)</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div>
+<h3 id="extract-high-error-features">Extract High-Error Features</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="op">&lt;&lt; &#39;EOF&#39;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;shared/results/test6/report_data.json&#39;) as f:</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">    r = json.load(f)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">high_error = [(s[&#39;feature&#39;], s[&#39;mean_relative_error_pct&#39;]) </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">              for s in r[&#39;summary&#39;] </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">              if s[&#39;mean_relative_error_pct&#39;] and s[&#39;mean_relative_error_pct&#39;] &gt; 50]</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="st">for feature, error in sorted(high_error, key=lambda x: -x[1]):</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f&quot;{feature:&lt;40} {error:&gt;8.2f}%&quot;)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div>
+<hr />
+<h2 id="file-locations">🔍 File Locations</h2>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 40%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Location</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input CSV</td>
+<td><code>shared/input_flows/{test}.csv</code></td>
+<td>Original flows (87 features)</td>
+</tr>
+<tr>
+<td>Topology JSON</td>
+<td><code>shared/topologies/{test}.csv.json</code></td>
+<td>Network topology</td>
+</tr>
+<tr>
+<td>PCAP Capture</td>
+<td><code>shared/pcap/{test}.pcap</code></td>
+<td>Traffic capture (binary)</td>
+</tr>
+<tr>
+<td>Regenerated CSV</td>
+<td><code>shared/output_flows/regenerated_{test}_clean.csv</code></td>
+<td>Extracted features</td>
+</tr>
+<tr>
+<td>Report Data</td>
+<td><code>shared/results/{test}/report_data.json</code></td>
+<td>Error metrics</td>
+</tr>
+<tr>
+<td>Report HTML</td>
+<td><code>shared/results/{test}/report.html</code></td>
+<td>Interactive report</td>
+</tr>
+<tr>
+<td>Key Features PNG</td>
+<td><code>shared/results/{test}/{test}_keyfeatures.png</code></td>
+<td>Error chart</td>
+</tr>
+<tr>
+<td>Key Features CSV</td>
+<td><code>shared/results/{test}/{test}_keyfeatures.csv</code></td>
+<td>Error data</td>
+</tr>
+<tr>
+<td>Intermediate Files</td>
+<td><code>shared/results/tmp/</code></td>
+<td>Temp files (bidir, burst, flows_adapted, etc.)</td>
+</tr>
+<tr>
+<td>Optimization State</td>
+<td><code>optimizer_state/{test}/trials.jsonl</code></td>
+<td>Bayesian optimization trials</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="success-criteria">✅ Success Criteria</h2>
+<p>✓ All steps complete without errors ✓ Error on key features &lt; 20%
+(good) or &lt; 50% (acceptable) ✓ FIN Flag Count error &lt; 50% ✓ Flow
+Duration error &lt; 30% ✓ PCAP file size &gt; 1KB</p>
+<hr />
+<h2 id="typical-results">📈 Typical Results</h2>
+<pre><code>test6 Results (default scapy_burst implementation):
+  Matched Flows: 42/42 ✓
+  Mean Error: 22.3% (acceptable)
+  Best Features (&lt; 10%): SYN Flag Count, Packet Length Min
+  Worst Features (&gt; 50%): ACK Flag Count, Flow IAT Min
+  
+After Optimization (10 trials):
+  Best Score: 14.56 (vs baseline 15.34)
+  Improvement: 5.1%</code></pre>
+<hr />
+<h2 id="performance-tips">🚀 Performance Tips</h2>
+<ol type="1">
+<li><strong>Faster First Run</strong>: Use <code>scapy_burst</code>
+(default, fastest)</li>
+<li><strong>Longer Simulation</strong>: Increase timeout in CSV
+(Duration column)</li>
+<li><strong>Batch Processing</strong>: Run on Linux with 8GB+ RAM</li>
+<li><strong>Parallel Execution</strong>: Run different tests on separate
+terminals</li>
+<li><strong>Skip Optimization</strong>: If time-limited, skip step 5
+(optional)</li>
+</ol>
+<hr />
+<h2 id="common-issues">⚠️ Common Issues</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker not found</td>
+<td>Install Docker, add user to docker group</td>
+</tr>
+<tr>
+<td>Out of memory</td>
+<td>Reduce flows in CSV or increase Docker memory</td>
+</tr>
+<tr>
+<td>PCAP not created</td>
+<td>Check step 2 logs, increase timeout</td>
+</tr>
+<tr>
+<td>No features extracted</td>
+<td>PCAP might be empty, check step 3 logs</td>
+</tr>
+<tr>
+<td>High error (&gt;80%)</td>
+<td>Try different implementation or adjust timing</td>
+</tr>
+<tr>
+<td>Optimization slow</td>
+<td>Reduce max_trials or use fewer features</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="getting-help">📞 Getting Help</h2>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View script help</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./1.generate_topology.sh</span> <span class="at">-h</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./2.replicate_flow.sh</span> <span class="at">-h</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./3.regenerate_flows.sh</span> <span class="at">-h</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./4.compare_flows.sh</span> <span class="at">-h</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./5.optimize_flow_simulation.sh</span> <span class="at">-h</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">./6.evaluate_optimization.sh</span> <span class="at">-h</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check logs</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs <span class="op">&lt;</span>container_id<span class="op">&gt;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># View generated files</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lah</span> shared/results/test6/</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lah</span> shared/pcap/</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lah</span> shared/results/tmp/</span></code></pre></div>
+<hr />
+<p><strong>Last Updated</strong>: 2026-10-28</p>
+        <footer>
+            <p>📚 FASF Documentation - Flow Stealth Attack Simulation Framework</p>
+            <p><a href="index.html">← Torna all'indice</a></p>
+        </footer>
+    </div>
+</body>
+</html>
